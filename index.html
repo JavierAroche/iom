@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>iom</title>
+    <link rel="stylesheet" href="styles/iom.css">
+    <link rel="stylesheet" href="styles/grid.css">
+    <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css"/>
+  </head>
+    <body>
+		<!-- Title Bar -->
+		<section>
+			<div class="titleBar col-1-1">
+				<span>iom</span>
+				<div class="settingsIcon">
+					<i class="fa fa-gear" aria-hidden="true" title="Settings" data-bind="click: setSettingsOverlay"></i>
+				</div>
+			</div>
+		</section>
+
+		<!-- Settings Overlay -->
+		<section>
+			<div class="settingsOverlay">
+				<div class="settingsModule">
+					<div class="col-1-1">
+						<h1>Settings</h1>
+					</div>
+					<div>
+						<div class="dropdownContainer col-1-1">
+							<div class="dropdown">
+								<button class="dropbtn">JPG</button>
+								<div class="dropdown-content" data-bind="foreach: settings.jpg.plugins">
+									<a href="#" data-bind="text: $data, click: function() { $root.setSettings($data, 'jpg') }"></a>
+								</div>
+							</div>
+							<span data-bind="text: settings.jpg.plugin"></span>
+						</div>
+						<div class="dropdownContainer col-1-1">
+							<div class="dropdown">
+								<button class="dropbtn">PNG</button>
+								<div class="dropdown-content" data-bind="foreach: settings.png.plugins">
+									<a href="#" data-bind="text: $data, click: function() { $root.setSettings($data, 'png') }"></a>
+								</div>
+							</div>
+							<span data-bind="text: settings.png.plugin"></span>
+						</div>
+						<div class="dropdownContainer col-1-1">
+							<div class="dropdown">
+								<button class="dropbtn">SVG</button>
+								<div class="dropdown-content" data-bind="foreach: settings.svg.plugins">
+									<a href="#" data-bind="text: $data, click: function() { $root.setSettings($data, 'svg') }"></a>
+								</div>
+							</div>
+							<span data-bind="text: settings.svg.plugin"></span>
+						</div>
+						<div class="dropdownContainer col-1-1">
+							<div class="dropdown">
+								<button class="dropbtn">GIF</button>
+								<div class="dropdown-content" data-bind="foreach: settings.gif.plugins">
+									<a href="#" data-bind="text: $data, click: function() { $root.setSettings($data, 'gif') }"></a>
+								</div>
+							</div>
+							<span data-bind="text: settings.gif.plugin"></span>
+						</div>
+					</div>	
+				</div>
+			</div>
+		</section>
+
+		<!-- Dropped Overlay -->
+		<section>
+			<div class="animOverlay">
+				<div class="outerRingAnim"></div>
+				<div class="circleAnim"></div>
+				<div class="plusAnim">
+					<i class="addIcon fa fa-plus" aria-hidden="true"></i>
+				</div>
+			</div>
+		</section>
+
+		<!-- Editor -->
+		<section>
+			<div class="propertiesBar col-1-1">
+				<div class="col-1-1">
+					<div class="li-item col-2-3">
+						<span class="fileNameTitle">Filename</span>
+					</div>
+					<div class="li-item col-1-11">
+						<span>Before</span>
+					</div>
+					<div class="li-item col-1-11">
+						<span>After</span>
+					</div>
+					<div class="li-item col-1-11">
+						<span>Savings</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="dropArea col-1-1">
+				<ul class="files" data-bind="foreach: files">
+					<li class="col-1-1">
+						<div class="li-item col-2-3">
+							<i class="folderIcon fa fa-folder" aria-hidden="true" title="Open containing folder" data-bind="click: function() { $root.openContainingFolder($data.filePath) }"></i>
+							<span class="fileName" data-bind="text: name"></span>
+						</div>
+						<div class="li-item col-1-11">
+							<span data-bind="text: initialFileSizeObservable"></span>
+						</div>
+						<div class="li-item col-1-11">
+							<span data-bind="text: finalFileSizeObservable"></span>
+						</div>
+						<div class="li-item col-1-11">
+							<span data-bind="text: fileSavings"></span>
+						</div>
+						<div class="pull-right">
+							<i class="statusIcon fail fa fa-times" aria-hidden="true" data-bind="visible: status() == 'fail'"></i>
+							<i class="statusIcon success fa fa-check" aria-hidden="true" data-bind="visible: status() == 'success'"></i>
+							<i class="statusIcon processing fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true" data-bind="visible: status() == 'processing'"></i>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</section>
+
+		<!-- Footer -->
+		<section class="footer col-1-1">
+			<div class="col-1-1">
+				<div class="col-1-2">
+					<span class="totalSavings">Total savings: <span data-bind="text: totalSavings"></span> (<span data-bind="text: totalPercentageSavings"></span>)
+				</div>
+				<div class="icons col-1-2 pull-right">
+					<i class="clearIcon fa fa-times" aria-hidden="true" title="Clear list" data-bind="click: clearList"></i>
+					<i class="againIcon fa fa-refresh" aria-hidden="true" title="Again" data-bind="click: reprocessFiles"></i>
+					<i class="addIcon fa fa-plus" aria-hidden="true" title="Add file(s) to list" data-bind="click: loadFiles"></i>
+				</div>
+			</div>
+		</section>
+    </body>
+    <script src="app/iom.js"></script>
+</html>

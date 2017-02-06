@@ -1,0 +1,32 @@
+{
+	"name": "iom",
+	"title": "iom",
+	"version": "0.0.1",
+	"description": "Image optimization manager to minify images",
+	"author": {
+		"name": "Javier Aroche",
+		"email": "aroche290@gmail.com",
+		"url": "https://github.com/JavierAroche"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/JavierAroche/iom"
+	},
+	"license": "MIT",
+	"main": "main.js",
+	"scripts": {
+		"start": "electron ."
+	},
+	"devDependencies": {
+		"electron": "^1.4.15"
+	},
+	"dependencies": {
+		"font-awesome": "^4.7.0",
+		"imagemin": "^5.2.2",
+		"imagemin-jpegtran": "^5.0.2",
+		"imagemin-optipng": "^5.2.1",
+		"imagemin-svgo": "^5.2.0",
+		"knockout": "^3.4.1",
+		"q": "^1.4.1"
+	}
+}
