@@ -1,0 +1,116 @@
+/*
+ *
+ *  iom - Image Optimization Manager
+ *  Author: Javier Aroche
+ *
+ */
+
+.settingsIcon {
+	position: absolute;
+	top: 0%;
+	width: 100%;
+	text-align: right;
+}
+
+.settingsIcon i {
+	margin-top: 10px;
+	margin-right: 15px;
+	color: #94b4c7;
+}
+
+.settingsIcon i:hover {
+	color: #b1d6ed;
+}
+
+.settingsIcon i:active {
+	color: #6d8594;
+}
+
+.statusIcon {
+	margin-top: 6px;
+	width: 14px;
+}
+
+.fail {
+	color: #ed2d2d;
+	margin-right: 2px;
+}
+
+.success {
+	color: #8bed2d;
+	margin-right: 3px;
+}
+
+.processing {
+	color: #30a4f6;
+	margin-right: 3px;
+}
+
+.folderIcon {
+	color: #b0c3d2;
+	margin: 6px 5px 0px 5px;
+}
+
+.folderIcon:hover {
+	color: #b1d6ed
+}
+
+.folderIcon:active {
+	color: #6d8594;
+}
+
+.addIcon {
+	float: right;
+	margin-right: 10px;
+	margin-top: 8px;
+}
+
+.addIcon i {
+	color: #268cd4;
+}
+
+.addIcon i:hover {
+	color: #31aaff;
+}
+
+.addIcon i:active {
+	color: #1a5c8a;
+}
+
+.clearIcon {
+	float: right;
+	margin-right: 5px;
+	margin-top: 6px;
+	font-size: 19px;
+}
+
+.clearIcon i {
+	color: #d42626;
+}
+
+.clearIcon i:hover {
+	color: #ff3131;
+}
+
+.clearIcon i:active {
+	color: #8a1a1a;
+}
+
+.againIcon {
+	float: right;
+	margin-right: 10px;
+	margin-top: 8px;
+}
+
+.againIcon i {
+	color: #94b4c7;
+	font-size: 14px;
+}
+
+.againIcon i:hover {
+	color: #b1d6ed;
+}
+
+.againIcon i:active {
+	color: #6d8594;
+}

@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <title>iom</title>
     <link rel="stylesheet" href="styles/iom.css">
+    <link rel="stylesheet" href="styles/iom-drop.css">
+    <link rel="stylesheet" href="styles/iom-settings.css">
+    <link rel="stylesheet" href="styles/iom-icons.css">
     <link rel="stylesheet" href="styles/grid.css">
     <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css"/>
   </head>
@@ -20,49 +23,39 @@
 
 		<!-- Settings Overlay -->
 		<section>
-			<div class="settingsOverlay">
+			<div class="settingsOverlay addOverlay">
 				<div class="settingsModule">
-					<div class="col-1-1">
+					<div class="settingsTitle">
 						<h1>Settings</h1>
 					</div>
-					<div>
-						<div class="dropdownContainer col-1-1">
-							<div class="dropdown">
-								<button class="dropbtn">JPG</button>
-								<div class="dropdown-content" data-bind="foreach: settings.jpg.plugins">
-									<a href="#" data-bind="text: $data, click: function() { $root.setSettings($data, 'jpg') }"></a>
+					
+					<!-- Tabs -->
+					<div class="tabs" data-bind="foreach: imageminSettings">
+						<a class="tab" data-bind="text: fileType, css: { activeTab: active }, click: function() { $root.selectTab(fileType) }"></a>
+					</div>
+
+					<!-- SubTabs -->
+					<div data-bind="foreach: { data: imageminSettings, as: 'imageminSetting' }">
+						<div class="subTabs" data-bind="foreach: { data: imageminSetting.plugins, as: 'plugin' }, visible: imageminSetting.active">
+							<a class="subTab" data-bind="text: pluginName, css: { activeSubTab: imageminSetting.activePlugin() == pluginName }, click: function() { $root.setSettings(imageminSetting.fileType, pluginName) }"></a>
+						</div>
+					</div>
+					
+					<!-- Plugin Settings -->
+					<div class="pluginSettinsContainer" data-bind="foreach: { data: imageminSettings, as: 'imageminSetting' }">
+						<div data-bind="foreach: plugins, visible: active">
+							<div class="pluginSettings col-1-1" data-bind="foreach: settings, visible: imageminSetting.activePlugin() == pluginName">
+								<div class="pluginSetting">
+									<input type="checkbox"><span title="Lossless conversion to progressive" data-bind="text: setting, attr: { title: title }"></span><input type="text" data-bind="value: textValue, visible: type() == 'checkbox-text'">
+									<select class="dropdownSetting" name="" data-bind="options: dropdownOptions, optionsText: $data, value: dropdownSelection, visible: type() == 'checkbox-dropdown'"></select>
 								</div>
 							</div>
-							<span data-bind="text: settings.jpg.plugin"></span>
 						</div>
-						<div class="dropdownContainer col-1-1">
-							<div class="dropdown">
-								<button class="dropbtn">PNG</button>
-								<div class="dropdown-content" data-bind="foreach: settings.png.plugins">
-									<a href="#" data-bind="text: $data, click: function() { $root.setSettings($data, 'png') }"></a>
-								</div>
-							</div>
-							<span data-bind="text: settings.png.plugin"></span>
-						</div>
-						<div class="dropdownContainer col-1-1">
-							<div class="dropdown">
-								<button class="dropbtn">SVG</button>
-								<div class="dropdown-content" data-bind="foreach: settings.svg.plugins">
-									<a href="#" data-bind="text: $data, click: function() { $root.setSettings($data, 'svg') }"></a>
-								</div>
-							</div>
-							<span data-bind="text: settings.svg.plugin"></span>
-						</div>
-						<div class="dropdownContainer col-1-1">
-							<div class="dropdown">
-								<button class="dropbtn">GIF</button>
-								<div class="dropdown-content" data-bind="foreach: settings.gif.plugins">
-									<a href="#" data-bind="text: $data, click: function() { $root.setSettings($data, 'gif') }"></a>
-								</div>
-							</div>
-							<span data-bind="text: settings.gif.plugin"></span>
-						</div>
-					</div>	
+					</div>
+				</div>
+
+				<div class="col-1-1">
+					<input class="includeSubfolders" type="checkbox" name="includeSubfolders"><span>Include subfolders when loading a folder</span>
 				</div>
 			</div>
 		</section>
@@ -101,7 +94,7 @@
 				<ul class="files" data-bind="foreach: files">
 					<li class="col-1-1">
 						<div class="li-item col-2-3">
-							<i class="folderIcon fa fa-folder" aria-hidden="true" title="Open containing folder" data-bind="click: function() { $root.openContainingFolder($data.filePath) }"></i>
+							<i class="folderIcon fa fa-folder fa-fw" aria-hidden="true" title="Open containing folder" data-bind="click: function() { $root.openContainingFolder($data.filePath) }"></i>
 							<span class="fileName" data-bind="text: name"></span>
 						</div>
 						<div class="li-item col-1-11">
@@ -114,8 +107,8 @@
 							<span data-bind="text: fileSavings"></span>
 						</div>
 						<div class="pull-right">
-							<i class="statusIcon fail fa fa-times" aria-hidden="true" data-bind="visible: status() == 'fail'"></i>
-							<i class="statusIcon success fa fa-check" aria-hidden="true" data-bind="visible: status() == 'success'"></i>
+							<i class="statusIcon fail fa fa-times fa-fw" aria-hidden="true" data-bind="visible: status() == 'fail'"></i>
+							<i class="statusIcon success fa fa-check fa-fw" aria-hidden="true" data-bind="visible: status() == 'success'"></i>
 							<i class="statusIcon processing fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true" data-bind="visible: status() == 'processing'"></i>
 						</div>
 					</li>
@@ -130,9 +123,15 @@
 					<span class="totalSavings">Total savings: <span data-bind="text: totalSavings"></span> (<span data-bind="text: totalPercentageSavings"></span>)
 				</div>
 				<div class="icons col-1-2 pull-right">
-					<i class="clearIcon fa fa-times" aria-hidden="true" title="Clear list" data-bind="click: clearList"></i>
-					<i class="againIcon fa fa-refresh" aria-hidden="true" title="Again" data-bind="click: reprocessFiles"></i>
-					<i class="addIcon fa fa-plus" aria-hidden="true" title="Add file(s) to list" data-bind="click: loadFiles"></i>
+					<div class="clearIcon">
+						<i class="fa fa-times" aria-hidden="true" title="Clear list" data-bind="click: clearList"></i>
+					</div>
+					<div class="againIcon">
+						<i class="fa fa-refresh" aria-hidden="true" title="Again" data-bind="click: reprocessFiles"></i>
+					</div>
+					<div class="addIcon">
+						<i class="fa fa-plus" aria-hidden="true" title="Add file(s) to list" data-bind="click: loadFiles"></i>
+					</div>
 				</div>
 			</div>
 		</section>

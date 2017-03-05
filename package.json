@@ -1,32 +1,45 @@
 {
-	"name": "iom",
-	"title": "iom",
-	"version": "0.0.1",
-	"description": "Image optimization manager to minify images",
-	"author": {
-		"name": "Javier Aroche",
-		"email": "aroche290@gmail.com",
-		"url": "https://github.com/JavierAroche"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/JavierAroche/iom"
-	},
-	"license": "MIT",
-	"main": "main.js",
-	"scripts": {
-		"start": "electron ."
-	},
-	"devDependencies": {
-		"electron": "^1.4.15"
-	},
-	"dependencies": {
-		"font-awesome": "^4.7.0",
-		"imagemin": "^5.2.2",
-		"imagemin-jpegtran": "^5.0.2",
-		"imagemin-optipng": "^5.2.1",
-		"imagemin-svgo": "^5.2.0",
-		"knockout": "^3.4.1",
-		"q": "^1.4.1"
-	}
+  "name": "iom",
+  "title": "iom",
+  "version": "0.0.1",
+  "description": "Image optimization manager to minify images",
+  "author": {
+    "name": "Javier Aroche",
+    "email": "aroche290@gmail.com",
+    "url": "https://github.com/JavierAroche"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JavierAroche/iom"
+  },
+  "license": "MIT",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^1.4.15"
+  },
+  "dependencies": {
+    "font-awesome": "^4.7.0",
+    "imagemin": "^5.2.2",
+    "imagemin-advpng": "^3.1.0",
+    "imagemin-giflossy": "^5.1.10",
+    "imagemin-gifsicle": "^5.1.0",
+    "imagemin-guetzli": "^0.1.3",
+    "imagemin-jpeg-recompress": "^5.1.0",
+    "imagemin-jpegoptim": "^5.0.0",
+    "imagemin-jpegtran": "^5.0.2",
+    "imagemin-jpegtran-gfw": "^0.2.0",
+    "imagemin-mozjpeg": "^6.0.0",
+    "imagemin-optipng": "^5.2.1",
+    "imagemin-pngcrush": "^5.0.0",
+    "imagemin-pngout": "^2.0.0",
+    "imagemin-pngquant": "^5.0.0",
+    "imagemin-pngquant-gfw": "^0.2.0",
+    "imagemin-svgo": "^5.2.0",
+    "imagemin-webp": "^4.0.0",
+    "imagemin-zopfli": "^5.0.0",
+    "knockout": "^3.4.1"
+  }
 }
