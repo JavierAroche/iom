@@ -105,6 +105,7 @@
 	background-color: rgba(0,0,0,0.1);
 	margin-bottom: 5px;
 	overflow-y: scroll;
+	overflow-x: hidden;
 }
 
 .pluginSetting {
@@ -131,6 +132,8 @@
 	text-align: center;
 	margin: 2px 0 0 3px;
 	float: right;
+	background-color: rgba(255,255,255,.85);
+	cursor: text;
 }
 
 .pluginSettings span {
@@ -146,6 +149,7 @@
 	font-size: 10px;
 	direction: rtl;
 	border: none;
+	background-color: rgba(255,255,255,.85);
 }
 
 .includeSubfolders {

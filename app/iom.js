@@ -40,8 +40,8 @@
 		this.mainMenu = new MainMenu(this);
         this.animOverlay = document.getElementsByClassName('animOverlay')[0];
         this.settingsOverlay = document.getElementsByClassName('settingsOverlay')[0];
-		this.imageminSettings = new ImageminSettings(this).plugins;
 		this.enabledSettingsOverlay = ko.observable(false);
+		this.imageminSettings = new ImageminSettings(this).plugins;
 		this.mbDecimals = 2;
 		this.percentageDecimals = 1;
 		this.files = ko.observableArray();
