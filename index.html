@@ -37,16 +37,16 @@
 					<!-- SubTabs -->
 					<div data-bind="foreach: { data: imageminSettings, as: 'imageminSetting' }">
 						<div class="subTabs" data-bind="foreach: { data: imageminSetting.plugins, as: 'plugin' }, visible: imageminSetting.active">
-							<a class="subTab" data-bind="text: pluginName, css: { activeSubTab: imageminSetting.activePlugin() == pluginName }, click: function() { $root.setSettings(imageminSetting.fileType, pluginName) }"></a>
+							<a class="subTab" data-bind="text: name, css: { activeSubTab: imageminSetting.activePlugin() == name }, click: function() { $root.setSettings(imageminSetting.fileType, name) }"></a>
 						</div>
 					</div>
 					
 					<!-- Plugin Settings -->
 					<div class="pluginSettinsContainer" data-bind="foreach: { data: imageminSettings, as: 'imageminSetting' }">
 						<div data-bind="foreach: plugins, visible: active">
-							<div class="pluginSettings col-1-1" data-bind="foreach: settings, visible: imageminSetting.activePlugin() == pluginName">
+							<div class="pluginSettings col-1-1" data-bind="foreach: settings, visible: imageminSetting.activePlugin() == name">
 								<div class="pluginSetting">
-									<input type="checkbox" data-bind="checked: checkbox"><span title="Lossless conversion to progressive" data-bind="text: setting, attr: { title: title }"></span><input type="text" data-bind="value: textValue, visible: type() == 'checkbox-text'">
+									<input type="checkbox" data-bind="checked: checkbox"><span title="Lossless conversion to progressive" data-bind="text: name, attr: { title: title }"></span><input type="text" data-bind="value: textValue, visible: type() == 'checkbox-text'">
 									<select class="dropdownSetting" name="" data-bind="options: dropdownOptions, optionsText: $data, value: dropdownSelection, visible: type() == 'checkbox-dropdown'"></select>
 								</div>
 							</div>
