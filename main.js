@@ -74,12 +74,9 @@ app.on('open-file', function (event, path) {
     console.log(path)
 })
 
-app.on('will-quit', () => {
-    // Unregister a shortcut.
-    globalShortcut.unregister('Command+Shift+X')
-
-    // Unregister all shortcuts.
-    globalShortcut.unregisterAll()
+app.on('window-all-closed', () => {
+	globalShortcut.unregisterAll()
+	app.quit()
 })
 
 function attachAppListeners() {
