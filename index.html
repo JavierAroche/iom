@@ -46,7 +46,7 @@
 						<div data-bind="foreach: plugins, visible: active">
 							<div class="pluginSettings col-1-1" data-bind="foreach: settings, visible: imageminSetting.activePlugin() == pluginName">
 								<div class="pluginSetting">
-									<input type="checkbox"><span title="Lossless conversion to progressive" data-bind="text: setting, attr: { title: title }"></span><input type="text" data-bind="value: textValue, visible: type() == 'checkbox-text'">
+									<input type="checkbox" data-bind="checked: checkbox"><span title="Lossless conversion to progressive" data-bind="text: setting, attr: { title: title }"></span><input type="text" data-bind="value: textValue, visible: type() == 'checkbox-text'">
 									<select class="dropdownSetting" name="" data-bind="options: dropdownOptions, optionsText: $data, value: dropdownSelection, visible: type() == 'checkbox-dropdown'"></select>
 								</div>
 							</div>
