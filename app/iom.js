@@ -16,21 +16,6 @@
     const { app, ipcRenderer, shell } = require('electron');
 	
 	const imagemin = require('imagemin');
-	const imageminAdvpng = require('imagemin-advpng');
-	const imageminGiflossy = require('imagemin-giflossy');
-	const imageminGifsicle = require('imagemin-gifsicle');
-	const imageminGuetzli = require('imagemin-guetzli');
-	const imageminJpegRecompress = require('imagemin-jpeg-recompress');
-	const imageminJpegoptim = require('imagemin-jpegoptim');
-	const imageminJpegtran = require('imagemin-jpegtran');
-	const imageminMozjpeg = require('imagemin-mozjpeg');
-	const imageminOptipng = require('imagemin-optipng');
-	const imageminPngcrush = require('imagemin-pngcrush');
-	const imageminPngout = require('imagemin-pngout');
-	const imageminPngquant = require('imagemin-pngquant');
-	const imageminSvgo = require('imagemin-svgo');
-	const imageminZopfli = require('imagemin-zopfli');
-
 	const MainMenu = require('./app/MainMenu');
 	const ImageminSettings = require('./app/ImageminSettings');
 	
@@ -187,16 +172,11 @@
     */
     iom.prototype._compressImageFile = function(file) {
 		var self = this;
+		var fileType = file.fileType.toUpperCase();
+		var userImageminSettings = this._getImageminSettings();
 		
 		imagemin([file.filePath], file.parentFolder, {
-			plugins: [
-				imageminJpegtran({ progressive: true }),
-				imageminOptipng({ optimizationLevel: 3 }),
-				imageminSvgo({
-					plugins: [{ cleanupIDs: false }]
-				}),
-				imageminGifsicle({ optimizationLevel: 3, colors: 128 })
-			]
+			plugins: [ userImageminSettings[fileType].plugin(userImageminSettings[fileType].options) ]
 		}).then(files => {
 			var compressedFile = files[0];
 			var finalFileSize = self._getFileSize(compressedFile.path);
@@ -247,11 +227,15 @@
 		if(this.enabledSettingsOverlay()) { return; }
 		
 		for(var ii = 0; ii < self.files().length; ii++) {
-			self.files()[ii].status('processing');
-			self.files()[ii].initialFileSize(self._getFileSize(self.files()[ii].filePath));
-			self.files()[ii].finalFileSize('');
-			self.files()[ii].fileSavings('');
-			self._compressImageFile(self.files()[ii]);
+			try {
+				self.files()[ii].status('processing');
+				self.files()[ii].initialFileSize(self._getFileSize(self.files()[ii].filePath));
+				self.files()[ii].finalFileSize('');
+				self.files()[ii].fileSavings('');
+				self._compressImageFile(self.files()[ii]);
+			} catch(err) {
+				self.files()[ii].status('fail');
+			}
 		}
 	};
 	
@@ -315,6 +299,49 @@
 		var initialSize = file.initialFileSize();
 		var finalSize = file.finalFileSize();
 		return (100 - ((finalSize * 100) / initialSize)).toFixed(this.percentageDecimals) + '%';
+	};
+	
+	iom.prototype._getImageminSettings = function() {
+		var self = this;
+		var userImageminSettings = {
+			JPG : {},
+			PNG : {},
+			SVG : {},
+			GIF : {},
+		};
+		
+		// Iterate through file types
+		this.imageminSettings.forEach(function(imageminSetting) {
+			// Iterate through plugins
+			imageminSetting.plugins.forEach(function(imageminPlugin) {				
+				if(imageminPlugin.name == imageminSetting.activePlugin()) {
+					var options = {};
+					
+					imageminPlugin.settings.forEach(function(pluginSetting) {
+						if(pluginSetting.checkbox()) {
+							switch(pluginSetting.type()) {
+								case 'checkbox':
+									options[pluginSetting.name] = pluginSetting.checkbox();
+									break;
+								case 'checkbox-text':
+									options[pluginSetting.name] = pluginSetting.textValue();
+									break;
+								case 'checkbox-dropdown':
+									options[pluginSetting.name] = pluginSetting.dropdownSelection();
+									break;
+								default:
+									break;
+							}
+						}
+					});
+						
+					userImageminSettings[imageminSetting.fileType].plugin = imageminPlugin.plugin;
+					userImageminSettings[imageminSetting.fileType].options = options;
+				}
+			})
+		});
+		
+		return userImageminSettings;
 	};
     
     ko.applyBindings(new iom);
