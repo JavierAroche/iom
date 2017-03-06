@@ -15,7 +15,8 @@
   "license": "MIT",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+	"package": "electron-packager . --out ./iom-builds"
   },
   "devDependencies": {
     "electron": "^1.4.15"
