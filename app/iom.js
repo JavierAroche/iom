@@ -13,7 +13,7 @@
     const path = require('path');
     const exec = require('child_process').exec;
     const { dialog } = require('electron').remote;
-    const { app, ipcRenderer, shell } = require('electron');
+    const { ipcRenderer, shell } = require('electron');
 	
 	const imagemin = require('imagemin');
 	const MainMenu = require('./app/MainMenu');

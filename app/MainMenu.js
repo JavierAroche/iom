@@ -9,8 +9,8 @@
     
     'use strict';
 
-    const {remote, ipcRenderer} = require('electron');
-    const {Menu, MenuItem} = remote;
+    const { remote, ipcRenderer } = require('electron');
+    const { Menu, MenuItem } = remote;
 
    /*
     * Main Menu constructor.
