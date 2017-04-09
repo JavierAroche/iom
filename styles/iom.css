@@ -77,7 +77,7 @@ body {
 .dropArea {
 	position: absolute; 
 	top: 55px;
-	bottom: 35px; 
+	bottom: 55px; 
 	left: 0px; 
 	right: 0px; 
 	overflow-y: overlay;
@@ -136,11 +136,37 @@ ul {
     font-size: 12px;
 }
 
+.footerPlugins {
+	position: absolute; 
+	left: 0px;
+	right: 0px; 
+    width: 100%;
+	bottom: 35px;
+    height: 20px;
+	color: #6f8292;
+	text-align: center;
+	background-color: rgba(0, 0, 0, 0.2);
+	pointer-events: none;
+}
+
+.footerPlugins.activeSetings {
+	background-color: rgba(0, 0, 0, 0.3);
+}
+
+.footerPluginsTitle {
+	margin-left: 8px;
+}
+
+.activePluginText {
+	margin: 0 7px 0 7px;
+}
+
 .totalSavings {
 	position: absolute;
 	top: 30%;
 	color: #6f8292;
 	margin-left: 10px;
+	pointer-events: none;
 }
 
 ::-webkit-scrollbar {

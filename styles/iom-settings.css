@@ -8,7 +8,7 @@
 .settingsOverlay {
 	position: absolute;
 	top: 35px;
-	bottom: 35px;
+	bottom: 55px;
 	left: 0px;
 	right: 0px;
 	background-color: #212329;
@@ -30,9 +30,8 @@
 	border-radius: 3px;
 }
 
-.settingsModule span {
+.settingsTitle {
 	font-size: 12px;
-	margin-left: 1px;
 }
 
 .addOverlay {

@@ -115,9 +115,10 @@
 }
 
 .infoIcon {
-	float: right;
-	margin-right: 10px;
-	margin-top: 8px;
+	position: absolute;
+	right: 0px;
+	text-align: right;
+	margin: 8px 35px 0 0;
 	cursor: pointer;
 }
 

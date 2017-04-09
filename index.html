@@ -25,7 +25,7 @@
 			<div class="settingsOverlay">			
 				<div class="settingsModule">
 					<div class="infoIcon">
-						<i class="fa fa-info-circle fa-fw" aria-hidden="true" title="NPM Plugins info" data-bind="click: openLink"></i>
+						<i class="fa fa-info-circle" aria-hidden="true" title="NPM Plugins info" data-bind="click: openLink"></i>
 					</div>
 				
 					<div class="settingsTitle">
@@ -40,7 +40,7 @@
 					<!-- SubTabs -->
 					<div data-bind="foreach: { data: imageminSettings, as: 'imageminSetting' }">
 						<div class="subTabs" data-bind="foreach: { data: imageminSetting.plugins, as: 'plugin' }, visible: imageminSetting.active">
-							<a class="subTab" data-bind="text: name, css: { activeSubTab: imageminSetting.activePlugin() == name }, click: function() { $root.setSettings(imageminSetting.fileType, name) }"></a>
+							<span class="subTab" data-bind="text: name, css: { activeSubTab: imageminSetting.activePlugin() == name }, click: function() { $root.setSettings(imageminSetting.fileType, name) }"></span>
 						</div>
 					</div>
 					
@@ -114,6 +114,14 @@
 
 		<!-- Footer -->
 		<div class="footer">
+			<div class="footerPlugins" data-bind="css: { activeSetings: enabledSettingsOverlay }">
+				<div>
+					<span class="activePluginText">JPG: <span data-bind="text: imageminSettings[0].activePlugin"></span></span>
+					<span class="activePluginText">PNG: <span data-bind="text: imageminSettings[1].activePlugin"></span></span>
+					<span class="activePluginText">SVG: <span data-bind="text: imageminSettings[2].activePlugin"></span></span>
+					<span class="activePluginText">GIF: <span data-bind="text: imageminSettings[3].activePlugin"></span></span>
+				</div>
+			</div>
 			<div>
 				<div>
 					<span class="totalSavings">Total savings: <span data-bind="text: totalSavings"></span> <span data-bind="text: totalPercentageSavings"></span></span>
