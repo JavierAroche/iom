@@ -27,7 +27,7 @@
         this.settingsOverlay = document.getElementsByClassName('settingsOverlay')[0];
 		this.enabledSettingsOverlay = ko.observable(false);
 		this.imageminSettings = new ImageminSettings(this).plugins;
-		this.includeSubfolders = ko.observable(true);
+		this.includeSubfolders = ko.observable(false);
 		this.mbDecimals = 2;
 		this.percentageDecimals = 1;
 		this.files = ko.observableArray();

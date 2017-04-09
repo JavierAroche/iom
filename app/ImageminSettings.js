@@ -47,7 +47,7 @@
 								"name" : "progressive",
 								"type" : ko.observable("checkbox"),
 								"title" : ko.observable("Lossless conversion to progressive"),
-								"checkbox" : ko.observable(false),
+								"checkbox" : ko.observable(true),
 								"textValue" : ko.observable(),
 								"dropdownOptions" : ko.observableArray(),
 								"dropdownSelection" : ko.observable()
@@ -335,7 +335,7 @@
 			{
 				"fileType" : "PNG",
 				"active" : ko.observable(false),
-				"activePlugin" : ko.observable("pngquant"),
+				"activePlugin" : ko.observable("optipng"),
 				"plugins" : [
 					{
 						"name" : "pngquant",
@@ -405,7 +405,7 @@
 								"name" : "optimizationLevel",
 								"type" : ko.observable("checkbox-dropdown"),
 								"title" : ko.observable("Select an optimization level between 0 and 7.  \n\nThe optimization level 0 enables a set of optimization operations that require minimal effort. There will be no changes to image attributes like bit depth or color type, and no recompression of existing IDAT datastreams. The optimization level 1 enables a single IDAT compression trial. The trial chosen is what. OptiPNG thinks it’s probably the most effective. The optimization levels 2 and higher enable multiple IDAT compression trials; the higher the level, the more trials.  \n\nLevel and trials: \n 1. 1 trial\n 2. 8 trials\n 3. 16 trials\n 4. 24 trials\n 5. 48 trials\n 6. 120 trials\n 7. 240 trials"),
-								"checkbox" : ko.observable(false),
+								"checkbox" : ko.observable(true),
 								"textValue" : ko.observable(),
 								"dropdownOptions" : ko.observableArray([1, 2, 3, 4, 5, 6, 7]),
 								"dropdownSelection" : ko.observable(3)
