@@ -1045,7 +1045,7 @@
 								"title" : ko.observable("Set the method used to resize images."),
 								"checkbox" : ko.observable(false),
 								"textValue" : ko.observable(),
-								"dropdownOptions" : ko.observableArray(),
+								"dropdownOptions" : ko.observableArray(["sample"]),
 								"dropdownSelection" : ko.observable()
 							},
 							{
