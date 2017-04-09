@@ -101,7 +101,7 @@
 
 .pluginSettingsContainer {
 	border-radius: 5px 5px 5px 5px;
-	margin-bottom: 10px;
+	margin-bottom: 15px;
 	overflow-y: overlay;
 	overflow-x: hidden;
 }
@@ -155,10 +155,7 @@
 	background-color: rgba(255,255,255,.85);
 }
 
-.includeSubfolders {
-	margin-top: 7px;
-}
-
-.includeSubfoldersText {
-	font-size: 10px;
+.saveInSubFolder, .includeSubfolders {
+	font-size: 11px;
+	margin-top: 5px;
 }

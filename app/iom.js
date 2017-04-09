@@ -29,6 +29,7 @@
 		this.enabledSettingsOverlay = ko.observable(false);
 		this.imageminSettings = new ImageminSettings(this).plugins;
 		this.includeSubfolders = ko.observable(false);
+		this.saveInSubFolder = ko.observable(true);
 		this.mbDecimals = 2;
 		this.percentageDecimals = 1;
 		this.files = ko.observableArray();
@@ -180,8 +181,15 @@
 		var self = this;
 		var fileType = file.fileType.toUpperCase();
 		var userImageminSettings = this._getImageminSettings();
+		var outputFolder;
 		
-		imagemin([file.filePath], file.parentFolder, {
+		if(this.saveInSubFolder()) {
+			outputFolder = file.parentFolder + '/_exports';
+		} else {
+			outputFolder = file.parentFolder;
+		}
+		
+		imagemin([file.filePath], outputFolder, {
 			plugins: [ userImageminSettings[fileType].plugin(userImageminSettings[fileType].options) ]
 		}).then(files => {
 			var compressedFile = files[0];
@@ -189,7 +197,6 @@
 			self.files()[file.index].finalFileSize(finalFileSize);			
 			var fileSavings = self._getFileSavings(self.files()[file.index]);
 			self.files()[file.index].fileSavings(fileSavings);
-			
 			self.files()[file.index].status('success');
 		}).catch(function(err){
 			self.files()[file.index].status('fail');
@@ -352,7 +359,8 @@
 	
 	iom.prototype._loadPrefFileSettings = function() {
 		var self = this;
-		this.includeSubfolders(JSON.parse(localStorage.subFolderPref));
+		this.includeSubfolders(JSON.parse(localStorage.includeSubfolders));
+		this.saveInSubFolder(JSON.parse(localStorage.saveInSubFolder));
 		var prefFileSettings = JSON.parse(fs.readFileSync(this.localStoragePath(), 'utf8'));
 		
 		for(var i = 0; i < this.imageminSettings.length; i++) {
@@ -370,7 +378,8 @@
 	};
 	
 	iom.prototype._savePrefToCache = function(args) {
-		localStorage.subFolderPref = this.includeSubfolders();
+		localStorage.includeSubfolders = this.includeSubfolders();
+		localStorage.saveInSubFolder = this.saveInSubFolder();
 		
 		try { 
 			fs.writeFileSync(this.localStoragePath(), args); 
@@ -405,7 +414,8 @@
 			// Set preference file computed only after obtaining local storage path
 			self.prefFileComputed = ko.computed(function() {
 				var plugins = ko.toJSON(this.imageminSettings);
-				var subFolderPref = self.includeSubfolders();
+				var includeSubfolders = self.includeSubfolders();
+				var saveInSubFolder = self.saveInSubFolder();
 
 				if(self.localStoragePath() == '') { 
 					return true; 
