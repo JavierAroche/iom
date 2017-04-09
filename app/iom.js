@@ -22,6 +22,7 @@
     window.ko = require('knockout');
 	
     function iom() {
+		this.localStoragePath = ko.observable('');
 		this.mainMenu = new MainMenu(this);
         this.animOverlay = document.getElementsByClassName('animOverlay')[0];
         this.settingsOverlay = document.getElementsByClassName('settingsOverlay')[0];
@@ -68,6 +69,7 @@
     iom.prototype._init = function() {
         this._setPlaceholderListeners();
 		this._attachAppListeners();
+        ipcRenderer.send('request-localStoragePath');
     };
 
     iom.prototype._setPlaceholderListeners = function() {
@@ -348,27 +350,71 @@
 		return userImageminSettings;
 	};
 	
+	iom.prototype._loadPrefFileSettings = function() {
+		var self = this;
+		this.includeSubfolders(JSON.parse(localStorage.subFolderPref));
+		var prefFileSettings = JSON.parse(fs.readFileSync(this.localStoragePath(), 'utf8'));
+		
+		for(var i = 0; i < this.imageminSettings.length; i++) {
+			this.imageminSettings[i].active(prefFileSettings[i].active);
+			this.imageminSettings[i].activePlugin(prefFileSettings[i].activePlugin);
+			
+			for(var j = 0; j < this.imageminSettings[i].plugins.length; j++) {
+				for(var k = 0; k < this.imageminSettings[i].plugins[j].settings.length; k ++) {
+					this.imageminSettings[i].plugins[j].settings[k].checkbox(prefFileSettings[i].plugins[j].settings[k].checkbox);
+					this.imageminSettings[i].plugins[j].settings[k].textValue(prefFileSettings[i].plugins[j].settings[k].textValue);
+					this.imageminSettings[i].plugins[j].settings[k].dropdownSelection(prefFileSettings[i].plugins[j].settings[k].dropdownSelection);
+				}
+			}
+		}
+	};
+	
+	iom.prototype._savePrefToCache = function(args) {
+		localStorage.subFolderPref = this.includeSubfolders();
+		
+		try { 
+			fs.writeFileSync(this.localStoragePath(), args); 
+		} catch(err) {}
+	};
+	
 	iom.prototype.openLink = function() {
 		shell.openExternal('https://www.npmjs.com/browse/keyword/imageminplugin');
 	};
 	
     iom.prototype._attachAppListeners = function() {
+		var self = this;
+		
         // Helpers
         ipcRenderer.once('console-on-renderer', function(event, args) {
             console.log(args);
         });
 
         ipcRenderer.once('toggle-checkForUpdatesMenuItem', function(event, state) {
-            this.mainMenu.checkForUpdatesMenuItem.enabled = state;
+            self.mainMenu.checkForUpdatesMenuItem.enabled = state;
         });
 
-//        ipcRenderer.once('send-localStoragePath', function(event, localStoragePath) {
-//            this.localStoragePath(localStoragePath + '/Local Storage/images/');
-//        });
-//
-//        ipcRenderer.once('delete-LocalStorage', function(event) {
-//            this._deleteLocalStorage(self.localStoragePath());
-//        });
+        ipcRenderer.once('send-localStoragePath', function(event, localStoragePath) {
+            self.localStoragePath(localStoragePath + '/Local Storage/iomPreferences.json');
+			
+			// Read preference file if it exists
+			try {
+				fs.statSync(self.localStoragePath()).isFile();
+				self._loadPrefFileSettings();
+			} catch(err) {}
+			
+			// Set preference file computed only after obtaining local storage path
+			self.prefFileComputed = ko.computed(function() {
+				var plugins = ko.toJSON(this.imageminSettings);
+				var subFolderPref = self.includeSubfolders();
+
+				if(self.localStoragePath() == '') { 
+					return true; 
+				} else {
+					self._savePrefToCache(plugins);
+					return true;
+				}
+			}, self);
+		});
     };
     
     ko.applyBindings(new iom);

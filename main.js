@@ -99,6 +99,11 @@ function attachAppListeners() {
     ipcMain.on('request-update', function(event) {
         checkForUpdates('userRequested');
     });
+	
+	ipcMain.on('request-localStoragePath', function(event) {
+        var localStoragePath = getLocalStoragePath();
+        event.sender.send('send-localStoragePath', localStoragePath);
+    });
 }
 
 // Update App Helpers
@@ -175,4 +180,8 @@ function updateVersion() {
 
 function getFeedUrl() {
     return 'https://raw.githubusercontent.com/JavierAroche/iom/master/releases/releases.json';
+}
+
+function getLocalStoragePath() {
+    return app.getPath('userData');
 }
