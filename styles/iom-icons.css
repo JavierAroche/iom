@@ -27,7 +27,6 @@
 }
 
 .statusIcon {
-	margin-top: 6px;
 	width: 14px;
 }
 
@@ -48,7 +47,7 @@
 
 .folderIcon {
 	color: #b0c3d2;
-	margin: 6px 5px 0px 5px;
+	margin: 0px 5px 0px 8px;
 }
 
 .folderIcon:hover {

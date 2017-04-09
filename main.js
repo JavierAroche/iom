@@ -21,14 +21,12 @@ function createWindow() {
     mainWindow = new BrowserWindow({
         width: 500, 
         height: 400,
-        minWidth: 450,
+        minWidth: 500,
         minHeight: 200,
-        maxWidth: 800,
-        maxHeight: 600,
         frame: true,
         center : true,
-        maximizable : false,
-        resizable: false,
+        maximizable : true,
+        resizable: true,
         titleBarStyle: 'hidden-inset'
     })
 

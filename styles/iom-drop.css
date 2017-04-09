@@ -7,9 +7,9 @@
 
 .animOverlay {
 	position: absolute;
-	margin: 0 0;
-	padding: 0 0;
-	width: 100%;
+	top: 0px;
+	left: 0px;
+	right: 0px;
 	height: 100%;
 	background-color: rgba(0, 0, 0, 0.6);
 	z-index: 5001;
@@ -19,7 +19,7 @@
 	transition: all 0.5s ease;
 }
 
-.draged-over {
+.dragged-over {
 	opacity: 1;
 }
 
@@ -102,11 +102,20 @@
 }
 
 .plusAnim {
-	position: relative;
-	width: 100%;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
 	height: 100%;
-	transform: scale(2, 2);
-	margin-top: -15px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.plusAnim i {
+	color: #fefeff;
+	font-size: 30px;
 	
 	animation-name: plusPulse;
     animation-duration: 1s;
@@ -114,33 +123,21 @@
 	animation-timing-function: ease-in-out;
 }
 
-.plusAnim i {
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	color: #fefeff;
-	transform: translate(-50%, -50%);
-}
-
 @keyframes plusPulse {
     0% {
-		transform: scale(2, 2);
-		margin-top: -15px;
+		font-size: 30px;
 		color: #fefeff;
 	}
     30% {
-		transform: scale(1.6, 1.6);
-		margin-top: -12px;
+		font-size: 25px;
 		color: #bcd0db;
 	}
 	40% {
-		transform: scale(1.6, 1.6);
-		margin-top: -12px;
+		font-size: 25px;
 		color: #bcd0db;
 	}
 	60% {
-		transform: scale(2, 2);
-		margin-top: -15px;
+		font-size: 30px;
 		color: #fefeff;
 	}
 }

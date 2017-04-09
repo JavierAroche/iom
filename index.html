@@ -7,22 +7,21 @@
     <link rel="stylesheet" href="styles/iom-drop.css">
     <link rel="stylesheet" href="styles/iom-settings.css">
     <link rel="stylesheet" href="styles/iom-icons.css">
-    <link rel="stylesheet" href="styles/grid.css">
     <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css"/>
   </head>
     <body>
 		<!-- Title Bar -->
-		<section>
-			<div class="titleBar col-1-1">
+		<div>
+			<div class="titleBar">
 				<span>iom</span>
 				<div class="settingsIcon">
-					<i class="fa fa-gear" aria-hidden="true" title="Settings" data-bind="click: setSettingsOverlay"></i>
+					<i class="fa fa-ellipsis-h" aria-hidden="true" title="Settings" data-bind="click: setSettingsOverlay"></i>
 				</div>
 			</div>
-		</section>
+		</div>
 
 		<!-- Settings Overlay -->
-		<section>
+		<div>
 			<div class="settingsOverlay">
 				<div class="settingsModule">
 					<div class="settingsTitle">
@@ -42,9 +41,9 @@
 					</div>
 					
 					<!-- Plugin Settings -->
-					<div class="pluginSettinsContainer" data-bind="foreach: { data: imageminSettings, as: 'imageminSetting' }">
+					<div class="pluginSettingsContainer" data-bind="foreach: { data: imageminSettings, as: 'imageminSetting' }">
 						<div data-bind="foreach: plugins, visible: active">
-							<div class="pluginSettings col-1-1" data-bind="foreach: settings, visible: imageminSetting.activePlugin() == name">
+							<div class="pluginSettings" data-bind="foreach: settings, visible: imageminSetting.activePlugin() == name">
 								<div class="pluginSetting">
 									<input type="checkbox" data-bind="checked: checkbox"><span title="Lossless conversion to progressive" data-bind="text: name, attr: { title: title }"></span><input type="text" data-bind="value: textValue, visible: type() == 'checkbox-text'">
 									<select class="dropdownSetting" name="" data-bind="options: dropdownOptions, optionsText: $data, value: dropdownSelection, visible: type() == 'checkbox-dropdown'"></select>
@@ -52,77 +51,71 @@
 							</div>
 						</div>
 					</div>
-				</div>
-
-				<div class="col-1-1">
-					<input class="includeSubfolders" type="checkbox" name="includeSubfolders"><span>Include subfolders when loading a folder</span>
+					
+					<div>
+						<input class="includeSubfolders" type="checkbox" name="includeSubfolders"><span>Include subfolders when loading a folder</span>
+					</div>
 				</div>
 			</div>
-		</section>
+		</div>
 
 		<!-- Dropped Overlay -->
-		<section>
+		<div>
 			<div class="animOverlay">
 				<div class="outerRingAnim"></div>
 				<div class="circleAnim"></div>
 				<div class="plusAnim">
-					<i class="addIcon fa fa-plus" aria-hidden="true"></i>
+					<i class="fa fa-plus" aria-hidden="true"></i>
 				</div>
 			</div>
-		</section>
+		</div>
 
 		<!-- Editor -->
-		<section>
-			<div class="propertiesBar col-1-1">
-				<div class="col-1-1">
-					<div class="li-item col-2-3">
+		<div>
+			<div class="propertiesBar">
+				<div>
+					<div class="fileNameTitleDiv">
 						<span class="fileNameTitle">Filename</span>
 					</div>
-					<div class="li-item col-1-11">
-						<span>Before</span>
-					</div>
-					<div class="li-item col-1-11">
-						<span>After</span>
-					</div>
-					<div class="li-item col-1-11">
-						<span>Savings</span>
+					<div class="fileSizePropertiesDiv activeScroll">
+						<span class="fileSizeBefore">Before</span>
+						<span class="fileSizeAfter">After</span>
+						<span class="fileSavings">Savings</span>
 					</div>
 				</div>
 			</div>
 
-			<div class="dropArea col-1-1">
+			<div class="dropArea">
 				<ul class="files" data-bind="foreach: files">
-					<li class="col-1-1">
-						<div class="li-item col-2-3">
-							<i class="folderIcon fa fa-folder fa-fw" aria-hidden="true" title="Open containing folder" data-bind="click: function() { $root.openContainingFolder($data.filePath) }"></i>
+					<li>
+						<div class="fileNameTitleDiv">
+							<div class="folderIcons">
+								<i class="folderIcon fa fa-folder fa-fw" aria-hidden="true" title="Open containing folder" data-bind="click: function() { $root.openContainingFolder($data.filePath) }"></i>
+							</div>
 							<span class="fileName" data-bind="text: name"></span>
 						</div>
-						<div class="li-item col-1-11">
+						<div class="fileSizePropertiesDiv">
 							<span data-bind="text: initialFileSizeObservable"></span>
-						</div>
-						<div class="li-item col-1-11">
 							<span data-bind="text: finalFileSizeObservable"></span>
-						</div>
-						<div class="li-item col-1-11">
 							<span data-bind="text: fileSavings"></span>
-						</div>
-						<div class="pull-right">
-							<i class="statusIcon fail fa fa-times fa-fw" aria-hidden="true" data-bind="visible: status() == 'fail'"></i>
-							<i class="statusIcon success fa fa-check fa-fw" aria-hidden="true" data-bind="visible: status() == 'success'"></i>
-							<i class="statusIcon processing fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true" data-bind="visible: status() == 'processing'"></i>
+							<div class="statusIcons">
+								<i class="statusIcon fail fa fa-times fa-fw" aria-hidden="true" data-bind="visible: status() == 'fail'"></i>
+								<i class="statusIcon success fa fa-check fa-fw" aria-hidden="true" data-bind="visible: status() == 'success'"></i>
+								<i class="statusIcon processing fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true" data-bind="visible: status() == 'processing'"></i>
+							</div>
 						</div>
 					</li>
 				</ul>
 			</div>
-		</section>
+		</div>
 
 		<!-- Footer -->
-		<section class="footer col-1-1">
-			<div class="col-1-1">
-				<div class="col-1-2">
-					<span class="totalSavings">Total savings: <span data-bind="text: totalSavings"></span> (<span data-bind="text: totalPercentageSavings"></span>)
+		<div class="footer">
+			<div>
+				<div>
+					<span class="totalSavings">Total savings: <span data-bind="text: totalSavings"></span> <span data-bind="text: totalPercentageSavings"></span></span>
 				</div>
-				<div class="icons col-1-2 pull-right">
+				<div class="icons">
 					<div class="clearIcon">
 						<i class="fa fa-times" aria-hidden="true" title="Clear list" data-bind="click: clearList"></i>
 					</div>
@@ -134,7 +127,7 @@
 					</div>
 				</div>
 			</div>
-		</section>
+		</div>
     </body>
     <script src="app/iom.js"></script>
 </html>

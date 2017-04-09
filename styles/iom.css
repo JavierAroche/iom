@@ -6,87 +6,105 @@
  */
 
 body {
+	width: 100%;
     height: 100%;
-    padding: 0 0;
-    margin: 0 0;
 	background-color: #292c33;
     font-family: "Myriad Set Pro";
 	letter-spacing: .2px;
 	color: #94b4c7;
+	overflow: hidden;
     -webkit-user-select: none;
-    overflow: hidden;
 }
 
-/* Titlebar */
+
 .titleBar {
-    position: fixed;
-    width: 100%;
+    position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
     height: 35px;
     text-align: center;
 	outline: #444c5c solid .5px;
 	background-color: #292c33;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
     z-index: 5002;
 	-webkit-app-region: drag;
 }
 
-.titleBar span {
-	position: relative;
+.titleBar span {	
     color: #94b4c7;
     font-size: 12px;
     letter-spacing: 1px;
-    width: 100%; 
-	top: 25%;
 }
 
 .propertiesBar {
-	position: fixed;
-	width: 100%;
+	position: absolute;
+	top: 35px; 
+	left:0px; 
+	right:0px;
 	height: 20px;
-	margin: 35px 0 0 0;
 	background-color: rgba(0, 0, 0, 0.2);
 	font-size: 12px;
 	z-index: 5000;
 }
 
-.propertiesBar span {
-	position: absolute;
-	top: 25%;
+.fileNameTitleDiv {
+	margin-top: 5px;
+	display: inline-block;
 }
 
 .fileNameTitle {
 	margin-left: 5px;
 }
 
+.fileSizePropertiesDiv {
+	width: 180px;
+	margin-top: 5px;
+	margin-right: 12px;
+	float: right;
+	display: inline-block;
+}
+
+.fileSizePropertiesDiv span {
+	margin-right: 10px;
+	float: left;
+	width: 40px;
+}
+
 .dropArea {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-	padding: 0 0;
-    margin: -5px 0;
+	position: absolute; 
+	top: 55px;
+	bottom: 35px; 
+	left: 0px; 
+	right: 0px; 
+	overflow-y: overlay;
+	overflow-x: hidden;
     background-color: #292c33;
 }
 
 ul {
-	width: 100%;
-	height: 77%;
 	list-style-type: none;
-	padding: 0 0;
-	margin: 60px 0 0 0;
-	font-size: 12px;
 	list-style-position: inside;
-	overflow: hidden; 
-	overflow-y: scroll;
+	margin: 0 0;
+	padding: 0 0;
+	font-size: 12px;
 }
 
 .files li {
-	display:inline-block;
-	position: relative;
+	width: 100%;
+	display: inline-block;
 	height: 25px;
 }
 
-.files li span {
-	position: absolute;
-	top: 25%;
+.folderIcons {
+	float: left;
+}
+
+.statusIcons {
+	float: right;
 }
 
 .files li:nth-child(odd) {
@@ -101,13 +119,14 @@ ul {
 }
 
 .footer {
-    position: absolute;
+    position: absolute; 
+	left: 0px; 
+	right: 0px; 
     width: 100%;
 	bottom: 0px;
     height: 35px;
 	outline: #444c5c solid .5px;
-	background-color: #292c33;
-	
+	background-color: #292c33;	
 	z-index: 5002;
 	-webkit-app-region: drag;
 }
@@ -121,4 +140,19 @@ ul {
 	top: 30%;
 	color: #6f8292;
 	margin-left: 10px;
+}
+
+::-webkit-scrollbar {
+	width: 12px;
+}
+
+::-webkit-scrollbar-track {
+	background-color: rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #6f8292;
+    border-radius: 9px;
+	border: 2px solid transparent;
+	background-clip: content-box;  
 }

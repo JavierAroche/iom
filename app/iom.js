@@ -72,7 +72,7 @@
             event.preventDefault();
             
             if(!self.enabledSettingsOverlay()) {
-	            self.animOverlay.classList.add('draged-over');
+	            self.animOverlay.classList.add('dragged-over');
 	        }
             
             return false;
@@ -85,7 +85,7 @@
 	        if(!self.enabledSettingsOverlay()) {
 	            var files = event.dataTransfer.files;
 				self.addFilesToList(files);
-	            self.animOverlay.classList.remove('draged-over');
+	            self.animOverlay.classList.remove('dragged-over');
 	        }
             
             return false;
@@ -95,7 +95,7 @@
         document.addEventListener('dragleave',function(event) {
             event.preventDefault();
             
-	        self.animOverlay.classList.remove('draged-over');
+	        self.animOverlay.classList.remove('dragged-over');
 
             return false;
         }, false);
@@ -110,12 +110,12 @@
 				// Include subdirectories?
 				this.addFilesToList(filesInFolder);
 			} else {
-				this._addfileToList(files[i]);
+				this._addFileToList(files[i]);
 			}
 		}
 	};
 	
-	iom.prototype._addfileToList = function(file) {
+	iom.prototype._addFileToList = function(file) {
 		var pathProperties = path.parse(file.path),
 			name = pathProperties.base,
 			parentFolder = pathProperties.dir,
