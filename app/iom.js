@@ -27,6 +27,7 @@
         this.settingsOverlay = document.getElementsByClassName('settingsOverlay')[0];
 		this.enabledSettingsOverlay = ko.observable(false);
 		this.imageminSettings = new ImageminSettings(this).plugins;
+		this.includeSubfolders = ko.observable(true);
 		this.mbDecimals = 2;
 		this.percentageDecimals = 1;
 		this.files = ko.observableArray();
@@ -84,7 +85,7 @@
             
 	        if(!self.enabledSettingsOverlay()) {
 	            var files = event.dataTransfer.files;
-				self.addFilesToList(files);
+				self.addFilesToList(files, true);
 	            self.animOverlay.classList.remove('dragged-over');
 	        }
             
@@ -101,14 +102,14 @@
         }, false);
     };
 	
-	iom.prototype.addFilesToList = function(files) {
+	iom.prototype.addFilesToList = function(files, mainFolder) {
 		for(var i = 0; i < files.length; i++) {
 			var fileStats = fs.statSync(files[i].path);
 			if(fileStats.isDirectory()) {
 				var filesInFolder = this._getFolderContents(files[i].path);
-				// TODO
-				// Include subdirectories?
-				this.addFilesToList(filesInFolder);
+				if(this.includeSubfolders() || mainFolder) {
+					this.addFilesToList(filesInFolder, false);
+				}
 			} else {
 				this._addFileToList(files[i]);
 			}
@@ -208,7 +209,7 @@
 				});
         	});
 
-        	self.addFilesToList(filesToProcess);
+        	self.addFilesToList(filesToProcess, true);
         });
 	};
 
