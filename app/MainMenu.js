@@ -55,6 +55,10 @@
         ];
 
         this.menu = Menu.buildFromTemplate(this.iomMenu);
+		// Expose menu items
+        this.settingsMenuItem = this.menu.items[0].submenu.items[1];
+        this.checkForUpdatesMenuItem = this.menu.items[0].submenu.items[2];
+		
         Menu.setApplicationMenu(this.menu);
     }
     
