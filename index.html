@@ -22,8 +22,12 @@
 
 		<!-- Settings Overlay -->
 		<div>
-			<div class="settingsOverlay">
+			<div class="settingsOverlay">			
 				<div class="settingsModule">
+					<div class="infoIcon">
+						<i class="fa fa-info-circle fa-fw" aria-hidden="true" title="NPM Plugins info" data-bind="click: openLink"></i>
+					</div>
+				
 					<div class="settingsTitle">
 						<h1>Settings</h1>
 					</div>
@@ -51,9 +55,8 @@
 							</div>
 						</div>
 					</div>
-					
 					<div>
-						<input class="includeSubfolders" type="checkbox" name="includeSubfolders"><span>Include subfolders when loading a folder</span>
+						<input class="includeSubfolders" type="checkbox" name="includeSubfolders"><span class="includeSubfoldersText">Include subfolders when loading a folder</span>
 					</div>
 				</div>
 			</div>

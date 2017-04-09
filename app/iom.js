@@ -343,6 +343,10 @@
 		
 		return userImageminSettings;
 	};
+	
+	iom.prototype.openLink = function() {
+		shell.openExternal('https://www.npmjs.com/browse/keyword/imageminplugin');
+	};
     
     ko.applyBindings(new iom);
 
