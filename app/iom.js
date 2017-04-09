@@ -116,7 +116,7 @@
 		}
 	};
 	
-	iom.prototype._addFileToList = function(file) {
+	iom.prototype._addFileToList = function(file) {		
 		var pathProperties = path.parse(file.path),
 			name = pathProperties.base,
 			parentFolder = pathProperties.dir,
@@ -129,9 +129,7 @@
 			this.files.push({
 				name : ko.observable(name),
 				initialFileSize : ko.observable(fileSize),
-				initialFileSizeObservable : ko.observable(this._getFinalFileSize(fileSize)),
 				finalFileSize : ko.observable(),
-				finalFileSizeObservable : ko.observable(),
 				fileSavings : ko.observable(),
 				status : ko.observable('processing'),
 				parentFolder : parentFolder,
@@ -139,7 +137,7 @@
 				fileType : fileType,
 				index : index
 			});
-
+			
 			this._compressImageFile(this.files()[index]);
 		}
 	};
@@ -181,9 +179,7 @@
 		}).then(files => {
 			var compressedFile = files[0];
 			var finalFileSize = self._getFileSize(compressedFile.path);
-			self.files()[file.index].finalFileSize(finalFileSize);
-			self.files()[file.index].finalFileSizeObservable(self._getFinalFileSize(finalFileSize));
-			
+			self.files()[file.index].finalFileSize(finalFileSize);			
 			var fileSavings = self._getFileSavings(self.files()[file.index]);
 			self.files()[file.index].fileSavings(fileSavings);
 			
@@ -278,7 +274,7 @@
 	iom.prototype._getFinalFileSize = function(bytes) {
 		var kb, mb;
 			
-		if(bytes == '') { 
+		if(bytes == '' || bytes == undefined) { 
 			return '';
 		}
 

@@ -98,8 +98,8 @@
 							<span class="fileName" data-bind="text: name"></span>
 						</div>
 						<div class="fileSizePropertiesDiv">
-							<span data-bind="text: initialFileSizeObservable"></span>
-							<span data-bind="text: finalFileSizeObservable"></span>
+							<span data-bind="text: $root._getFinalFileSize(initialFileSize())"></span>
+							<span data-bind="text: $root._getFinalFileSize(finalFileSize())"></span>
 							<span data-bind="text: fileSavings"></span>
 							<div class="statusIcons">
 								<i class="statusIcon fail fa fa-times fa-fw" aria-hidden="true" data-bind="visible: status() == 'fail'"></i>
