@@ -58,11 +58,16 @@
 		}, this);
 		
 		this.acceptableFileTypes = ['png', 'PNG', 'jpg', 'JPG', 'jpeg', 'JPEG', 'svg', 'SVG', 'gif', 'GIF'];
+		
+		// Settings menu item
+        this.mainMenu.settingsMenuItem.checked = false;
+		
         this._init();
     };
     
     iom.prototype._init = function() {
         this._setPlaceholderListeners();
+		this._attachAppListeners();
     };
 
     iom.prototype._setPlaceholderListeners = function() {
@@ -213,10 +218,12 @@
 		if(this.settingsOverlay.classList.value.indexOf('addOverlay') == -1) {
 			this.settingsOverlay.classList.add('addOverlay');
 			this.enabledSettingsOverlay(true);
+			this.mainMenu.settingsMenuItem.checked = true;
 		} else {
 			this.settingsOverlay.classList.remove('addOverlay');
 			this.enabledSettingsOverlay(false);
-		}
+			this.mainMenu.settingsMenuItem.checked = false;
+		}	
 	};
 	
 	iom.prototype.reprocessFiles = function() {
@@ -344,6 +351,25 @@
 	iom.prototype.openLink = function() {
 		shell.openExternal('https://www.npmjs.com/browse/keyword/imageminplugin');
 	};
+	
+    iom.prototype._attachAppListeners = function() {
+        // Helpers
+        ipcRenderer.once('console-on-renderer', function(event, args) {
+            console.log(args);
+        });
+
+        ipcRenderer.once('toggle-checkForUpdatesMenuItem', function(event, state) {
+            this.mainMenu.checkForUpdatesMenuItem.enabled = state;
+        });
+
+//        ipcRenderer.once('send-localStoragePath', function(event, localStoragePath) {
+//            this.localStoragePath(localStoragePath + '/Local Storage/images/');
+//        });
+//
+//        ipcRenderer.once('delete-LocalStorage', function(event) {
+//            this._deleteLocalStorage(self.localStoragePath());
+//        });
+    };
     
     ko.applyBindings(new iom);
 
