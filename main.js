@@ -15,9 +15,10 @@ const semver = require('semver')
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
+let openedFile = null
 
-attachAppListeners();
-attachUpdaterListeners();
+attachAppListeners()
+attachUpdaterListeners()
 
 function createWindow() {
     // Create the browser window.
@@ -30,8 +31,18 @@ function createWindow() {
         center : true,
         maximizable : true,
         resizable: true,
-        titleBarStyle: 'hidden-inset'
+        titleBarStyle: 'hidden-inset',
+		show: false
     })
+	
+	mainWindow.once('ready-to-show', () => {
+		mainWindow.show()
+		
+		if(openedFile) {
+			mainWindow.webContents.send('load-file', openedFile)
+			openedFile = null
+		}
+	})
 
     // and load the index.html of the app.
     mainWindow.loadURL(url.format({
@@ -52,7 +63,7 @@ function createWindow() {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', function onReady(){
+app.on('ready', () => {
     createWindow()
 
     // Shortcuts
@@ -63,7 +74,7 @@ app.on('ready', function onReady(){
     })
 })
 
-app.on('activate', function () {
+app.on('activate', () => {
     // On OS X it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
     if (mainWindow === null) {
@@ -71,8 +82,15 @@ app.on('activate', function () {
     }
 })
 
-app.on('open-file', function (event, path) {
-    console.log(path)
+app.on('will-finish-launching', () => {
+	app.on('open-file', (ev, path) => {
+		ev.preventDefault()
+		try {
+			mainWindow.webContents.send('load-file', path)
+		} catch(err) {
+			openedFile = path
+		}
+	})
 })
 
 app.on('window-all-closed', () => {
@@ -90,98 +108,98 @@ function attachAppListeners() {
             properties  : ['openFile', 'openDirectory', 'createDirectory', 'multiSelections'] 
         }, function(files) {
             if(files) {
-                event.sender.send('loaded-files', files);
+                event.sender.send('loaded-files', files)
             }
-        });
-    });
+        })
+    })
 	
 	// Updates
     ipcMain.on('request-update', function(event) {
-        checkForUpdates('userRequested');
-    });
+        checkForUpdates('userRequested')
+    })
 	
 	ipcMain.on('request-localStoragePath', function(event) {
-        var localStoragePath = getLocalStoragePath();
-        event.sender.send('send-localStoragePath', localStoragePath);
-    });
+        var localStoragePath = getLocalStoragePath()
+        event.sender.send('send-localStoragePath', localStoragePath)
+    })
 }
 
 // Update App Helpers
 function checkForUpdates(arg) {
     https.get(getFeedUrl(), (res) => {
-        var body = '';
+        var body = ''
 
         res.on('data', function(chunk){
-            body += chunk;
-        });
+            body += chunk
+        })
 
         res.on('end', function(chunk) {
-            var feed = JSON.parse(body);
+            var feed = JSON.parse(body)
 
             if ( semver.cmp(app.getVersion(), '<', feed.version) ) {
 				if( arg == 'userRequested' ) {
-					updateVersion();
-					dialog.showMessageBox({ message: 'New release available!', detail: 'Downloading and updating Kandinsky...', buttons: ['OK'] });	
+					updateVersion()
+					dialog.showMessageBox({ message: 'New release available!', detail: 'Downloading and updating Kandinsky...', buttons: ['OK'] })	
 				}
-                return true;
+                return true
             } else {
                 if( arg == 'userRequested' ) {
-                    dialog.showMessageBox({ message: 'You are up to date!', detail: 'Kandinsky v' + app.getVersion() + ' is the latest version.', buttons: ['OK'] }); 
+                    dialog.showMessageBox({ message: 'You are up to date!', detail: 'Kandinsky v' + app.getVersion() + ' is the latest version.', buttons: ['OK'] }) 
                 }
             }
-        });
+        })
 
     }).on('error', (err) => {
-          console.log('Error getting the update feed: ', err);
-    });
+          console.log('Error getting the update feed: ', err)
+    })
 }
 
 // Update event listeners
 function attachUpdaterListeners() {
     autoUpdater.on('update-available', function(update) {
-        mainWindow.webContents.send('console-on-renderer', 'update-available: ' + JSON.stringify(update));
-    });
+        mainWindow.webContents.send('console-on-renderer', 'update-available: ' + JSON.stringify(update))
+    })
 
     autoUpdater.on('checking-for-update', function(update) {
-        mainWindow.webContents.send('console-on-renderer', 'checking-for-update: ' + JSON.stringify(update));
+        mainWindow.webContents.send('console-on-renderer', 'checking-for-update: ' + JSON.stringify(update))
 
         // Disable check for updates item
-        mainWindow.webContents.send('toggle-checkForUpdatesMenuItem', false);
-    });
+        mainWindow.webContents.send('toggle-checkForUpdatesMenuItem', false)
+    })
 
     autoUpdater.on('update-downloaded', function(event, url, version, notes, pub_date, quitAndUpdate) {
-        mainWindow.webContents.send('console-on-renderer', 'update-downloaded: ');
+        mainWindow.webContents.send('console-on-renderer', 'update-downloaded: ')
 
          dialog.showMessageBox({ message: 'New release available!', detail: 'Please update Kandinsky to the latest version.', buttons: ['Install and Relaunch'] }, function(buttonIndex) {
             if(buttonIndex == 0) {
-                autoUpdater.quitAndInstall();
+                autoUpdater.quitAndInstall()
             }
-        });
+        })
 
         // Enable check for updates item
-        mainWindow.webContents.send('toggle-checkForUpdatesMenuItem', true);
-    });
+        mainWindow.webContents.send('toggle-checkForUpdatesMenuItem', true)
+    })
 
     autoUpdater.on('update-not-available', function(a) {
-        mainWindow.webContents.send('console-on-renderer', 'Update not available' + a);
-    });
+        mainWindow.webContents.send('console-on-renderer', 'Update not available' + a)
+    })
 
     autoUpdater.on('error', function(a, b) {
-        mainWindow.webContents.send('console-on-renderer', 'autoUpdate error: ' + JSON.stringify(a) + ' ' + JSON.stringify(b));
-    });
+        mainWindow.webContents.send('console-on-renderer', 'autoUpdate error: ' + JSON.stringify(a) + ' ' + JSON.stringify(b))
+    })
 }
 
 function updateVersion() {
-    autoUpdater.setFeedUrl( getFeedUrl() );
-    autoUpdater.checkForUpdates();
+    autoUpdater.setFeedUrl( getFeedUrl() )
+    autoUpdater.checkForUpdates()
 
-    mainWindow.webContents.send('console-on-renderer', 'Trying to update app...');
+    mainWindow.webContents.send('console-on-renderer', 'Trying to update app...')
 }
 
 function getFeedUrl() {
-    return 'https://raw.githubusercontent.com/JavierAroche/iom/master/releases/releases.json';
+    return 'https://raw.githubusercontent.com/JavierAroche/iom/master/releases/releases.json'
 }
 
 function getLocalStoragePath() {
-    return app.getPath('userData');
+    return app.getPath('userData')
 }

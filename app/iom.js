@@ -209,18 +209,20 @@
 		if(this.enabledSettingsOverlay()) { return; }
 
         ipcRenderer.send('load-files');
-        ipcRenderer.once('loaded-files', function(event, files) {
-        	var filesToProcess = [];
-        	
-        	files.forEach(function(file) {
-        		filesToProcess.unshift({
-	        		path : file,
-					size : self._getFileSize(file)
-				});
-        	});
+	};
+	
+	iom.prototype._receiveLoadedFiles = function(files) {
+		var self = this;
+		var filesToProcess = [];
 
-        	self.addFilesToList(filesToProcess, true);
-        });
+		files.forEach(function(file) {
+			filesToProcess.unshift({
+				path : file,
+				size : self._getFileSize(file)
+			});
+		});
+		
+		self.addFilesToList(filesToProcess, true);
 	};
 
 	iom.prototype.setSettingsOverlay = function() {
@@ -394,15 +396,23 @@
 		var self = this;
 		
         // Helpers
-        ipcRenderer.once('console-on-renderer', function(event, args) {
+        ipcRenderer.on('console-on-renderer', function(event, args) {
             console.log(args);
         });
+		
+		ipcRenderer.on('loaded-files', function(event, files) {
+        	self._receiveLoadedFiles(files);
+        });
+		
+		ipcRenderer.on('load-file', function(event, path) {
+			self._receiveLoadedFiles([path]);
+        });
 
-        ipcRenderer.once('toggle-checkForUpdatesMenuItem', function(event, state) {
+        ipcRenderer.on('toggle-checkForUpdatesMenuItem', function(event, state) {
             self.mainMenu.checkForUpdatesMenuItem.enabled = state;
         });
 
-        ipcRenderer.once('send-localStoragePath', function(event, localStoragePath) {
+        ipcRenderer.on('send-localStoragePath', function(event, localStoragePath) {
             self.localStoragePath(localStoragePath + '/Local Storage/iomPreferences.json');
 			
 			// Read preference file if it exists
