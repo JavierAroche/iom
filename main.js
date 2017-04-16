@@ -8,6 +8,7 @@
 const { electron, ipcMain, dialog, app, BrowserWindow, globalShortcut, autoUpdater } = require('electron')
 
 const path = require('path')
+const os = require('os')
 const url = require('url')
 const https = require ('https')
 const semver = require('semver')
@@ -16,6 +17,7 @@ const semver = require('semver')
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 let openedFile = null
+let osPlatform = os.platform()
 
 attachAppListeners()
 attachUpdaterListeners()
@@ -115,7 +117,17 @@ function attachAppListeners() {
 	
 	// Updates
     ipcMain.on('request-update', function(event) {
-        checkForUpdates('userRequested')
+		switch(osPlatform) {
+			case 'darwin':
+				checkForUpdates('userRequested')
+				break
+			case 'win32':
+			// TODO
+			// Add auto updates for windows
+			case 'linux':
+			default:
+				break;
+		}
     })
 	
 	ipcMain.on('request-localStoragePath', function(event) {
@@ -126,7 +138,10 @@ function attachAppListeners() {
 
 // Update App Helpers
 function checkForUpdates(arg) {
-    https.get(getFeedUrl(), (res) => {
+	var feedURL = getFeedUrl()
+	if(!feedURL) { return false }
+	
+    https.get(feedURL, (res) => {
         var body = ''
 
         res.on('data', function(chunk){
@@ -197,7 +212,18 @@ function updateVersion() {
 }
 
 function getFeedUrl() {
-    return 'https://raw.githubusercontent.com/JavierAroche/iom/master/releases/releases.json'
+	switch(osPlatform) {
+		case 'darwin':
+			return 'https://raw.githubusercontent.com/JavierAroche/iom/master/releases/releases-darwin.json'
+			break
+		case 'win32':
+			return 'https://raw.githubusercontent.com/JavierAroche/iom/master/releases/releases-win32.json'
+			break;
+		case 'linux':
+		default:
+			return false
+			break;
+	}
 }
 
 function getLocalStoragePath() {
