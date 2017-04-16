@@ -6,7 +6,9 @@ Image optimization manager to minify images using [imagemin](https://github.com/
 
 ## Latest Release
 [MacOS - iom v0.0.1](https://raw.githubusercontent.com/JavierAroche/iom/master/releases/darwin/v0.0.1/iom_v0.0.1.zip)
+
 [Windows - iom v0.0.1](https://raw.githubusercontent.com/JavierAroche/iom/master/releases/win32/v0.0.1/iom_v0.0.1.zip)
+
 [Linux - iom v0.0.1](https://raw.githubusercontent.com/JavierAroche/iom/master/releases/linux/v0.0.1/iom_v0.0.1.zip)
 
 ## Usage
