@@ -154,12 +154,12 @@ function checkForUpdates(arg) {
             if ( semver.cmp(app.getVersion(), '<', feed.version) ) {
 				if( arg == 'userRequested' ) {
 					updateVersion()
-					dialog.showMessageBox({ message: 'New release available!', detail: 'Downloading and updating Kandinsky...', buttons: ['OK'] })	
+					dialog.showMessageBox({ message: 'New release available!', detail: 'Downloading and updating iom...', buttons: ['OK'] })	
 				}
                 return true
             } else {
                 if( arg == 'userRequested' ) {
-                    dialog.showMessageBox({ message: 'You are up to date!', detail: 'Kandinsky v' + app.getVersion() + ' is the latest version.', buttons: ['OK'] }) 
+                    dialog.showMessageBox({ message: 'You are up to date!', detail: 'iom v' + app.getVersion() + ' is the latest version.', buttons: ['OK'] }) 
                 }
             }
         })
@@ -185,7 +185,7 @@ function attachUpdaterListeners() {
     autoUpdater.on('update-downloaded', function(event, url, version, notes, pub_date, quitAndUpdate) {
         mainWindow.webContents.send('console-on-renderer', 'update-downloaded: ')
 
-         dialog.showMessageBox({ message: 'New release available!', detail: 'Please update Kandinsky to the latest version.', buttons: ['Install and Relaunch'] }, function(buttonIndex) {
+         dialog.showMessageBox({ message: 'New release available!', detail: 'Please update iom to the latest version.', buttons: ['Install and Relaunch'] }, function(buttonIndex) {
             if(buttonIndex == 0) {
                 autoUpdater.quitAndInstall()
             }
