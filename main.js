@@ -5,7 +5,7 @@
  *
  */
 
-const { electron, ipcMain, dialog, app, BrowserWindow, globalShortcut, autoUpdater } = require('electron')
+const { electron, ipcMain, dialog, app, BrowserWindow, globalShortcut, autoUpdater, shell } = require('electron')
 
 const path = require('path')
 const os = require('os')
@@ -154,12 +154,16 @@ function checkForUpdates(arg) {
             if ( semver.cmp(app.getVersion(), '<', feed.version) ) {
 				if( arg == 'userRequested' ) {
 					updateVersion()
-					dialog.showMessageBox({ message: 'New release available!', detail: 'Downloading and updating iom...', buttons: ['OK'] })	
+					dialog.showMessageBox({ type: 'info', message: 'New release available!', detail: 'Downloading and updating iom...', buttons: ['OK'] })	
 				}
                 return true
             } else {
                 if( arg == 'userRequested' ) {
-                    dialog.showMessageBox({ message: 'You are up to date!', detail: 'iom v' + app.getVersion() + ' is the latest version.', buttons: ['OK'] }) 
+                    dialog.showMessageBox({ type: 'info', message: 'You are up to date!', detail: 'iom v' + app.getVersion() + ' is the latest version.', buttons: ['OK', 'More Info'] }, function(option) {
+						if(option == 1) {
+							shell.openExternal('https://github.com/JavierAroche/iom')	
+						}
+					}) 
                 }
             }
         })
