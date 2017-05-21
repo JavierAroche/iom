@@ -19,11 +19,23 @@
 }
 
 .settingsIcon i:hover {
-	color: #b1d6ed;
+	color: #31aaff;
 }
 
 .settingsIcon i:active {
-	color: #6d8594;
+	color: #1a5c8a;
+}
+
+.settingsIcon i.active {
+	color: #268cd4;
+}
+
+.settingsIcon i.active:hover {
+	color: #31aaff;
+}
+
+.settingsIcon i.active:active {
+	color: #1a5c8a;
 }
 
 .statusIcon {
@@ -118,7 +130,6 @@
 	right: 0px;
 	text-align: right;
 	margin: 8px 35px 0 0;
-	cursor: pointer;
 }
 
 .infoIcon i {
@@ -127,9 +138,13 @@
 }
 
 .infoIcon i:hover {
-	color: #b1d6ed;
+	color: #31aaff;
 }
 
 .infoIcon i:active {
-	color: #6d8594;
+	color: #1a5c8a;
+}
+
+.disabled {
+	color: #6f8292 !important;
 }

@@ -15,7 +15,7 @@
 			<div class="titleBar">
 				<span>iom</span>
 				<div class="settingsIcon">
-					<i class="fa fa-ellipsis-h" aria-hidden="true" title="Settings" data-bind="click: setSettingsOverlay"></i>
+					<i class="fa fa-ellipsis-h" aria-hidden="true" title="Settings" data-bind="click: setSettingsOverlay, css: { active : enabledSettingsOverlay }"></i>
 				</div>
 			</div>
 		</div>
@@ -133,13 +133,13 @@
 				</div>
 				<div class="icons">
 					<div class="clearIcon">
-						<i class="fa fa-minus" aria-hidden="true" title="Clear list" data-bind="click: clearList"></i>
+						<i class="fa fa-minus" aria-hidden="true" title="Clear list" data-bind="click: clearList, css: { disabled : enabledSettingsOverlay }"></i>
 					</div>
 					<div class="againIcon">
-						<i class="fa fa-refresh" aria-hidden="true" title="Again" data-bind="click: reprocessFiles"></i>
+						<i class="fa fa-refresh" aria-hidden="true" title="Again" data-bind="click: reprocessFiles, css: { disabled : enabledSettingsOverlay }"></i>
 					</div>
 					<div class="addIcon">
-						<i class="fa fa-plus" aria-hidden="true" title="Add file(s) to list" data-bind="click: loadFiles"></i>
+						<i class="fa fa-plus" aria-hidden="true" title="Add file(s) to list" data-bind="click: loadFiles, css: { disabled : enabledSettingsOverlay }"></i>
 					</div>
 				</div>
 			</div>
