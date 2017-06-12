@@ -16,7 +16,7 @@ const semver = require('semver')
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
-let openedFile = null
+let openedFiles = []
 let osPlatform = os.platform()
 
 attachAppListeners()
@@ -40,9 +40,11 @@ function createWindow() {
 	mainWindow.once('ready-to-show', () => {
 		mainWindow.show()
 		
-		if(openedFile) {
-			mainWindow.webContents.send('load-file', openedFile)
-			openedFile = null
+		if(openedFiles.length > 0) {
+			openedFiles.forEach(function(openedFile) {
+				mainWindow.webContents.send('load-file', openedFile)
+			})
+			openedFiles = [];
 		}
 	})
 
@@ -84,15 +86,12 @@ app.on('activate', () => {
     }
 })
 
-app.on('will-finish-launching', () => {
-	app.on('open-file', (ev, path) => {
-		ev.preventDefault()
-		try {
-			mainWindow.webContents.send('load-file', path)
-		} catch(err) {
-			openedFile = path
-		}
-	})
+app.on('open-file', (ev, path, aaa) => {
+	ev.preventDefault()
+	openedFiles.push(path)
+	try {
+		mainWindow.webContents.send('load-file', path)
+	} catch(err) {}
 })
 
 app.on('window-all-closed', () => {
