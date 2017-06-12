@@ -1,6 +1,6 @@
 {
-	"pub_date": "04-16-2017",
-	"notes": "First release",
-	"url": "https://raw.githubusercontent.com/JavierAroche/iom/master/releases/darwin/v0.0.1/iom_v0.0.1.zip",
-	"version": "0.0.1"
+	"pub_date": "06-11-2017",
+	"notes": "Fixed self updates. Fixed drag and drop on app icon for multiple files. Small tweaks.",
+	"url": "https://raw.githubusercontent.com/JavierAroche/iom/master/releases/darwin/v0.0.2/iom_v0.0.2.zip",
+	"version": "0.0.2"
 }
