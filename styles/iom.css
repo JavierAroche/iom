@@ -7,43 +7,43 @@
 
 body {
 	width: 100%;
-    height: 100%;
+	height: 100%;
 	background-color: #292c33;
-    font-family: "Myriad Set Pro";
+	font-family: "Myriad Set Pro";
 	letter-spacing: .2px;
 	color: #94b4c7;
 	overflow: hidden;
-    -webkit-user-select: none;
+	-webkit-user-select: none;
 }
 
 
 .titleBar {
-    position: absolute;
+	position: absolute;
 	top: 0px;
 	left: 0px;
 	right: 0px;
-    height: 35px;
-    text-align: center;
+	height: 35px;
+	text-align: center;
 	outline: #444c5c solid .5px;
 	background-color: #292c33;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-    z-index: 5002;
+	z-index: 5002;
 	-webkit-app-region: drag;
 }
 
-.titleBar span {	
-    color: #94b4c7;
-    font-size: 12px;
-    letter-spacing: 1px;
+.titleBar span {
+	color: #94b4c7;
+	font-size: 12px;
+	letter-spacing: 1px;
 }
 
 .propertiesBar {
 	position: absolute;
-	top: 35px; 
-	left:0px; 
+	top: 35px;
+	left:0px;
 	right:0px;
 	height: 20px;
 	background-color: rgba(0, 0, 0, 0.2);
@@ -75,14 +75,14 @@ body {
 }
 
 .dropArea {
-	position: absolute; 
+	position: absolute;
 	top: 55px;
-	bottom: 55px; 
-	left: 0px; 
-	right: 0px; 
+	bottom: 55px;
+	left: 0px;
+	right: 0px;
 	overflow-y: overlay;
 	overflow-x: hidden;
-    background-color: #292c33;
+	background-color: #292c33;
 }
 
 ul {
@@ -120,29 +120,29 @@ ul {
 }
 
 .footer {
-    position: absolute; 
-	left: 0px; 
-	right: 0px; 
-    width: 100%;
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	width: 100%;
 	bottom: 0px;
-    height: 35px;
+	height: 35px;
 	outline: #444c5c solid .5px;
-	background-color: #292c33;	
+	background-color: #292c33;
 	z-index: 5002;
 	-webkit-app-region: drag;
 }
 
 .footer span {
-    font-size: 12px;
+	font-size: 12px;
 }
 
 .footerPlugins {
-	position: absolute; 
+	position: absolute;
 	left: 0px;
-	right: 0px; 
-    width: 100%;
+	right: 0px;
+	width: 100%;
 	bottom: 35px;
-    height: 20px;
+	height: 20px;
 	color: #6f8292;
 	text-align: center;
 	background-color: rgba(0, 0, 0, 0.2);
@@ -178,8 +178,8 @@ ul {
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #6f8292;
-    border-radius: 9px;
+	background-color: #6f8292;
+	border-radius: 9px;
 	border: 2px solid transparent;
-	background-clip: content-box;  
+	background-clip: content-box;
 }

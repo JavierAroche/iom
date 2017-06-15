@@ -6,26 +6,26 @@
  */
 
 ;(function(window) {
-	
-    'use strict';
 
-    const fs   = require('fs');
-    const path = require('path');
-    const exec = require('child_process').exec;
-    const { dialog } = require('electron').remote;
-    const { ipcRenderer, shell } = require('electron');
-	
+	'use strict';
+
+	const fs   = require('fs');
+	const path = require('path');
+	const exec = require('child_process').exec;
+	const { dialog } = require('electron').remote;
+	const { ipcRenderer, shell } = require('electron');
+
 	const imagemin = require('imagemin');
 	const MainMenu = require('./app/MainMenu');
 	const ImageminSettings = require('./app/ImageminSettings');
-	
-    window.ko = require('knockout');
-	
-    function iom() {
+
+	window.ko = require('knockout');
+
+	function iom() {
 		this.localStoragePath = ko.observable('');
 		this.mainMenu = new MainMenu(this);
-        this.animOverlay = document.getElementsByClassName('animOverlay')[0];
-        this.settingsOverlay = document.getElementsByClassName('settingsOverlay')[0];
+		this.animOverlay = document.getElementsByClassName('animOverlay')[0];
+		this.settingsOverlay = document.getElementsByClassName('settingsOverlay')[0];
 		this.enabledSettingsOverlay = ko.observable(false);
 		this.imageminSettings = new ImageminSettings(this).plugins;
 		this.includeSubfolders = ko.observable(false);
@@ -40,76 +40,76 @@
 				savedBytes = 0,
 				savedTotal = '0 kb',
 				percentageSaved = '0.0%';
-			
+
 			this.files().forEach(function(file) {
 				if(file.status() == 'success') {
 					initialBytes = initialBytes + file.initialFileSize();
 					finalBytes = finalBytes + file.finalFileSize();
 				}
 			});
-			
+
 			savedBytes = initialBytes - finalBytes;
-			
+
 			if(savedBytes > 0) {
 				savedTotal = this._getFinalFileSize(savedBytes);
 				percentageSaved = (100 - ((finalBytes * 100) / initialBytes)).toFixed(this.percentageDecimals) + '%';
 			}
-			
+
 			this.totalPercentageSavings(percentageSaved);
 			return savedTotal;
 		}, this);
-		
+
 		this.acceptableFileTypes = ['png', 'PNG', 'jpg', 'JPG', 'jpeg', 'JPEG', 'svg', 'SVG', 'gif', 'GIF'];
-		
+
 		// Settings menu item
-        this.mainMenu.settingsMenuItem.checked = false;
-		
-        this._init();
-    };
-    
-    iom.prototype._init = function() {
-        this._setPlaceholderListeners();
+		this.mainMenu.settingsMenuItem.checked = false;
+
+		this._init();
+	};
+
+	iom.prototype._init = function() {
+		this._setPlaceholderListeners();
 		this._attachAppListeners();
-        ipcRenderer.send('request-localStoragePath');
-    };
+		ipcRenderer.send('request-localStoragePath');
+	};
 
-    iom.prototype._setPlaceholderListeners = function() {
-        var self = this;
-        
+	iom.prototype._setPlaceholderListeners = function() {
+		var self = this;
+
 		// Drag over event for the drop area
-        document.addEventListener('dragover', function(event) {
-            event.preventDefault();
-            
-            if(!self.enabledSettingsOverlay()) {
-	            self.animOverlay.classList.add('dragged-over');
-	        }
-            
-            return false;
-        }, false);
+		document.addEventListener('dragover', function(event) {
+			event.preventDefault();
 
-        // Drop event for the drop area
-        document.addEventListener('drop', function(event) {
-            event.preventDefault();
-            
-	        if(!self.enabledSettingsOverlay()) {
-	            var files = event.dataTransfer.files;
+			if(!self.enabledSettingsOverlay()) {
+				self.animOverlay.classList.add('dragged-over');
+			}
+
+			return false;
+		}, false);
+
+		// Drop event for the drop area
+		document.addEventListener('drop', function(event) {
+			event.preventDefault();
+
+			if(!self.enabledSettingsOverlay()) {
+				var files = event.dataTransfer.files;
 				self.addFilesToList(files, true);
-	            self.animOverlay.classList.remove('dragged-over');
-	        }
-            
-            return false;
-        }, false);
+				self.animOverlay.classList.remove('dragged-over');
+			}
 
-        // Drag leave the drop area
-        document.addEventListener('dragleave',function(event) {
-            event.preventDefault();
-            
-	        self.animOverlay.classList.remove('dragged-over');
+			return false;
+		}, false);
 
-            return false;
-        }, false);
-    };
-	
+		// Drag leave the drop area
+		document.addEventListener('dragleave',function(event) {
+			event.preventDefault();
+
+			self.animOverlay.classList.remove('dragged-over');
+
+			return false;
+		}, false);
+	};
+
 	iom.prototype.addFilesToList = function(files, mainFolder) {
 		for(var i = 0; i < files.length; i++) {
 			var fileStats = fs.statSync(files[i].path);
@@ -123,8 +123,8 @@
 			}
 		}
 	};
-	
-	iom.prototype._addFileToList = function(file) {		
+
+	iom.prototype._addFileToList = function(file) {
 		var pathProperties = path.parse(file.path),
 			name = pathProperties.base,
 			parentFolder = pathProperties.dir,
@@ -145,56 +145,56 @@
 				fileType : fileType,
 				index : index
 			});
-			
+
 			this._compressImageFile(this.files()[index]);
 		}
 	};
-	
+
 	iom.prototype._getFolderContents = function(folder) {
 		var self = this;
-		
+
 		var filesInFolder = fs.readdirSync(folder),
 			files = [];
-		
+
 		filesInFolder.forEach(function(file) {
 			var filePath = path.resolve(folder, file);
-			
+
 			files.unshift({
 				path : filePath,
 				size : self._getFileSize(filePath)
 			});
 		});
-		
+
 		return files;
 	};
 
 	iom.prototype.openContainingFolder = function(filePath) {
 		shell.showItemInFolder(filePath);
 	};
-	
+
    /*
-    * @private
-    * Handler function to compress an image file with imagemin
-	* @param {Object} 
-    */
-    iom.prototype._compressImageFile = function(file) {
+	* @private
+	* Handler function to compress an image file with imagemin
+	* @param {Object}
+	*/
+	iom.prototype._compressImageFile = function(file) {
 		var self = this;
 		var fileType = file.fileType.toUpperCase();
 		var userImageminSettings = this._getImageminSettings();
 		var outputFolder;
-		
+
 		if(this.saveInSubFolder()) {
 			outputFolder = file.parentFolder + '/_exports';
 		} else {
 			outputFolder = file.parentFolder;
 		}
-		
+
 		imagemin([file.filePath], outputFolder, {
 			plugins: [ userImageminSettings[fileType].plugin(userImageminSettings[fileType].options) ]
 		}).then(files => {
 			var compressedFile = files[0];
 			var finalFileSize = self._getFileSize(compressedFile.path);
-			self.files()[file.index].finalFileSize(finalFileSize);			
+			self.files()[file.index].finalFileSize(finalFileSize);
 			var fileSavings = self._getFileSavings(self.files()[file.index]);
 			self.files()[file.index].fileSavings(fileSavings);
 			self.files()[file.index].status('success');
@@ -202,15 +202,15 @@
 			self.files()[file.index].status('fail');
 			console.log(err)
 		});
-    };
-	
+	};
+
 	iom.prototype.loadFiles = function() {
 		var self = this;
 		if(this.enabledSettingsOverlay()) { return; }
 
-        ipcRenderer.send('load-files');
+		ipcRenderer.send('load-files');
 	};
-	
+
 	iom.prototype._receiveLoadedFiles = function(files) {
 		var self = this;
 		var filesToProcess = [];
@@ -221,7 +221,7 @@
 				size : self._getFileSize(file)
 			});
 		});
-		
+
 		self.addFilesToList(filesToProcess, true);
 	};
 
@@ -234,13 +234,13 @@
 			this.settingsOverlay.classList.remove('addOverlay');
 			this.enabledSettingsOverlay(false);
 			this.mainMenu.settingsMenuItem.checked = false;
-		}	
+		}
 	};
-	
+
 	iom.prototype.reprocessFiles = function() {
 		var self = this;
 		if(this.enabledSettingsOverlay()) { return; }
-		
+
 		for(var ii = 0; ii < self.files().length; ii++) {
 			try {
 				self.files()[ii].status('processing');
@@ -253,12 +253,12 @@
 			}
 		}
 	};
-	
+
 	iom.prototype.clearList = function() {
 		if(this.enabledSettingsOverlay()) { return; }
 		this.files.removeAll();
 	};
-	
+
 	iom.prototype.selectTab = function(tabName) {
 		this.imageminSettings.forEach(function(setting) {
 			if(setting.fileType == tabName) {
@@ -272,27 +272,27 @@
 	iom.prototype.setSettings = function(fileType, plugin) {
 		var self = this;
 		var index = 0;
-		
+
 		switch(fileType) {
 			case 'JPG': index = 0; break;
 			case 'PNG': index = 1; break;
 			case 'SVG': index = 2; break;
 			case 'GIF': index = 3; break;
 		}
-		
+
 		this.imageminSettings[index].activePlugin(plugin);
 	};
-	
+
 	iom.prototype._getFileSize = function(filePath) {
 		var stats = fs.statSync(filePath);
 		var fileSizeInBytes = stats.size;
 		return fileSizeInBytes;
 	};
-	
+
 	iom.prototype._getFinalFileSize = function(bytes) {
 		var kb, mb;
-			
-		if(bytes == '' || bytes == undefined) { 
+
+		if(bytes == '' || bytes == undefined) {
 			return '';
 		}
 
@@ -301,7 +301,7 @@
 		} else {
 			return bytes + 'b';
 		}
-		
+
 		if(kb > 1000) {
 			mb = bytes / 1000000;
 			return (mb).toFixed(this.mbDecimals) + 'mb';
@@ -309,13 +309,13 @@
 			return Math.round(kb) + 'kb';
 		}
 	};
-	
+
 	iom.prototype._getFileSavings = function(file) {
 		var initialSize = file.initialFileSize();
 		var finalSize = file.finalFileSize();
 		return (100 - ((finalSize * 100) / initialSize)).toFixed(this.percentageDecimals) + '%';
 	};
-	
+
 	iom.prototype._getImageminSettings = function() {
 		var self = this;
 		var userImageminSettings = {
@@ -324,14 +324,14 @@
 			SVG : {},
 			GIF : {},
 		};
-		
+
 		// Iterate through file types
 		this.imageminSettings.forEach(function(imageminSetting) {
 			// Iterate through plugins
-			imageminSetting.plugins.forEach(function(imageminPlugin) {				
+			imageminSetting.plugins.forEach(function(imageminPlugin) {
 				if(imageminPlugin.name == imageminSetting.activePlugin()) {
 					var options = {};
-					
+
 					imageminPlugin.settings.forEach(function(pluginSetting) {
 						if(pluginSetting.checkbox()) {
 							switch(pluginSetting.type()) {
@@ -349,26 +349,26 @@
 							}
 						}
 					});
-						
+
 					userImageminSettings[imageminSetting.fileType].plugin = imageminPlugin.plugin;
 					userImageminSettings[imageminSetting.fileType].options = options;
 				}
 			})
 		});
-		
+
 		return userImageminSettings;
 	};
-	
+
 	iom.prototype._loadPrefFileSettings = function() {
 		var self = this;
 		this.includeSubfolders(JSON.parse(localStorage.includeSubfolders));
 		this.saveInSubFolder(JSON.parse(localStorage.saveInSubFolder));
 		var prefFileSettings = JSON.parse(fs.readFileSync(this.localStoragePath(), 'utf8'));
-		
+
 		for(var i = 0; i < this.imageminSettings.length; i++) {
 			this.imageminSettings[i].active(prefFileSettings[i].active);
 			this.imageminSettings[i].activePlugin(prefFileSettings[i].activePlugin);
-			
+
 			for(var j = 0; j < this.imageminSettings[i].plugins.length; j++) {
 				for(var k = 0; k < this.imageminSettings[i].plugins[j].settings.length; k ++) {
 					this.imageminSettings[i].plugins[j].settings[k].checkbox(prefFileSettings[i].plugins[j].settings[k].checkbox);
@@ -378,65 +378,65 @@
 			}
 		}
 	};
-	
+
 	iom.prototype._savePrefToCache = function(args) {
 		localStorage.includeSubfolders = this.includeSubfolders();
 		localStorage.saveInSubFolder = this.saveInSubFolder();
-		
-		try { 
-			fs.writeFileSync(this.localStoragePath(), args); 
+
+		try {
+			fs.writeFileSync(this.localStoragePath(), args);
 		} catch(err) {}
 	};
-	
+
 	iom.prototype.openLink = function() {
 		shell.openExternal('https://www.npmjs.com/browse/keyword/imageminplugin');
 	};
-	
-    iom.prototype._attachAppListeners = function() {
+
+	iom.prototype._attachAppListeners = function() {
 		var self = this;
-		
-        // Helpers
-        ipcRenderer.on('console-on-renderer', function(event, args) {
-            console.log(args);
-        });
-		
+
+		// Helpers
+		ipcRenderer.on('console-on-renderer', function(event, args) {
+			console.log(args);
+		});
+
 		ipcRenderer.on('loaded-files', function(event, files) {
-        	self._receiveLoadedFiles(files);
-        });
-		
+			self._receiveLoadedFiles(files);
+		});
+
 		ipcRenderer.on('load-file', function(event, path) {
 			self._receiveLoadedFiles([path]);
-        });
+		});
 
-        ipcRenderer.on('toggle-checkForUpdatesMenuItem', function(event, state) {
-            self.mainMenu.checkForUpdatesMenuItem.enabled = state;
-        });
+		ipcRenderer.on('toggle-checkForUpdatesMenuItem', function(event, state) {
+			self.mainMenu.checkForUpdatesMenuItem.enabled = state;
+		});
 
-        ipcRenderer.on('send-localStoragePath', function(event, localStoragePath) {
-            self.localStoragePath(localStoragePath + '/Local Storage/iomPreferences.json');
-			
+		ipcRenderer.on('send-localStoragePath', function(event, localStoragePath) {
+			self.localStoragePath(localStoragePath + '/Local Storage/iomPreferences.json');
+
 			// Read preference file if it exists
 			try {
 				fs.statSync(self.localStoragePath()).isFile();
 				self._loadPrefFileSettings();
 			} catch(err) {}
-			
+
 			// Set preference file computed only after obtaining local storage path
 			self.prefFileComputed = ko.computed(function() {
 				var plugins = ko.toJSON(this.imageminSettings);
 				var includeSubfolders = self.includeSubfolders();
 				var saveInSubFolder = self.saveInSubFolder();
 
-				if(self.localStoragePath() == '') { 
-					return true; 
+				if(self.localStoragePath() == '') {
+					return true;
 				} else {
 					self._savePrefToCache(plugins);
 					return true;
 				}
 			}, self);
 		});
-    };
-    
-    ko.applyBindings(new iom);
+	};
+
+	ko.applyBindings(new iom);
 
 })(window);

@@ -15,7 +15,7 @@
 	z-index: 5001;
 	opacity: 0;
 	pointer-events: none;
-	
+
 	transition: all 0.5s ease;
 }
 
@@ -32,31 +32,31 @@
 	left: 50%;
 	top: 50%;
 	transform: translate(-50%, -50%);
-	
+
 	animation-name: circlePulse;
-    animation-duration: 1s;
+	animation-duration: 1s;
 	animation-iteration-count: infinite;
 	animation-timing-function: ease-in-out;
 }
 
 @keyframes circlePulse {
-    0% {
-		width: 90px; 
+	0% {
+		width: 90px;
 		height: 90px;
 		background: #30a4f6;
 	}
-    30% {
-		width: 75px; 
+	30% {
+		width: 75px;
 		height: 75px;
 		background: #2174ae;
 	}
 	40% {
-		width: 75px; 
+		width: 75px;
 		height: 75px;
 		background: #2174ae;
 	}
 	60% {
-		width: 90px; 
+		width: 90px;
 		height: 90px;
 		background: #30a4f6;
 	}
@@ -74,16 +74,16 @@
 	top: 50%;
 	transform: translate(-50%, -50%);
 	opacity: 0;
-	
+
 	animation-name: ringPulse;
-    animation-duration: 1s;
+	animation-duration: 1s;
 	animation-iteration-count: infinite;
 	animation-timing-function: ease-in-out;
 }
 
 @keyframes ringPulse {
-    40% {
-		width: 70px; 
+	40% {
+		width: 70px;
 		height: 70px;
 		border-radius: 35px;
 		opacity: 0;
@@ -92,8 +92,8 @@
 		opacity: 1;
 		border-width: 1px;
 	}
-    100% {
-		width: 250px; 
+	100% {
+		width: 250px;
 		height: 250px;
 		border-radius: 125px;
 		border-width: 1px;
@@ -116,19 +116,19 @@
 .plusAnim i {
 	color: #fefeff;
 	font-size: 30px;
-	
+
 	animation-name: plusPulse;
-    animation-duration: 1s;
+	animation-duration: 1s;
 	animation-iteration-count: infinite;
 	animation-timing-function: ease-in-out;
 }
 
 @keyframes plusPulse {
-    0% {
+	0% {
 		font-size: 30px;
 		color: #fefeff;
 	}
-    30% {
+	30% {
 		font-size: 25px;
 		color: #bcd0db;
 	}

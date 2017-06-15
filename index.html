@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
-    <title>iom</title>
-    <link rel="stylesheet" href="styles/iom.css">
-    <link rel="stylesheet" href="styles/iom-drop.css">
-    <link rel="stylesheet" href="styles/iom-settings.css">
-    <link rel="stylesheet" href="styles/iom-icons.css">
-    <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css"/>
+	<meta charset="UTF-8">
+	<title>iom</title>
+	<link rel="stylesheet" href="styles/iom.css">
+	<link rel="stylesheet" href="styles/iom-drop.css">
+	<link rel="stylesheet" href="styles/iom-settings.css">
+	<link rel="stylesheet" href="styles/iom-icons.css">
+	<link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css"/>
   </head>
-    <body>
+	<body>
 		<!-- Title Bar -->
 		<div>
 			<div class="titleBar">
@@ -22,16 +22,16 @@
 
 		<!-- Settings Overlay -->
 		<div>
-			<div class="settingsOverlay">			
+			<div class="settingsOverlay">
 				<div class="settingsModule">
 					<div class="infoIcon">
 						<i class="fa fa-info-circle" aria-hidden="true" title="NPM Plugins info" data-bind="click: openLink"></i>
 					</div>
-				
+
 					<div class="settingsTitle">
 						<h1>Settings</h1>
 					</div>
-					
+
 					<!-- Tabs -->
 					<div class="tabs" data-bind="foreach: imageminSettings">
 						<a class="tab" data-bind="text: fileType, css: { activeTab: active }, click: function() { $root.selectTab(fileType) }"></a>
@@ -43,7 +43,7 @@
 							<span class="subTab" data-bind="text: name, css: { activeSubTab: imageminSetting.activePlugin() == name }, click: function() { $root.setSettings(imageminSetting.fileType, name) }"></span>
 						</div>
 					</div>
-					
+
 					<!-- Plugin Settings -->
 					<div class="pluginSettingsContainer" data-bind="foreach: { data: imageminSettings, as: 'imageminSetting' }">
 						<div data-bind="foreach: plugins, visible: active">
@@ -55,7 +55,7 @@
 							</div>
 						</div>
 					</div>
-					
+
 					<!-- Extra Settings -->
 					<div class="saveInSubFolder">
 						<input type="checkbox" data-bind="checked: saveInSubFolder"><span>Save exports in subfolder (keep original)</span>
@@ -144,6 +144,6 @@
 				</div>
 			</div>
 		</div>
-    </body>
-    <script src="app/iom.js"></script>
+	</body>
+	<script src="app/iom.js"></script>
 </html>

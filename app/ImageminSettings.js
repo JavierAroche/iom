@@ -6,10 +6,10 @@
  */
 
 ;(function() {
-    
-    'use strict';
 
-    const imageminAdvpng = require('imagemin-advpng');
+	'use strict';
+
+	const imageminAdvpng = require('imagemin-advpng');
 	const imageminGiflossy = require('imagemin-giflossy');
 	const imageminGifsicle = require('imagemin-gifsicle');
 	const imageminGuetzli = require('imagemin-guetzli');
@@ -23,16 +23,16 @@
 	const imageminPngquant = require('imagemin-pngquant');
 	const imageminSvgo = require('imagemin-svgo');
 	const imageminZopfli = require('imagemin-zopfli');
-	
+
 	/*
-    * Imagemin Settings constructor.
-    * @constructor
-    * @param {Context<Object>} The context where the Menu is attached to.
-    *                          In this case to the KO ViewModel.
-    */
+	* Imagemin Settings constructor.
+	* @constructor
+	* @param {Context<Object>} The context where the Menu is attached to.
+	*                          In this case to the KO ViewModel.
+	*/
 	function ImageminSettings(context) {
 		var self = context;
-		
+
 		this.plugins = [
 			{
 				"fileType" : "JPG",
@@ -1081,6 +1081,6 @@
 			}
 		];
 	}
-    
-    module.exports = ImageminSettings;
+
+	module.exports = ImageminSettings;
 })();

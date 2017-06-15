@@ -17,7 +17,6 @@
 	pointer-events: none;
 	overflow-y: overlay;
 	overflow-x: hidden;
-	
 	transition: all 0.5s ease;
 }
 
@@ -47,22 +46,22 @@
 }
 
 .tabs {
-    overflow: hidden;
-    background-color: rgba(0,0,0,0.15);
+	overflow: hidden;
+	background-color: rgba(0,0,0,0.15);
 	border-radius: 5px 5px 5px 5px;
 }
 
 .tab {
 	width: 25%;
 	padding: 10px 0 10px 0;
-    float: left;
-    display: block;
-    text-align: center;
-    text-decoration: none;
-    transition: 0.3s;
-    font-size: 17px;
-    cursor: pointer;
-    color: #94b4c7;
+	float: left;
+	display: block;
+	text-align: center;
+	text-decoration: none;
+	transition: 0.3s;
+	font-size: 17px;
+	cursor: pointer;
+	color: #94b4c7;
 }
 
 .tab:hover {
@@ -71,18 +70,18 @@
 
 .activeTab {
 	color: #31aaff;
-    background-color: rgba(0,0,0,0.2);
+	background-color: rgba(0,0,0,0.2);
 }
 
 .subTabs {
 	margin-top: 10px;
-    overflow: hidden;
-    text-align: center;
+	overflow: hidden;
+	text-align: center;
 }
 
 .subTab {
 	color: #94b4c7;
-    display: inline-block;
+	display: inline-block;
 	font-size: 11px;
 	border-radius: 5px 5px 0 0;
 	padding: 10px 10px 10px 10px;
@@ -113,7 +112,7 @@
 }
 
 .pluginSetting {
-    width: 198px;
+	width: 198px;
 	padding: 3px 10px 3px 10px;
 	margin: 0 2px 2px 0;
 	background: rgba(0,0,0,.08);
