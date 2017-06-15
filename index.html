@@ -24,6 +24,10 @@
 		<div>
 			<div class="settingsOverlay">
 				<div class="settingsModule">
+					<div class="lockedSettingsBar" data-bind="visible: enabledSettingsOverlay && lockedSettings">
+						<span class="activePluginText">Settings are locked!</span>
+					</div>
+
 					<div class="infoIcon">
 						<i class="fa fa-info-circle" aria-hidden="true" title="NPM Plugins info" data-bind="click: openLink"></i>
 					</div>
@@ -38,14 +42,14 @@
 					</div>
 
 					<!-- SubTabs -->
-					<div data-bind="foreach: { data: imageminSettings, as: 'imageminSetting' }">
+					<div class="subTabsParent" data-bind="foreach: { data: imageminSettings, as: 'imageminSetting' }, css: { locked : $root.lockedSettings }">
 						<div class="subTabs" data-bind="foreach: { data: imageminSetting.plugins, as: 'plugin' }, visible: imageminSetting.active">
 							<span class="subTab" data-bind="text: name, css: { activeSubTab: imageminSetting.activePlugin() == name }, click: function() { $root.setSettings(imageminSetting.fileType, name) }"></span>
 						</div>
 					</div>
 
 					<!-- Plugin Settings -->
-					<div class="pluginSettingsContainer" data-bind="foreach: { data: imageminSettings, as: 'imageminSetting' }">
+					<div class="pluginSettingsContainer" data-bind="foreach: { data: imageminSettings, as: 'imageminSetting' }, css: { locked : $root.lockedSettings }">
 						<div data-bind="foreach: plugins, visible: active">
 							<div class="pluginSettings" data-bind="foreach: settings, visible: imageminSetting.activePlugin() == name">
 								<div class="pluginSetting">

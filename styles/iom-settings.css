@@ -73,10 +73,20 @@
 	background-color: rgba(0,0,0,0.2);
 }
 
+.subTabsParent {
+	transition: all 0.2s ease;
+}
+
 .subTabs {
 	margin-top: 10px;
 	overflow: hidden;
 	text-align: center;
+}
+
+.locked {
+	pointer-events: none;
+	opacity: 0.5;
+	transition: all 0.2s ease;
 }
 
 .subTab {
@@ -157,4 +167,22 @@
 .saveInSubFolder, .includeSubfolders {
 	font-size: 11px;
 	margin-top: 5px;
+}
+
+.lockedSettingsBar {
+	position: absolute;
+	top: 0px;
+	left:0px;
+	right:0px;
+	height: 20px;
+	background-color: rgba(0, 0, 0, 0.2);
+	font-size: 12px;
+	z-index: 5000;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.lockedSettingsBar span {
+	color: #ed2d2d;
 }

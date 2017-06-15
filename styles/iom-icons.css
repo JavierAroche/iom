@@ -78,6 +78,7 @@
 
 .addIcon i {
 	color: #268cd4;
+	transition: all 0.2s ease;
 }
 
 .addIcon i:hover {
@@ -96,6 +97,7 @@
 
 .clearIcon i {
 	color: #d42626;
+	transition: all 0.2s ease;
 }
 
 .clearIcon i:hover {
@@ -115,6 +117,7 @@
 .againIcon i {
 	color: #94b4c7;
 	font-size: 14px;
+	transition: all 0.2s ease;
 }
 
 .againIcon i:hover {

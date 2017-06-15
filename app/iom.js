@@ -26,6 +26,7 @@
 		this.mainMenu = new MainMenu(this);
 		this.animOverlay = document.getElementsByClassName('animOverlay')[0];
 		this.settingsOverlay = document.getElementsByClassName('settingsOverlay')[0];
+		this.lockedSettings = ko.observable(true);
 		this.enabledSettingsOverlay = ko.observable(false);
 		this.imageminSettings = new ImageminSettings(this).plugins;
 		this.includeSubfolders = ko.observable(false);
@@ -62,7 +63,8 @@
 		this.acceptableFileTypes = ['png', 'PNG', 'jpg', 'JPG', 'jpeg', 'JPEG', 'svg', 'SVG', 'gif', 'GIF'];
 
 		// Settings menu item
-		this.mainMenu.settingsMenuItem.checked = false;
+		this.mainMenu.settingsMenuItem.checked = this.enabledSettingsOverlay();
+		this.mainMenu.lockSettingsMenuItem.checked = this.lockedSettings();
 
 		this._init();
 	};
@@ -270,7 +272,6 @@
 	};
 
 	iom.prototype.setSettings = function(fileType, plugin) {
-		var self = this;
 		var index = 0;
 
 		switch(fileType) {
