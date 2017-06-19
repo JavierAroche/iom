@@ -60,18 +60,35 @@
 			return savedTotal;
 		}, this);
 		this.acceptableFileTypes = ['png', 'PNG', 'jpg', 'JPG', 'jpeg', 'JPEG', 'svg', 'SVG', 'gif', 'GIF'];
+		this.newPresetName = ko.observable();
 		this.presets = ko.observableArray([
 			{
-				name : 'No preset',
-				settings : ''
+				name : 'Select...',
+				settings : {
+					imagemin : ko.toJSON(this.imageminSettings),
+					includeSubfolders : this.includeSubfolders(),
+					saveInSubFolder : this.saveInSubFolder()
+				}
 			}
-		]);
-		this.selectedPreset = ko.observable('');
+		], this);
+		this.selectedPresetValue = ko.observable('Select...');
+		this.selectedPreset = ko.computed(function() {
+			var selectedPresetValue = this.selectedPresetValue();
+			var selectedPreset = this.presets()[0]
+			this.presets().forEach(function(preset) {
+				if(preset.name == selectedPresetValue) {
+					selectedPreset = preset;
+				}
+			})
+			return selectedPreset;
+		}, this);
 
 		// Settings menu item
 		this.mainMenu.settingsMenuItem.checked = this.enabledSettingsOverlay();
 		this.mainMenu.lockSettingsMenuItem.checked = this.lockedSettings();
 		this._init();
+		//TODO: delete this
+		this.setSettingsOverlay();
 	};
 
 	iom.prototype._init = function() {
@@ -86,7 +103,6 @@
 		// Drag over event for the drop area
 		document.addEventListener('dragover', function(event) {
 			event.preventDefault();
-
 			if(!self.enabledSettingsOverlay()) {
 				self.animOverlay.classList.add('dragged-over');
 			}
@@ -97,7 +113,6 @@
 		// Drop event for the drop area
 		document.addEventListener('drop', function(event) {
 			event.preventDefault();
-
 			if(!self.enabledSettingsOverlay()) {
 				var files = event.dataTransfer.files;
 				self.addFilesToList(files, true);
@@ -110,9 +125,7 @@
 		// Drag leave the drop area
 		document.addEventListener('dragleave',function(event) {
 			event.preventDefault();
-
 			self.animOverlay.classList.remove('dragged-over');
-
 			return false;
 		}, false);
 	};
@@ -159,13 +172,11 @@
 
 	iom.prototype._getFolderContents = function(folder) {
 		var self = this;
-
 		var filesInFolder = fs.readdirSync(folder),
 			files = [];
 
 		filesInFolder.forEach(function(file) {
 			var filePath = path.resolve(folder, file);
-
 			files.unshift({
 				path : filePath,
 				size : self._getFileSize(filePath)
@@ -214,7 +225,6 @@
 	iom.prototype.loadFiles = function() {
 		var self = this;
 		if(this.enabledSettingsOverlay()) { return; }
-
 		ipcRenderer.send('load-files');
 	};
 
@@ -276,7 +286,6 @@
 
 	iom.prototype.setSettings = function(fileType, plugin) {
 		var index = 0;
-
 		switch(fileType) {
 			case 'JPG': index = 0; break;
 			case 'PNG': index = 1; break;
@@ -364,11 +373,13 @@
 	};
 
 	iom.prototype._loadPrefFileSettings = function() {
-		var self = this;
 		this.includeSubfolders(JSON.parse(localStorage.includeSubfolders));
 		this.saveInSubFolder(JSON.parse(localStorage.saveInSubFolder));
 		var prefFileSettings = JSON.parse(fs.readFileSync(this.localStoragePath(), 'utf8'));
+		this._loadImageminPrefs(prefFileSettings);
+	};
 
+	iom.prototype._loadImageminPrefs = function(prefFileSettings) {
 		for(var i = 0; i < this.imageminSettings.length; i++) {
 			this.imageminSettings[i].active(prefFileSettings[i].active);
 			this.imageminSettings[i].activePlugin(prefFileSettings[i].activePlugin);
@@ -390,6 +401,27 @@
 		try {
 			fs.writeFileSync(this.localStoragePath(), args);
 		} catch(err) {}
+	};
+
+	iom.prototype.addPreset = function() {
+		var self = this;
+		this.presets.push({
+			name: self.newPresetName(),
+			settings: {
+				imagemin : ko.toJSON(self.imageminSettings),
+				includeSubfolders : this.includeSubfolders(),
+				saveInSubFolder : this.saveInSubFolder()
+			}
+		});
+		this.newPresetName('');
+	};
+
+	iom.prototype.loadPreset = function() {
+		var selectedPreset = this.selectedPreset();
+		this.includeSubfolders(selectedPreset.includeSubfolders);
+		this.saveInSubFolder(selectedPreset.saveInSubFolder);
+		var prefFileSettings = JSON.parse(selectedPreset.settings.imagemin);
+		this._loadImageminPrefs(prefFileSettings);
 	};
 
 	iom.prototype.openLink = function() {
@@ -431,12 +463,11 @@
 				var includeSubfolders = self.includeSubfolders();
 				var saveInSubFolder = self.saveInSubFolder();
 
-				if(self.localStoragePath() == '') {
-					return true;
-				} else {
+				if(self.localStoragePath() !== '') {
 					self._savePrefToCache(plugins);
-					return true;
 				}
+
+				return true;
 			}, self);
 		});
 	};

@@ -296,7 +296,7 @@ ul {
   width: 60px;
   height: 11px;
   border: 0px solid white;
-  border-radius: 2px;
+  border-radius: 3px;
   outline: none;
   font-size: 10px;
   text-align: center;
@@ -323,8 +323,22 @@ ul {
   display: flex;
   flex-direction: column; }
 
+.presetInput {
+  display: flex;
+  flex-direction: row; }
+
+.presetName {
+  width: 100px;
+  height: 15px;
+  border: none;
+  border-radius: 3px;
+  margin-right: 10px;
+  outline: none;
+  font-size: 11px;
+  text-align: center; }
+
 .dropdownPresets {
-  width: 170px;
+  width: 100px;
   outline: none;
   font-size: 10px;
   border: none;
@@ -336,10 +350,10 @@ ul {
   margin-top: 7px; }
 
 .presetButtons input {
-  width: 80px;
+  width: 102px;
   height: 25px;
   font-size: 11px;
-  margin: 0 5px 0 0;
+  margin: 0 9px 0 0;
   border: none;
   border-radius: 5px;
   outline: none;

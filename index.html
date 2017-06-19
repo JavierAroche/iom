@@ -65,10 +65,13 @@
 						<input type="checkbox" data-bind="checked: includeSubfolders"><span>Include subfolders when loading a folder</span>
 					</div>
 					<div class="presets">
-						<select class="dropdownPresets" data-bind="options: presets, optionsValue : 'name', value: selectedPreset"></select>
+						<div class="presetInput">
+							<input class="presetName" type="text" placeholder="New Preset" data-bind="value: newPresetName">
+							<select class="dropdownPresets" data-bind="options: presets, optionsValue : 'name', value: selectedPresetValue"></select>
+						</div>
 						<div class="presetButtons">
-							<input type="button" value="Load Preset">
-							<input type="button" value="Save Preset">
+							<input type="button" value="Save Preset" data-bind="click: addPreset">
+							<input type="button" value="Load Preset" data-bind="click: loadPreset">
 						</div>
 					</div>
 				</div>
