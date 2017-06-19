@@ -1,186 +1,612 @@
 /*
  *
- *  iom - Image Optimization Manager
+ *  iom
  *  Author: Javier Aroche
  *
  */
-
+/*
+ *
+ *  Variables
+ *  Author: Javier Aroche
+ *
+ */
+/*
+ *
+ *  Mixins
+ *  Author: Javier Aroche
+ *
+ */
+/*
+ *
+ *  Main
+ *  Author: Javier Aroche
+ *
+ */
 body {
-	width: 100%;
-	height: 100%;
-	background-color: #292c33;
-	font-family: "Myriad Set Pro";
-	letter-spacing: .2px;
-	color: #94b4c7;
-	overflow: hidden;
-	-webkit-user-select: none;
-	cursor: default;
-}
-
+  width: 100%;
+  height: 100%;
+  background-color: #292c33;
+  font-family: "Myriad Set Pro";
+  letter-spacing: .2px;
+  color: #94b4c7;
+  overflow: hidden;
+  -webkit-user-select: none;
+  cursor: default; }
 
 .titleBar {
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	right: 0px;
-	height: 35px;
-	text-align: center;
-	outline: #444c5c solid .5px;
-	background-color: #292c33;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	z-index: 5002;
-	-webkit-app-region: drag;
-}
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  height: 35px;
+  text-align: center;
+  outline: #444c5c solid .5px;
+  background-color: #292c33;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 5002;
+  -webkit-app-region: drag; }
 
 .titleBar span {
-	color: #94b4c7;
-	font-size: 12px;
-	letter-spacing: 1px;
-}
+  color: #94b4c7;
+  font-size: 12px;
+  letter-spacing: 1px; }
 
 .propertiesBar {
-	position: absolute;
-	top: 35px;
-	left:0px;
-	right:0px;
-	height: 20px;
-	background-color: rgba(0, 0, 0, 0.2);
-	font-size: 12px;
-	z-index: 5000;
-}
+  position: absolute;
+  top: 35px;
+  left: 0px;
+  right: 0px;
+  height: 20px;
+  background-color: rgba(0, 0, 0, 0.2);
+  font-size: 12px;
+  z-index: 5000; }
 
 .fileNameTitleDiv {
-	margin-top: 5px;
-	display: inline-block;
-}
+  margin-top: 5px;
+  display: inline-block; }
 
 .fileNameTitle {
-	margin-left: 8px;
-}
+  margin-left: 8px; }
 
 .fileSizePropertiesDiv {
-	width: 180px;
-	margin-top: 5px;
-	margin-right: 12px;
-	float: right;
-	display: inline-block;
-}
+  width: 180px;
+  margin-top: 5px;
+  margin-right: 12px;
+  float: right;
+  display: inline-block; }
 
 .fileSizePropertiesDiv span {
-	margin-right: 10px;
-	float: left;
-	width: 40px;
-}
+  margin-right: 10px;
+  float: left;
+  width: 40px; }
 
 .dropArea {
-	position: absolute;
-	top: 55px;
-	bottom: 55px;
-	left: 0px;
-	right: 0px;
-	overflow-y: overlay;
-	overflow-x: hidden;
-	background-color: #292c33;
-}
+  position: absolute;
+  top: 55px;
+  bottom: 55px;
+  left: 0px;
+  right: 0px;
+  overflow-y: overlay;
+  overflow-x: hidden;
+  background-color: #292c33; }
 
 ul {
-	list-style-type: none;
-	list-style-position: inside;
-	margin: 0 0;
-	padding: 0 0;
-	font-size: 12px;
-}
+  list-style-type: none;
+  list-style-position: inside;
+  margin: 0 0;
+  padding: 0 0;
+  font-size: 12px; }
 
 .files li {
-	width: 100%;
-	display: inline-block;
-	height: 25px;
-}
+  width: 100%;
+  display: inline-block;
+  height: 25px; }
 
 .folderIcons {
-	float: left;
-}
+  float: left; }
 
 .statusIcons {
-	float: right;
-}
+  float: right; }
 
 .files li:nth-child(odd) {
-	background-color: rgba(0, 0, 0, 0.1);
-}
+  background-color: rgba(0, 0, 0, 0.1); }
 
 .fileName {
-	position: absolute;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	max-width: 50%;
-}
+  position: absolute;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 50%; }
 
 .footer {
-	position: absolute;
-	left: 0px;
-	right: 0px;
-	width: 100%;
-	bottom: 0px;
-	height: 35px;
-	outline: #444c5c solid .5px;
-	background-color: #292c33;
-	z-index: 5002;
-	-webkit-app-region: drag;
-}
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  width: 100%;
+  bottom: 0px;
+  height: 35px;
+  outline: #444c5c solid .5px;
+  background-color: #292c33;
+  z-index: 5002;
+  -webkit-app-region: drag; }
 
 .footer span {
-	font-size: 12px;
-}
+  font-size: 12px; }
 
 .footerPlugins {
-	position: absolute;
-	left: 0px;
-	right: 0px;
-	width: 100%;
-	bottom: 35px;
-	height: 20px;
-	color: #6f8292;
-	text-align: center;
-	background-color: rgba(0, 0, 0, 0.2);
-	pointer-events: none;
-}
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  width: 100%;
+  bottom: 35px;
+  height: 20px;
+  color: #6f8292;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.2);
+  pointer-events: none; }
 
 .footerPlugins.activeSetings {
-	background-color: rgba(0, 0, 0, 0.3);
-}
+  background-color: rgba(0, 0, 0, 0.3); }
 
 .footerPluginsTitle {
-	margin-left: 8px;
-}
+  margin-left: 8px; }
 
 .activePluginText {
-	margin: 0 7px 0 7px;
-}
+  margin: 0 7px 0 7px; }
 
 .totalSavings {
-	position: absolute;
-	top: 30%;
-	color: #6f8292;
-	margin-left: 10px;
-	pointer-events: none;
-}
+  position: absolute;
+  top: 30%;
+  color: #6f8292;
+  margin-left: 10px;
+  pointer-events: none; }
 
 ::-webkit-scrollbar {
-	width: 12px;
-}
+  width: 12px; }
 
 ::-webkit-scrollbar-track {
-	background-color: rgba(0, 0, 0, 0.3);
-}
+  background-color: rgba(0, 0, 0, 0.3); }
 
 ::-webkit-scrollbar-thumb {
-	background-color: #6f8292;
-	border-radius: 9px;
-	border: 2px solid transparent;
-	background-clip: content-box;
-}
+  background-color: #6f8292;
+  border-radius: 9px;
+  border: 2px solid transparent;
+  background-clip: content-box; }
+
+/*
+ *
+ *  Settings
+ *  Author: Javier Aroche
+ *
+ */
+.settingsOverlay {
+  position: absolute;
+  top: 35px;
+  bottom: 55px;
+  left: 0px;
+  right: 0px;
+  background-color: #212329;
+  z-index: 5001;
+  opacity: 0;
+  pointer-events: none;
+  overflow-y: overlay;
+  overflow-x: hidden;
+  transition: all 0.5s ease; }
+
+.settingsModule {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  padding: 30px 30px;
+  border-radius: 3px; }
+
+.settingsTitle {
+  font-size: 12px; }
+
+.addOverlay {
+  opacity: 1;
+  pointer-events: auto; }
+
+.settingsOverlay h1 {
+  font-size: 14px;
+  font-weight: 300;
+  text-align: center;
+  color: #94b4c7; }
+
+.tabs {
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.15);
+  border-radius: 5px 5px 5px 5px; }
+
+.tab {
+  width: 25%;
+  padding: 10px 0 10px 0;
+  float: left;
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  transition: 0.3s;
+  font-size: 17px;
+  cursor: pointer;
+  color: #94b4c7; }
+
+.tab:hover {
+  color: #5bbbff; }
+
+.activeTab {
+  color: #31aaff;
+  background-color: rgba(0, 0, 0, 0.2); }
+
+.subTabsParent {
+  transition: all 0.2s ease; }
+
+.subTabs {
+  margin-top: 10px;
+  overflow: hidden;
+  text-align: center; }
+
+.locked {
+  pointer-events: none;
+  opacity: 0.5;
+  transition: all 0.2s ease; }
+
+.subTab {
+  color: #94b4c7;
+  display: inline-block;
+  font-size: 11px;
+  border-radius: 5px 5px 0 0;
+  padding: 10px 10px 10px 10px;
+  cursor: pointer;
+  border: none; }
+
+.subTab:hover {
+  color: #5bbbff; }
+
+.activeSubTab {
+  background-color: rgba(0, 0, 0, 0.2);
+  color: #31aaff; }
+
+.pluginSettingsContainer {
+  border-radius: 5px 5px 5px 5px;
+  margin-bottom: 15px;
+  overflow-y: overlay;
+  overflow-x: hidden; }
+
+.pluginSettings {
+  display: flex;
+  flex-direction: row;
+  flex-flow: row wrap; }
+
+.pluginSetting {
+  width: 198px;
+  padding: 3px 10px 3px 10px;
+  margin: 0 2px 2px 0;
+  background: rgba(0, 0, 0, 0.08); }
+
+.pluginSettings input[type='checkbox'] {
+  position: relative;
+  margin: 0 2px 0 0;
+  outline: none; }
+
+.pluginSettings input[type='text'] {
+  width: 60px;
+  height: 11px;
+  border: 0px solid white;
+  border-radius: 2px;
+  outline: none;
+  font-size: 10px;
+  text-align: center;
+  margin: 2px 0 0 3px;
+  float: right;
+  background-color: rgba(255, 255, 255, 0.85);
+  cursor: text; }
+
+.pluginSettings span {
+  font-size: 11px;
+  cursor: default; }
+
+.dropdownSetting {
+  float: right;
+  width: 70px;
+  background: white;
+  outline: none;
+  font-size: 10px;
+  direction: rtl;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.85); }
+
+.presets {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column; }
+
+.presets span {
+  font-size: 11px;
+  margin-bottom: 5px; }
+
+.presetsUI {
+  display: flex;
+  flex-direction: row; }
+
+.presetsUI input {
+  width: 80px;
+  font-size: 11px;
+  margin: 0 0 0 7px;
+  background: rgba(0, 0, 0, 0.2);
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  color: #94b4c7; }
+
+.dropdownPresets {
+  width: 100px;
+  background: white;
+  outline: none;
+  font-size: 10px;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.85); }
+
+.saveInSubFolder, .includeSubfolders {
+  font-size: 11px;
+  margin-top: 5px; }
+
+.lockedSettingsBar {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  height: 20px;
+  background-color: rgba(0, 0, 0, 0.2);
+  font-size: 12px;
+  z-index: 5000;
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+
+.lockedSettingsBar span {
+  color: #ed2d2d; }
+
+/*
+ *
+ *  Icons
+ *  Author: Javier Aroche
+ *
+ */
+.settingsIcon {
+  position: absolute;
+  top: 0%;
+  width: 100%;
+  text-align: right; }
+
+.settingsIcon i {
+  margin-top: 10px;
+  margin-right: 15px;
+  color: #94b4c7; }
+
+.settingsIcon i:hover {
+  color: #31aaff; }
+
+.settingsIcon i:active {
+  color: #1a5c8a; }
+
+.settingsIcon i.active {
+  color: #268cd4; }
+
+.settingsIcon i.active:hover {
+  color: #31aaff; }
+
+.settingsIcon i.active:active {
+  color: #1a5c8a; }
+
+.statusIcon {
+  width: 14px; }
+
+.fail {
+  color: #ed2d2d;
+  margin-right: 2px; }
+
+.success {
+  color: #8bed2d;
+  margin-right: 3px; }
+
+.processing {
+  color: #30a4f6;
+  margin-right: 3px; }
+
+.folderIcon {
+  color: #b0c3d2;
+  margin: 0px 5px 0px 8px; }
+
+.folderIcon:hover {
+  color: #b1d6ed; }
+
+.folderIcon:active {
+  color: #6d8594; }
+
+.addIcon {
+  float: right;
+  margin-right: 10px;
+  margin-top: 8px; }
+
+.addIcon i {
+  color: #268cd4;
+  transition: all 0.2s ease; }
+
+.addIcon i:hover {
+  color: #31aaff; }
+
+.addIcon i:active {
+  color: #1a5c8a; }
+
+.clearIcon {
+  float: right;
+  margin-right: 5px;
+  margin-top: 8px; }
+
+.clearIcon i {
+  color: #d42626;
+  transition: all 0.2s ease; }
+
+.clearIcon i:hover {
+  color: #ff3131; }
+
+.clearIcon i:active {
+  color: #8a1a1a; }
+
+.againIcon {
+  float: right;
+  margin-right: 10px;
+  margin-top: 8px; }
+
+.againIcon i {
+  color: #94b4c7;
+  font-size: 14px;
+  transition: all 0.2s ease; }
+
+.againIcon i:hover {
+  color: #b1d6ed; }
+
+.againIcon i:active {
+  color: #6d8594; }
+
+.infoIcon {
+  position: absolute;
+  right: 0px;
+  text-align: right;
+  margin: 8px 35px 0 0; }
+
+.infoIcon i {
+  color: #94b4c7;
+  font-size: 14px; }
+
+.infoIcon i:hover {
+  color: #31aaff; }
+
+.infoIcon i:active {
+  color: #1a5c8a; }
+
+.disabled {
+  color: #6f8292 !important; }
+
+/*
+ *
+ *  Drop
+ *  Author: Javier Aroche
+ *
+ */
+.animOverlay {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 5001;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.5s ease; }
+
+.dragged-over {
+  opacity: 1; }
+
+.circleAnim {
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  background: #30a4f6;
+  border-radius: 50px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  animation-name: circlePulse;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out; }
+
+@keyframes circlePulse {
+  0% {
+    width: 90px;
+    height: 90px;
+    background: #30a4f6; }
+  30% {
+    width: 75px;
+    height: 75px;
+    background: #2174ae; }
+  40% {
+    width: 75px;
+    height: 75px;
+    background: #2174ae; }
+  60% {
+    width: 90px;
+    height: 90px;
+    background: #30a4f6; } }
+
+.outerRingAnim {
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  background: none;
+  border-radius: 35px;
+  border-style: solid;
+  border-width: 2px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  animation-name: ringPulse;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out; }
+
+@keyframes ringPulse {
+  40% {
+    width: 70px;
+    height: 70px;
+    border-radius: 35px;
+    opacity: 0; }
+  50% {
+    opacity: 1;
+    border-width: 1px; }
+  100% {
+    width: 250px;
+    height: 250px;
+    border-radius: 125px;
+    border-width: 1px;
+    opacity: 0; } }
+
+.plusAnim {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+
+.plusAnim i {
+  color: #fefeff;
+  font-size: 30px;
+  animation-name: plusPulse;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out; }
+
+@keyframes plusPulse {
+  0% {
+    font-size: 30px;
+    color: #fefeff; }
+  30% {
+    font-size: 25px;
+    color: #bcd0db; }
+  40% {
+    font-size: 25px;
+    color: #bcd0db; }
+  60% {
+    font-size: 30px;
+    color: #fefeff; } }

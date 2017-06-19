@@ -1,0 +1,186 @@
+/*
+ *
+ *  Main
+ *  Author: Javier Aroche
+ *
+ */
+
+body {
+	width: 100%;
+	height: 100%;
+	background-color: #292c33;
+	font-family: "Myriad Set Pro";
+	letter-spacing: .2px;
+	color: #94b4c7;
+	overflow: hidden;
+	-webkit-user-select: none;
+	cursor: default;
+}
+
+
+.titleBar {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	height: 35px;
+	text-align: center;
+	outline: #444c5c solid .5px;
+	background-color: #292c33;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	z-index: 5002;
+	-webkit-app-region: drag;
+}
+
+.titleBar span {
+	color: #94b4c7;
+	font-size: 12px;
+	letter-spacing: 1px;
+}
+
+.propertiesBar {
+	position: absolute;
+	top: 35px;
+	left:0px;
+	right:0px;
+	height: 20px;
+	background-color: rgba(0, 0, 0, 0.2);
+	font-size: 12px;
+	z-index: 5000;
+}
+
+.fileNameTitleDiv {
+	margin-top: 5px;
+	display: inline-block;
+}
+
+.fileNameTitle {
+	margin-left: 8px;
+}
+
+.fileSizePropertiesDiv {
+	width: 180px;
+	margin-top: 5px;
+	margin-right: 12px;
+	float: right;
+	display: inline-block;
+}
+
+.fileSizePropertiesDiv span {
+	margin-right: 10px;
+	float: left;
+	width: 40px;
+}
+
+.dropArea {
+	position: absolute;
+	top: 55px;
+	bottom: 55px;
+	left: 0px;
+	right: 0px;
+	overflow-y: overlay;
+	overflow-x: hidden;
+	background-color: #292c33;
+}
+
+ul {
+	list-style-type: none;
+	list-style-position: inside;
+	margin: 0 0;
+	padding: 0 0;
+	font-size: 12px;
+}
+
+.files li {
+	width: 100%;
+	display: inline-block;
+	height: 25px;
+}
+
+.folderIcons {
+	float: left;
+}
+
+.statusIcons {
+	float: right;
+}
+
+.files li:nth-child(odd) {
+	background-color: rgba(0, 0, 0, 0.1);
+}
+
+.fileName {
+	position: absolute;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 50%;
+}
+
+.footer {
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	width: 100%;
+	bottom: 0px;
+	height: 35px;
+	outline: #444c5c solid .5px;
+	background-color: #292c33;
+	z-index: 5002;
+	-webkit-app-region: drag;
+}
+
+.footer span {
+	font-size: 12px;
+}
+
+.footerPlugins {
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	width: 100%;
+	bottom: 35px;
+	height: 20px;
+	color: #6f8292;
+	text-align: center;
+	background-color: rgba(0, 0, 0, 0.2);
+	pointer-events: none;
+}
+
+.footerPlugins.activeSetings {
+	background-color: rgba(0, 0, 0, 0.3);
+}
+
+.footerPluginsTitle {
+	margin-left: 8px;
+}
+
+.activePluginText {
+	margin: 0 7px 0 7px;
+}
+
+.totalSavings {
+	position: absolute;
+	top: 30%;
+	color: #6f8292;
+	margin-left: 10px;
+	pointer-events: none;
+}
+
+::-webkit-scrollbar {
+	width: 12px;
+}
+
+::-webkit-scrollbar-track {
+	background-color: rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: #6f8292;
+	border-radius: 9px;
+	border: 2px solid transparent;
+	background-clip: content-box;
+}

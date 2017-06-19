@@ -1,6 +1,6 @@
 /*
  *
- *  iom - Image Optimization Manager
+ *  Settings
  *  Author: Javier Aroche
  *
  */
@@ -160,6 +160,42 @@
 	outline: none;
 	font-size: 10px;
 	direction: rtl;
+	border: none;
+	background-color: rgba(255,255,255,.85);
+}
+
+.presets {
+	margin-top: 10px;
+	display: flex;
+	flex-direction: column;
+}
+
+.presets span {
+	font-size: 11px;
+	margin-bottom: 5px;
+}
+
+.presetsUI {
+	display: flex;
+	flex-direction: row;
+}
+
+.presetsUI input {
+	width: 80px;
+	font-size: 11px;
+	margin: 0 0 0 7px;
+	background: rgba(0,0,0,.2);
+	border: none;
+	border-radius: 5px;
+	outline: none;
+	color: #94b4c7;
+}
+
+.dropdownPresets {
+	width: 100px;
+	background: white;
+	outline: none;
+	font-size: 10px;
 	border: none;
 	background-color: rgba(255,255,255,.85);
 }
