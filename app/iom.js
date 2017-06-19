@@ -59,13 +59,17 @@
 			this.totalPercentageSavings(percentageSaved);
 			return savedTotal;
 		}, this);
-
 		this.acceptableFileTypes = ['png', 'PNG', 'jpg', 'JPG', 'jpeg', 'JPEG', 'svg', 'SVG', 'gif', 'GIF'];
+		this.presets = ko.observableArray([
+			{
+				name : 'No preset',
+				settings : ''
+			});
+		this.selectedPreset = ko.observable('');
 
 		// Settings menu item
 		this.mainMenu.settingsMenuItem.checked = this.enabledSettingsOverlay();
 		this.mainMenu.lockSettingsMenuItem.checked = this.lockedSettings();
-
 		this._init();
 	};
 
@@ -231,11 +235,9 @@
 		if(this.settingsOverlay.classList.value.indexOf('addOverlay') == -1) {
 			this.settingsOverlay.classList.add('addOverlay');
 			this.enabledSettingsOverlay(true);
-			this.mainMenu.settingsMenuItem.checked = true;
 		} else {
 			this.settingsOverlay.classList.remove('addOverlay');
 			this.enabledSettingsOverlay(false);
-			this.mainMenu.settingsMenuItem.checked = false;
 		}
 	};
 
