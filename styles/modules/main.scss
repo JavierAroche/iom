@@ -8,15 +8,14 @@
 body {
 	width: 100%;
 	height: 100%;
-	background-color: #292c33;
+	background-color: $main-background-color;
 	font-family: "Myriad Set Pro";
 	letter-spacing: .2px;
-	color: #94b4c7;
+	color: $light-text-color;
 	overflow: hidden;
 	-webkit-user-select: none;
 	cursor: default;
 }
-
 
 .titleBar {
 	position: absolute;
@@ -25,31 +24,31 @@ body {
 	right: 0px;
 	height: 35px;
 	text-align: center;
-	outline: #444c5c solid .5px;
-	background-color: #292c33;
+	background-color: $main-background-color;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	z-index: 5002;
 	-webkit-app-region: drag;
+	@include titlebar-footer-outline();
 }
 
 .titleBar span {
-	color: #94b4c7;
-	font-size: 12px;
+	color: $light-text-color;
+	font-size: $font-size-12;
 	letter-spacing: 1px;
 }
 
 .propertiesBar {
 	position: absolute;
 	top: 35px;
-	left:0px;
-	right:0px;
+	left: 0px;
+	right: 0px;
 	height: 20px;
-	background-color: rgba(0, 0, 0, 0.2);
-	font-size: 12px;
+	font-size: $font-size-12;
 	z-index: 5000;
+	@include background-color('black', .2);
 }
 
 .fileNameTitleDiv {
@@ -83,7 +82,7 @@ body {
 	right: 0px;
 	overflow-y: overlay;
 	overflow-x: hidden;
-	background-color: #292c33;
+	background-color: $main-background-color;
 }
 
 ul {
@@ -91,7 +90,7 @@ ul {
 	list-style-position: inside;
 	margin: 0 0;
 	padding: 0 0;
-	font-size: 12px;
+	font-size: $font-size-12;
 }
 
 .files li {
@@ -109,7 +108,7 @@ ul {
 }
 
 .files li:nth-child(odd) {
-	background-color: rgba(0, 0, 0, 0.1);
+	@include background-color('black', .1);
 }
 
 .fileName {
@@ -127,14 +126,14 @@ ul {
 	width: 100%;
 	bottom: 0px;
 	height: 35px;
-	outline: #444c5c solid .5px;
-	background-color: #292c33;
+	background-color: $main-background-color;
 	z-index: 5002;
 	-webkit-app-region: drag;
+	@include titlebar-footer-outline();
 }
 
 .footer span {
-	font-size: 12px;
+	font-size: $font-size-12;
 }
 
 .footerPlugins {
@@ -144,14 +143,14 @@ ul {
 	width: 100%;
 	bottom: 35px;
 	height: 20px;
-	color: #6f8292;
+	color: $light-footer-text-color;
 	text-align: center;
-	background-color: rgba(0, 0, 0, 0.2);
+	@include background-color('black', .2);
 	pointer-events: none;
 }
 
 .footerPlugins.activeSetings {
-	background-color: rgba(0, 0, 0, 0.3);
+	@include background-color('black', .3);
 }
 
 .footerPluginsTitle {
@@ -165,7 +164,7 @@ ul {
 .totalSavings {
 	position: absolute;
 	top: 30%;
-	color: #6f8292;
+	color: $light-footer-text-color;
 	margin-left: 10px;
 	pointer-events: none;
 }
@@ -175,11 +174,11 @@ ul {
 }
 
 ::-webkit-scrollbar-track {
-	background-color: rgba(0, 0, 0, 0.3);
+	@include background-color('black', .3);
 }
 
 ::-webkit-scrollbar-thumb {
-	background-color: #6f8292;
+	background-color: $light-footer-text-color;
 	border-radius: 9px;
 	border: 2px solid transparent;
 	background-clip: content-box;

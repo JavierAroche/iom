@@ -4,9 +4,6 @@
 	<meta charset="UTF-8">
 	<title>iom</title>
 	<link rel="stylesheet" href="styles/iom.css">
-	<link rel="stylesheet" href="styles/iom-drop.css">
-	<link rel="stylesheet" href="styles/iom-settings.css">
-	<link rel="stylesheet" href="styles/iom-icons.css">
 	<link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css"/>
   </head>
 	<body>
@@ -15,7 +12,7 @@
 			<div class="titleBar">
 				<span>iom</span>
 				<div class="settingsIcon">
-					<i class="fa fa-sliders" aria-hidden="true" title="Settings" data-bind="click: setSettingsOverlay, css: { active : enabledSettingsOverlay }"></i>
+					<i class="fa fa-sliders" aria-hidden="true" title="Settings" data-bind="click: setSettingsOverlay, css: { on : enabledSettingsOverlay }"></i>
 				</div>
 			</div>
 		</div>
@@ -54,7 +51,7 @@
 							<div class="pluginSettings" data-bind="foreach: settings, visible: imageminSetting.activePlugin() == name">
 								<div class="pluginSetting">
 									<input type="checkbox" data-bind="checked: checkbox"><span title="Lossless conversion to progressive" data-bind="text: name, attr: { title: title }"></span><input type="text" data-bind="value: textValue, visible: type() == 'checkbox-text'">
-									<select class="dropdownSetting" name="" data-bind="options: dropdownOptions, optionsText: $data, value: dropdownSelection, visible: type() == 'checkbox-dropdown'"></select>
+									<select class="dropdownSetting" data-bind="options: dropdownOptions, optionsText: $data, value: dropdownSelection, visible: type() == 'checkbox-dropdown'"></select>
 								</div>
 							</div>
 						</div>
@@ -66,6 +63,13 @@
 					</div>
 					<div class="includeSubfolders">
 						<input type="checkbox" data-bind="checked: includeSubfolders"><span>Include subfolders when loading a folder</span>
+					</div>
+					<div class="presets">
+						<select class="dropdownPresets" data-bind="options: presets, optionsValue : 'name', value: selectedPreset"></select>
+						<div class="presetButtons">
+							<input type="button" value="Load Preset">
+							<input type="button" value="Save Preset">
+						</div>
 					</div>
 				</div>
 			</div>

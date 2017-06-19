@@ -40,14 +40,14 @@ body {
   right: 0px;
   height: 35px;
   text-align: center;
-  outline: #444c5c solid .5px;
   background-color: #292c33;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   z-index: 5002;
-  -webkit-app-region: drag; }
+  -webkit-app-region: drag;
+  outline: #444c5c solid .5px; }
 
 .titleBar span {
   color: #94b4c7;
@@ -60,9 +60,9 @@ body {
   left: 0px;
   right: 0px;
   height: 20px;
-  background-color: rgba(0, 0, 0, 0.2);
   font-size: 12px;
-  z-index: 5000; }
+  z-index: 5000;
+  background-color: rgba(0, 0, 0, 0.2); }
 
 .fileNameTitleDiv {
   margin-top: 5px;
@@ -128,10 +128,10 @@ ul {
   width: 100%;
   bottom: 0px;
   height: 35px;
-  outline: #444c5c solid .5px;
   background-color: #292c33;
   z-index: 5002;
-  -webkit-app-region: drag; }
+  -webkit-app-region: drag;
+  outline: #444c5c solid .5px; }
 
 .footer span {
   font-size: 12px; }
@@ -219,8 +219,8 @@ ul {
 
 .tabs {
   overflow: hidden;
-  background-color: rgba(0, 0, 0, 0.15);
-  border-radius: 5px 5px 5px 5px; }
+  border-radius: 5px 5px 5px 5px;
+  background-color: rgba(0, 0, 0, 0.15); }
 
 .tab {
   width: 25%;
@@ -239,7 +239,7 @@ ul {
 
 .activeTab {
   color: #31aaff;
-  background-color: rgba(0, 0, 0, 0.2); }
+  background-color: rgba(0, 0, 0, 0.3); }
 
 .subTabsParent {
   transition: all 0.2s ease; }
@@ -267,8 +267,8 @@ ul {
   color: #5bbbff; }
 
 .activeSubTab {
-  background-color: rgba(0, 0, 0, 0.2);
-  color: #31aaff; }
+  color: #31aaff;
+  background-color: rgba(0, 0, 0, 0.3); }
 
 .pluginSettingsContainer {
   border-radius: 5px 5px 5px 5px;
@@ -285,7 +285,7 @@ ul {
   width: 198px;
   padding: 3px 10px 3px 10px;
   margin: 0 2px 2px 0;
-  background: rgba(0, 0, 0, 0.08); }
+  background-color: rgba(0, 0, 0, 0.08); }
 
 .pluginSettings input[type='checkbox'] {
   position: relative;
@@ -302,8 +302,8 @@ ul {
   text-align: center;
   margin: 2px 0 0 3px;
   float: right;
-  background-color: rgba(255, 255, 255, 0.85);
-  cursor: text; }
+  cursor: text;
+  background-color: rgba(255, 255, 255, 0.85); }
 
 .pluginSettings span {
   font-size: 11px;
@@ -315,7 +315,6 @@ ul {
   background: white;
   outline: none;
   font-size: 10px;
-  direction: rtl;
   border: none;
   background-color: rgba(255, 255, 255, 0.85); }
 
@@ -324,31 +323,33 @@ ul {
   display: flex;
   flex-direction: column; }
 
-.presets span {
-  font-size: 11px;
-  margin-bottom: 5px; }
-
-.presetsUI {
-  display: flex;
-  flex-direction: row; }
-
-.presetsUI input {
-  width: 80px;
-  font-size: 11px;
-  margin: 0 0 0 7px;
-  background: rgba(0, 0, 0, 0.2);
-  border: none;
-  border-radius: 5px;
-  outline: none;
-  color: #94b4c7; }
-
 .dropdownPresets {
-  width: 100px;
-  background: white;
+  width: 170px;
   outline: none;
   font-size: 10px;
   border: none;
   background-color: rgba(255, 255, 255, 0.85); }
+
+.presetButtons {
+  display: flex;
+  flex-direction: row;
+  margin-top: 7px; }
+
+.presetButtons input {
+  width: 80px;
+  height: 25px;
+  font-size: 11px;
+  margin: 0 5px 0 0;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  color: #94b4c7;
+  background-color: rgba(0, 0, 0, 0.15); }
+  .presetButtons input:hover {
+    color: #5bbbff; }
+  .presetButtons input:active {
+    color: #5bbbff;
+    background-color: rgba(0, 0, 0, 0.3); }
 
 .saveInSubFolder, .includeSubfolders {
   font-size: 11px;
@@ -360,12 +361,12 @@ ul {
   left: 0px;
   right: 0px;
   height: 20px;
-  background-color: rgba(0, 0, 0, 0.2);
   font-size: 12px;
   z-index: 5000;
   display: flex;
   align-items: center;
-  justify-content: center; }
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.2); }
 
 .lockedSettingsBar span {
   color: #ed2d2d; }
@@ -393,13 +394,13 @@ ul {
 .settingsIcon i:active {
   color: #1a5c8a; }
 
-.settingsIcon i.active {
+.settingsIcon i.on {
   color: #268cd4; }
 
-.settingsIcon i.active:hover {
+.settingsIcon i.on:hover {
   color: #31aaff; }
 
-.settingsIcon i.active:active {
+.settingsIcon i.on:active {
   color: #1a5c8a; }
 
 .statusIcon {
@@ -414,18 +415,18 @@ ul {
   margin-right: 3px; }
 
 .processing {
-  color: #30a4f6;
+  color: #31aaff;
   margin-right: 3px; }
 
 .folderIcon {
-  color: #b0c3d2;
+  color: #94b4c7;
   margin: 0px 5px 0px 8px; }
 
 .folderIcon:hover {
   color: #b1d6ed; }
 
 .folderIcon:active {
-  color: #6d8594; }
+  color: #6f8292; }
 
 .addIcon {
   float: right;
@@ -471,7 +472,7 @@ ul {
   color: #b1d6ed; }
 
 .againIcon i:active {
-  color: #6d8594; }
+  color: #6f8292; }
 
 .infoIcon {
   position: absolute;
@@ -504,11 +505,11 @@ ul {
   left: 0px;
   right: 0px;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
   z-index: 5001;
   opacity: 0;
   pointer-events: none;
-  transition: all 0.5s ease; }
+  transition: all 0.5s ease;
+  background-color: rgba(0, 0, 0, 0.6); }
 
 .dragged-over {
   opacity: 1; }

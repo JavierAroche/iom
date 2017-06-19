@@ -5,3 +5,16 @@
  *
  */
 
+@mixin background-color($color, $value) {
+	@if $color == 'white' {
+		background-color: rgba(255, 255, 255, $value);
+	} @else if $color == 'black' {
+		background-color: rgba(0, 0, 0, $value);
+	} @else {
+		background-color: $color;
+	}
+}
+
+@mixin titlebar-footer-outline() {
+	outline: #444c5c solid .5px;
+}

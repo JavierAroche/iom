@@ -15,27 +15,27 @@
 .settingsIcon i {
 	margin-top: 10px;
 	margin-right: 15px;
-	color: #94b4c7;
+	color: $settings-icon;
 }
 
 .settingsIcon i:hover {
-	color: #31aaff;
+	color: $settings-icon-hover;
 }
 
 .settingsIcon i:active {
-	color: #1a5c8a;
+	color: $settings-icon-active;
 }
 
-.settingsIcon i.active {
-	color: #268cd4;
+.settingsIcon i.on {
+	color: $settings-icon-on;
 }
 
-.settingsIcon i.active:hover {
-	color: #31aaff;
+.settingsIcon i.on:hover {
+	color: $settings-icon-on-hover;
 }
 
-.settingsIcon i.active:active {
-	color: #1a5c8a;
+.settingsIcon i.on:active {
+	color: $settings-icon-on-active;
 }
 
 .statusIcon {
@@ -43,31 +43,31 @@
 }
 
 .fail {
-	color: #ed2d2d;
+	color: $fail-icon;
 	margin-right: 2px;
 }
 
 .success {
-	color: #8bed2d;
+	color: $success-icon;
 	margin-right: 3px;
 }
 
 .processing {
-	color: #30a4f6;
+	color: $processing-icon;
 	margin-right: 3px;
 }
 
 .folderIcon {
-	color: #b0c3d2;
+	color: $folder-icon;
 	margin: 0px 5px 0px 8px;
 }
 
 .folderIcon:hover {
-	color: #b1d6ed
+	color: $folder-icon-hover;
 }
 
 .folderIcon:active {
-	color: #6d8594;
+	color: $folder-icon-active;
 }
 
 .addIcon {
@@ -77,16 +77,16 @@
 }
 
 .addIcon i {
-	color: #268cd4;
+	color: $add-icon;
 	transition: all 0.2s ease;
 }
 
 .addIcon i:hover {
-	color: #31aaff;
+	color: $add-icon-hover;
 }
 
 .addIcon i:active {
-	color: #1a5c8a;
+	color: $add-icon-active;
 }
 
 .clearIcon {
@@ -96,16 +96,16 @@
 }
 
 .clearIcon i {
-	color: #d42626;
+	color: $clear-icon;
 	transition: all 0.2s ease;
 }
 
 .clearIcon i:hover {
-	color: #ff3131;
+	color: $clear-icon-hover;
 }
 
 .clearIcon i:active {
-	color: #8a1a1a;
+	color: $clear-icon-active;
 }
 
 .againIcon {
@@ -115,17 +115,17 @@
 }
 
 .againIcon i {
-	color: #94b4c7;
+	color: $again-icon;
 	font-size: 14px;
 	transition: all 0.2s ease;
 }
 
 .againIcon i:hover {
-	color: #b1d6ed;
+	color: $again-icon-hover;
 }
 
 .againIcon i:active {
-	color: #6d8594;
+	color: $again-icon-active;
 }
 
 .infoIcon {
@@ -136,16 +136,16 @@
 }
 
 .infoIcon i {
-	color: #94b4c7;
+	color: $info-icon;
 	font-size: 14px;
 }
 
 .infoIcon i:hover {
-	color: #31aaff;
+	color: $info-icon-hover;
 }
 
 .infoIcon i:active {
-	color: #1a5c8a;
+	color: $info-icon-active;
 }
 
 .disabled {

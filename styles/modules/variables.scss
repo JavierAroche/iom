@@ -7,6 +7,45 @@
 
 
 // Colors
+$main-background-color: #292c33;
+$light-text-color: #94b4c7;
+$light-footer-text-color: #6f8292;
+$settings-background: #212329;
+$tab-hover: #5bbbff;
+$tab-text-active: #31aaff;
+$locked-settings-text-color: #ed2d2d;
+
+$settings-icon: $light-text-color;
+$settings-icon-hover: $tab-text-active;
+$settings-icon-active: #1a5c8a;
+$settings-icon-on: #268cd4;
+$settings-icon-on-hover: $tab-text-active;
+$settings-icon-on-active: $settings-icon-active;
+
+$info-icon: $light-text-color;
+$info-icon-hover: $tab-text-active;
+$info-icon-active: $settings-icon-active;
+
+$add-icon: $settings-icon-on;
+$add-icon-hover: $tab-text-active;
+$add-icon-active: $settings-icon-active;
+
+$clear-icon: #d42626;
+$clear-icon-hover: #ff3131;
+$clear-icon-active: #8a1a1a;
+
+$again-icon: $light-text-color;
+$again-icon-hover: #b1d6ed;
+$again-icon-active: $light-footer-text-color;
+
+$fail-icon: $locked-settings-text-color;
+$success-icon: #8bed2d;
+$processing-icon: $tab-text-active;
+$folder-icon: $light-text-color;
+$folder-icon-hover: $again-icon-hover;
+$folder-icon-active: $again-icon-active;
 
 
 // UI
+$font-size-11: 11px;
+$font-size-12: 12px;
