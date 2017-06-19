@@ -64,7 +64,8 @@
 			{
 				name : 'No preset',
 				settings : ''
-			});
+			}
+		]);
 		this.selectedPreset = ko.observable('');
 
 		// Settings menu item
