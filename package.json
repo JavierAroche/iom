@@ -1,53 +1,53 @@
 {
-	"name": "iom",
-	"title": "iom",
-	"version": "0.0.2",
-	"description": "Image optimization manager to minify images",
-	"author": {
-		"name": "Javier Aroche",
-		"email": "aroche290@gmail.com",
-		"url": "https://github.com/JavierAroche"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/JavierAroche/iom"
-	},
-	"license": "MIT",
-	"main": "main.js",
-	"scripts": {
-		"dev": "ttab -d $PWD gulp; npm run start",
-		"start": "electron .",
-		"package-mac": "electron-packager . --out=iom-builds --overwrite --platform=darwin --arch=x64 --icon=icon/iom.icns --ignore=releases --ignore=iom-builds --extend-info=extend.plist --osx-sign.identity='Javier Aroche'; npm run verify",
-		"package-win": "electron-packager . --out=iom-builds --overwrite --platform=win32 --arch=ia32 --icon=icon/iom.ico --ignore=releases --ignore=iom-builds --appCopyright=\"Copyright (C) 2017 Javier Aroche\" --win32metadata.CompanyName=\"Javer Aroche\" --win32metadata.FileDescription=\"iom\" --win32metadata.OriginalFilename=\"iom\" --win32metadata.ProductName=\"iom\"",
-		"package-linux": "electron-packager . --out=iom-builds --overwrite --platform=linux --arch=x64 --icon=icon/iom.png --ignore=releases --ignore=iom-builds",
-		"verify": "codesign --verify -vvvv ./iom-builds/iom-darwin-x64/iom.app"
-	},
-	"devDependencies": {
-		"electron": "^1.4.15",
-		"gulp": "^3.9.1",
-		"gulp-sass": "^3.1.0"
-	},
-	"dependencies": {
-		"font-awesome": "^4.7.0",
-		"imagemin": "^5.2.2",
-		"imagemin-advpng": "^3.1.0",
-		"imagemin-giflossy": "^5.1.10",
-		"imagemin-gifsicle": "^5.1.0",
-		"imagemin-guetzli": "^0.1.3",
-		"imagemin-jpeg-recompress": "^5.1.0",
-		"imagemin-jpegoptim": "^5.0.0",
-		"imagemin-jpegtran": "^5.0.2",
-		"imagemin-jpegtran-gfw": "^0.2.0",
-		"imagemin-mozjpeg": "^6.0.0",
-		"imagemin-optipng": "^5.2.1",
-		"imagemin-pngcrush": "^5.0.0",
-		"imagemin-pngout": "^2.0.0",
-		"imagemin-pngquant": "^5.0.0",
-		"imagemin-pngquant-gfw": "^0.2.0",
-		"imagemin-svgo": "^5.2.0",
-		"imagemin-webp": "^4.0.0",
-		"imagemin-zopfli": "^5.0.0",
-		"knockout": "^3.4.1",
-		"semver": "^5.3.0"
-	}
+  "name": "iom",
+  "title": "iom",
+  "version": "0.0.2",
+  "description": "Image optimization manager to minify images",
+  "author": {
+	"name": "Javier Aroche",
+	"email": "aroche290@gmail.com",
+	"url": "https://github.com/JavierAroche"
+  },
+  "repository": {
+	"type": "git",
+	"url": "https://github.com/JavierAroche/iom"
+  },
+  "license": "MIT",
+  "main": "main.js",
+  "scripts": {
+	"dev": "ttab -d $PWD gulp; npm run start",
+	"start": "electron .",
+	"package-mac": "electron-packager . --out=iom-builds --overwrite --platform=darwin --arch=x64 --icon=icon/iom.icns --ignore=releases --ignore=iom-builds --extend-info=extend.plist --osx-sign.identity='Javier Aroche'; npm run verify",
+	"package-win": "electron-packager . --out=iom-builds --overwrite --platform=win32 --arch=ia32 --icon=icon/iom.ico --ignore=releases --ignore=iom-builds --appCopyright=\"Copyright (C) 2017 Javier Aroche\" --win32metadata.CompanyName=\"Javer Aroche\" --win32metadata.FileDescription=\"iom\" --win32metadata.OriginalFilename=\"iom\" --win32metadata.ProductName=\"iom\"",
+	"package-linux": "electron-packager . --out=iom-builds --overwrite --platform=linux --arch=x64 --icon=icon/iom.png --ignore=releases --ignore=iom-builds",
+	"verify": "codesign --verify -vvvv ./iom-builds/iom-darwin-x64/iom.app"
+  },
+  "devDependencies": {
+	"electron": "^1.4.15",
+	"gulp": "^3.9.1",
+	"gulp-sass": "^3.1.0"
+  },
+  "dependencies": {
+	"font-awesome": "^4.7.0",
+	"imagemin": "^5.2.2",
+	"imagemin-advpng": "^3.1.0",
+	"imagemin-giflossy": "^5.1.10",
+	"imagemin-gifsicle": "^5.1.0",
+	"imagemin-guetzli": "^1.0.0",
+	"imagemin-jpeg-recompress": "^5.1.0",
+	"imagemin-jpegoptim": "^5.1.0",
+	"imagemin-jpegtran": "^5.0.2",
+	"imagemin-jpegtran-gfw": "^0.2.0",
+	"imagemin-mozjpeg": "^6.0.0",
+	"imagemin-optipng": "^5.2.1",
+	"imagemin-pngcrush": "^5.0.0",
+	"imagemin-pngout": "^2.0.0",
+	"imagemin-pngquant": "^5.0.0",
+	"imagemin-pngquant-gfw": "^0.2.0",
+	"imagemin-svgo": "^5.2.0",
+	"imagemin-webp": "^4.0.0",
+	"imagemin-zopfli": "^5.0.0",
+	"knockout": "^3.4.1",
+	"semver": "^5.3.0"
+  }
 }
