@@ -149,5 +149,6 @@
 }
 
 .disabled {
-	color: #6f8292 !important;
+	color: $disabled-settings-color !important;
+	opacity: .3;
 }

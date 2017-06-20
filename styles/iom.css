@@ -251,8 +251,9 @@ ul {
 
 .locked {
   pointer-events: none;
-  opacity: 0.5;
-  transition: all 0.2s ease; }
+  opacity: 0.3;
+  transition: all 0.2s ease;
+  color: #929292 !important; }
 
 .subTab {
   color: #94b4c7;
@@ -334,7 +335,7 @@ ul {
   border-radius: 3px;
   margin-right: 10px;
   outline: none;
-  font-size: 11px;
+  font-size: 10px;
   text-align: center; }
 
 .dropdownPresets {
@@ -505,7 +506,8 @@ ul {
   color: #1a5c8a; }
 
 .disabled {
-  color: #6f8292 !important; }
+  color: #929292 !important;
+  opacity: .3; }
 
 /*
  *

@@ -14,6 +14,7 @@ $settings-background: #212329;
 $tab-hover: #5bbbff;
 $tab-text-active: #31aaff;
 $locked-settings-text-color: #ed2d2d;
+$disabled-settings-color: #929292;
 
 $settings-icon: $light-text-color;
 $settings-icon-hover: $tab-text-active;
@@ -47,5 +48,6 @@ $folder-icon-active: $again-icon-active;
 
 
 // UI
+$font-size-10: 10px;
 $font-size-11: 11px;
 $font-size-12: 12px;

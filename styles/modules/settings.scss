@@ -85,8 +85,9 @@
 
 .locked {
 	pointer-events: none;
-	opacity: 0.5;
+	opacity: 0.3;
 	transition: all 0.2s ease;
+	color: $disabled-settings-color !important;
 }
 
 .subTab {
@@ -181,7 +182,7 @@
 	border-radius: 3px;
 	margin-right: 10px;
 	outline: none;
-	font-size: $font-size-11;
+	font-size: $font-size-10;
 	text-align: center;
 }
 
