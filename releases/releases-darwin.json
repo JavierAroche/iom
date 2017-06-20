@@ -1,6 +1,6 @@
 {
-	"pub_date": "06-11-2017",
-	"notes": "Fixed self updates. Fixed drag and drop on app icon for multiple files. Small tweaks.",
-	"url": "https://raw.githubusercontent.com/JavierAroche/iom/master/releases/darwin/v0.0.2/iom_v0.0.2.zip",
-	"version": "0.0.2"
+	"pub_date": "06-20-2017",
+	"notes": "Added sass and gulp. Added locked settings functionality. Added presets.",
+	"url": "https://raw.githubusercontent.com/JavierAroche/iom/master/releases/darwin/v0.0.3/iom_v0.0.3.zip",
+	"version": "0.0.3"
 }

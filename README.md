@@ -1,15 +1,15 @@
-# iom 
-[![npm-image](https://img.shields.io/badge/iom-v0.0.2-09bc00.svg)](https://github.com/JavierAroche/iom)
+# iom
+[![npm-image](https://img.shields.io/badge/iom-v0.0.3-09bc00.svg)](https://github.com/JavierAroche/iom)
 
 ## Description
 Image optimization manager to minify images using [imagemin](https://github.com/imagemin/imagemin).
 
 ## Latest Release
-[MacOS - iom v0.0.2](https://raw.githubusercontent.com/JavierAroche/iom/master/releases/darwin/v0.0.2/iom_v0.0.2.zip)
+[MacOS - iom v0.0.3](https://raw.githubusercontent.com/JavierAroche/iom/master/releases/darwin/v0.0.3/iom_v0.0.3.zip)
 
-[Windows - iom v0.0.2](https://raw.githubusercontent.com/JavierAroche/iom/master/releases/win32/v0.0.2/iom_v0.0.2.zip)
+[Windows - iom v0.0.3](https://raw.githubusercontent.com/JavierAroche/iom/master/releases/win32/v0.0.3/iom_v0.0.3.zip)
 
-[Linux - iom v0.0.2](https://raw.githubusercontent.com/JavierAroche/iom/master/releases/linux/v0.0.2/iom_v0.0.2.zip)
+[Linux - iom v0.0.3](https://raw.githubusercontent.com/JavierAroche/iom/master/releases/linux/v0.0.3/iom_v0.0.3.zip)
 
 ## Usage
 Drag and drop images to the iom app. Click on the settings icon (...) to change imagemin's plugin settings.
@@ -17,6 +17,11 @@ Drag and drop images to the iom app. Click on the settings icon (...) to change 
 NOTE: Images will not be overwritten by default. Change this behaviour in the settings.
 
 ## Changelog
+**v0.0.3 (Jun 20 2017)**
+* Added sass and gulp.
+* Added locked settings functionality.
+* Added presets.
+
 **v0.0.2 (Jun 11 2017)**
 * Fixed self updates.
 * Fixed drag and drop on app icon for multiple files.
