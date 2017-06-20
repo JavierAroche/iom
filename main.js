@@ -55,6 +55,8 @@ function createWindow() {
 		slashes: true
 	}))
 
+	checkForUpdates('autoRequested');
+
 	// Emitted when the window is closed.
 	mainWindow.on('closed', function () {
 		// Dereference the window object, usually you would store windows
@@ -151,8 +153,8 @@ function checkForUpdates(arg) {
 			var feed = JSON.parse(body)
 
 			if ( semver.cmp(app.getVersion(), '<', feed.version) ) {
+				updateVersion()
 				if( arg == 'userRequested' ) {
-					updateVersion()
 					dialog.showMessageBox({ type: 'info', message: 'New release available!', detail: 'Downloading and updating iom...', buttons: ['OK'] })
 				}
 				return true
@@ -208,7 +210,7 @@ function attachUpdaterListeners() {
 }
 
 function updateVersion() {
-	autoUpdater.setFeedUrl( getFeedUrl() )
+	autoUpdater.setFeedURL( getFeedUrl() )
 	autoUpdater.checkForUpdates()
 
 	mainWindow.webContents.send('console-on-renderer', 'Trying to update app...')
