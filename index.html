@@ -56,14 +56,17 @@
 							</div>
 						</div>
 					</div>
-
+					<hr>
 					<!-- Extra Settings -->
+					<span class="extraSettingsSpan">Extra Settings</span>
 					<div class="saveInSubFolder">
 						<input type="checkbox" data-bind="checked: saveInSubFolder"><span>Save exports in subfolder (keep original)</span>
 					</div>
 					<div class="includeSubfolders">
 						<input type="checkbox" data-bind="checked: includeSubfolders"><span>Include subfolders when loading a folder</span>
 					</div>
+					<hr>
+					<span class="presetsSpan">Presets</span>
 					<div class="presets">
 						<div class="presetInput">
 							<input class="presetName" type="text" placeholder="New Preset" data-bind="value: newPresetName">
@@ -72,6 +75,7 @@
 						<div class="presetButtons">
 							<input type="button" value="Save Preset" data-bind="click: addPreset">
 							<input type="button" value="Load Preset" data-bind="click: loadPreset">
+							<input type="button" value="Delete Preset" data-bind="click: deletePreset">
 						</div>
 					</div>
 				</div>

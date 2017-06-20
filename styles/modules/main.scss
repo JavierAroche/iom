@@ -48,7 +48,7 @@ body {
 	height: 20px;
 	font-size: $font-size-12;
 	z-index: 5000;
-	@include background-color('black', .2);
+	@include background-color('black', .3);
 }
 
 .fileNameTitleDiv {
@@ -145,12 +145,8 @@ ul {
 	height: 20px;
 	color: $light-footer-text-color;
 	text-align: center;
-	@include background-color('black', .2);
-	pointer-events: none;
-}
-
-.footerPlugins.activeSetings {
 	@include background-color('black', .3);
+	pointer-events: none;
 }
 
 .footerPluginsTitle {

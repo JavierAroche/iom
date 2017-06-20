@@ -62,7 +62,7 @@ body {
   height: 20px;
   font-size: 12px;
   z-index: 5000;
-  background-color: rgba(0, 0, 0, 0.2); }
+  background-color: rgba(0, 0, 0, 0.3); }
 
 .fileNameTitleDiv {
   margin-top: 5px;
@@ -145,11 +145,8 @@ ul {
   height: 20px;
   color: #6f8292;
   text-align: center;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.3);
   pointer-events: none; }
-
-.footerPlugins.activeSetings {
-  background-color: rgba(0, 0, 0, 0.3); }
 
 .footerPluginsTitle {
   margin-left: 8px; }
@@ -319,8 +316,17 @@ ul {
   border: none;
   background-color: rgba(255, 255, 255, 0.85); }
 
+hr {
+  border: 0;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.1); }
+
+.extraSettingsSpan, .presetsSpan {
+  margin-bottom: 5px;
+  font-size: 12px; }
+
 .presets {
-  margin-top: 10px;
+  margin-top: 5px;
   display: flex;
   flex-direction: column; }
 
@@ -329,7 +335,7 @@ ul {
   flex-direction: row; }
 
 .presetName {
-  width: 100px;
+  width: 150px;
   height: 15px;
   border: none;
   border-radius: 3px;
@@ -339,7 +345,7 @@ ul {
   text-align: center; }
 
 .dropdownPresets {
-  width: 100px;
+  width: 150px;
   outline: none;
   font-size: 10px;
   border: none;
@@ -354,7 +360,7 @@ ul {
   width: 102px;
   height: 25px;
   font-size: 11px;
-  margin: 0 9px 0 0;
+  margin: 0 5px 0 0;
   border: none;
   border-radius: 5px;
   outline: none;
@@ -381,7 +387,7 @@ ul {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.2); }
+  background-color: rgba(0, 0, 0, 0.3); }
 
 .lockedSettingsBar span {
   color: #ed2d2d; }
