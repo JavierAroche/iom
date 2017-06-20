@@ -88,8 +88,6 @@
 		this.mainMenu.settingsMenuItem.checked = this.enabledSettingsOverlay();
 		this.mainMenu.lockSettingsMenuItem.checked = this.lockedSettings();
 		this._init();
-		//TODO: delete this
-		this.setSettingsOverlay();
 	};
 
 	iom.prototype._init = function() {
