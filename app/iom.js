@@ -22,7 +22,8 @@
 	window.ko = require('knockout');
 
 	function iom() {
-		this.localStoragePath = ko.observable('');
+		this.localStorageSettingsPath = ko.observable();
+		this.localStoragePresetsPath = ko.observable();
 		this.mainMenu = new MainMenu(this);
 		this.animOverlay = document.getElementsByClassName('animOverlay')[0];
 		this.settingsOverlay = document.getElementsByClassName('settingsOverlay')[0];
@@ -63,7 +64,7 @@
 		this.newPresetName = ko.observable();
 		this.presets = ko.observableArray([
 			{
-				name : 'Select...',
+				name : 'Default...',
 				settings : {
 					imagemin : ko.toJSON(this.imageminSettings),
 					includeSubfolders : this.includeSubfolders(),
@@ -71,7 +72,7 @@
 				}
 			}
 		], this);
-		this.selectedPresetValue = ko.observable('Select...');
+		this.selectedPresetValue = ko.observable('Default...');
 		this.selectedPreset = ko.computed(function() {
 			var selectedPresetValue = this.selectedPresetValue();
 			var selectedPreset = this.presets()[0]
@@ -375,8 +376,13 @@
 	iom.prototype._loadPrefFileSettings = function() {
 		this.includeSubfolders(JSON.parse(localStorage.includeSubfolders));
 		this.saveInSubFolder(JSON.parse(localStorage.saveInSubFolder));
-		var prefFileSettings = JSON.parse(fs.readFileSync(this.localStoragePath(), 'utf8'));
+		var prefFileSettings = JSON.parse(fs.readFileSync(this.localStorageSettingsPath(), 'utf8'));
 		this._loadImageminPrefs(prefFileSettings);
+	};
+
+	iom.prototype._loadPresetsFileSettings = function() {
+		var presetsFileSettings = JSON.parse(fs.readFileSync(this.localStoragePresetsPath(), 'utf8'));
+		this.presets(presetsFileSettings);
 	};
 
 	iom.prototype._loadImageminPrefs = function(prefFileSettings) {
@@ -399,7 +405,13 @@
 		localStorage.saveInSubFolder = this.saveInSubFolder();
 
 		try {
-			fs.writeFileSync(this.localStoragePath(), args);
+			fs.writeFileSync(this.localStorageSettingsPath(), args);
+		} catch(err) {}
+	};
+
+	iom.prototype._savePresetsToCache = function(args) {
+		try {
+			fs.writeFileSync(this.localStoragePresetsPath(), args);
 		} catch(err) {}
 	};
 
@@ -427,15 +439,15 @@
 
 	iom.prototype.loadPreset = function() {
 		var selectedPreset = this.selectedPreset();
-		this.includeSubfolders(selectedPreset.includeSubfolders);
-		this.saveInSubFolder(selectedPreset.saveInSubFolder);
+		this.includeSubfolders(selectedPreset.settings.includeSubfolders);
+		this.saveInSubFolder(selectedPreset.settings.saveInSubFolder);
 		var prefFileSettings = JSON.parse(selectedPreset.settings.imagemin);
 		this._loadImageminPrefs(prefFileSettings);
 	};
 
 	iom.prototype.deletePreset = function() {
 		var index = this.presets().indexOf(this.selectedPreset());
-		if (index > -1) {
+		if (index > -1 || this.selectedPresetValue() !== 'Default...') {
 			this.presets.splice(index, 1);
 		}
 	}
@@ -465,12 +477,19 @@
 		});
 
 		ipcRenderer.on('send-localStoragePath', function(event, localStoragePath) {
-			self.localStoragePath(localStoragePath + '/Local Storage/iomPreferences.json');
+			self.localStorageSettingsPath(localStoragePath + '/Local Storage/iomPreferences.json');
+			self.localStoragePresetsPath(localStoragePath + '/Local Storage/iomPlugins.json');
 
 			// Read preference file if it exists
 			try {
-				fs.statSync(self.localStoragePath()).isFile();
+				fs.statSync(self.localStorageSettingsPath()).isFile();
 				self._loadPrefFileSettings();
+			} catch(err) {}
+
+			// Read presets file if it exists
+			try {
+				fs.statSync(self.localStoragePresetsPath()).isFile();
+				self._loadPresetsFileSettings();
 			} catch(err) {}
 
 			// Set preference file computed only after obtaining local storage path
@@ -479,8 +498,19 @@
 				var includeSubfolders = self.includeSubfolders();
 				var saveInSubFolder = self.saveInSubFolder();
 
-				if(self.localStoragePath() !== '') {
+				if(self.localStorageSettingsPath() !== '') {
 					self._savePrefToCache(plugins);
+				}
+
+				return true;
+			}, self);
+
+			// Set presets file computed only after obtaining local storage path
+			self.presetsFileComputed = ko.computed(function() {
+				var presets = ko.toJSON(this.presets);
+
+				if(self.localStorageSettingsPath() !== '') {
+					self._savePresetsToCache(presets);
 				}
 
 				return true;
