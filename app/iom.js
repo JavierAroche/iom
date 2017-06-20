@@ -433,6 +433,13 @@
 		this._loadImageminPrefs(prefFileSettings);
 	};
 
+	iom.prototype.deletePreset = function() {
+		var index = this.presets().indexOf(this.selectedPreset());
+		if (index > -1) {
+			this.presets.splice(index, 1);
+		}
+	}
+
 	iom.prototype.openLink = function() {
 		shell.openExternal('https://www.npmjs.com/browse/keyword/imageminplugin');
 	};
