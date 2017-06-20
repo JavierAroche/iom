@@ -405,15 +405,24 @@
 
 	iom.prototype.addPreset = function() {
 		var self = this;
-		this.presets.push({
-			name: self.newPresetName(),
-			settings: {
-				imagemin : ko.toJSON(self.imageminSettings),
-				includeSubfolders : this.includeSubfolders(),
-				saveInSubFolder : this.saveInSubFolder()
-			}
-		});
-		this.newPresetName('');
+		if(this.newPresetName()) {
+			this.presets.push({
+				name: self.newPresetName(),
+				settings: {
+					imagemin : ko.toJSON(self.imageminSettings),
+					includeSubfolders : this.includeSubfolders(),
+					saveInSubFolder : this.saveInSubFolder()
+				}
+			});
+			this.newPresetName('');
+		} else {
+			dialog.showMessageBox({
+				type: 'info',
+				message: 'Invalid name',
+				detail: 'Please input a valid preset name',
+				buttons: ['OK']
+			});
+		}
 	};
 
 	iom.prototype.loadPreset = function() {
