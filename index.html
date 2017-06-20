@@ -69,13 +69,13 @@
 					<span class="presetsSpan">Presets</span>
 					<div class="presets">
 						<div class="presetInput">
-							<input class="presetName" type="text" placeholder="New Preset" data-bind="value: newPresetName">
+							<input class="presetName" type="text" placeholder="New Preset" data-bind="textInput: newPresetName">
 							<select class="dropdownPresets" data-bind="options: presets, optionsValue : 'name', value: selectedPresetValue"></select>
 						</div>
 						<div class="presetButtons">
-							<input type="button" value="Save Preset" data-bind="click: addPreset">
+							<input type="button" value="Save Preset" data-bind="click: addPreset, css: { locked : !$root.newPresetName() }">
 							<input type="button" value="Load Preset" data-bind="click: loadPreset">
-							<input type="button" value="Delete Preset" data-bind="click: deletePreset">
+							<input type="button" value="Delete Preset" data-bind="click: deletePreset, css: { locked : $root.selectedPresetValue() == 'Default...' }">
 						</div>
 					</div>
 				</div>
