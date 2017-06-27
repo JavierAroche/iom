@@ -6,11 +6,13 @@
  */
 
 @mixin background-color($color, $value) {
-	@if $color == 'white' {
+	@if $color=='white' {
 		background-color: rgba(255, 255, 255, $value);
-	} @else if $color == 'black' {
+	}
+	@else if $color=='black' {
 		background-color: rgba(0, 0, 0, $value);
-	} @else {
+	}
+	@else {
 		background-color: $color;
 	}
 }

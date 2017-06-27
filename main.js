@@ -5,12 +5,21 @@
  *
  */
 
-const { electron, ipcMain, dialog, app, BrowserWindow, globalShortcut, autoUpdater, shell } = require('electron')
+const {
+	electron,
+	ipcMain,
+	dialog,
+	app,
+	BrowserWindow,
+	globalShortcut,
+	autoUpdater,
+	shell
+} = require('electron')
 
 const path = require('path')
 const os = require('os')
 const url = require('url')
-const https = require ('https')
+const https = require('https')
 const semver = require('semver')
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -30,8 +39,8 @@ function createWindow() {
 		minWidth: 500,
 		minHeight: 200,
 		frame: true,
-		center : true,
-		maximizable : true,
+		center: true,
+		maximizable: true,
 		resizable: true,
 		titleBarStyle: 'hidden-inset',
 		show: false
@@ -40,8 +49,8 @@ function createWindow() {
 	mainWindow.once('ready-to-show', () => {
 		mainWindow.show()
 
-		if(openedFiles.length > 0) {
-			openedFiles.forEach(function(openedFile) {
+		if (openedFiles.length > 0) {
+			openedFiles.forEach(function (openedFile) {
 				mainWindow.webContents.send('load-file', openedFile)
 			})
 			openedFiles = [];
@@ -93,7 +102,7 @@ app.on('open-file', (ev, path, aaa) => {
 	openedFiles.push(path)
 	try {
 		mainWindow.webContents.send('load-file', path)
-	} catch(err) {}
+	} catch (err) {}
 })
 
 app.on('window-all-closed', () => {
@@ -103,35 +112,35 @@ app.on('window-all-closed', () => {
 
 function attachAppListeners() {
 	// Prompt for directory path
-	ipcMain.on('load-files', function(event) {
+	ipcMain.on('load-files', function (event) {
 		// Get files
 		dialog.showOpenDialog(mainWindow, {
-			title       : 'Load files',
-			buttonLabel : 'Process',
-			properties  : ['openFile', 'openDirectory', 'createDirectory', 'multiSelections']
-		}, function(files) {
-			if(files) {
+			title: 'Load files',
+			buttonLabel: 'Process',
+			properties: ['openFile', 'openDirectory', 'createDirectory', 'multiSelections']
+		}, function (files) {
+			if (files) {
 				event.sender.send('loaded-files', files)
 			}
 		})
 	})
 
 	// Updates
-	ipcMain.on('request-update', function(event) {
-		switch(osPlatform) {
+	ipcMain.on('request-update', function (event) {
+		switch (osPlatform) {
 			case 'darwin':
 				checkForUpdates('userRequested')
 				break
 			case 'win32':
-			// TODO
-			// Add auto updates for windows
+				// TODO
+				// Add auto updates for windows
 			case 'linux':
 			default:
 				break;
 		}
 	})
 
-	ipcMain.on('request-localStoragePath', function(event) {
+	ipcMain.on('request-localStoragePath', function (event) {
 		var localStoragePath = getLocalStoragePath()
 		event.sender.send('send-localStoragePath', localStoragePath)
 	})
@@ -140,28 +149,40 @@ function attachAppListeners() {
 // Update App Helpers
 function checkForUpdates(arg) {
 	var feedURL = getFeedUrl()
-	if(!feedURL) { return false }
+	if (!feedURL) {
+		return false
+	}
 
 	https.get(feedURL, (res) => {
 		var body = ''
 
-		res.on('data', function(chunk){
+		res.on('data', function (chunk) {
 			body += chunk
 		})
 
-		res.on('end', function(chunk) {
+		res.on('end', function (chunk) {
 			var feed = JSON.parse(body)
 
-			if ( semver.cmp(app.getVersion(), '<', feed.version) ) {
+			if (semver.cmp(app.getVersion(), '<', feed.version)) {
 				updateVersion()
-				if( arg == 'userRequested' ) {
-					dialog.showMessageBox({ type: 'info', message: 'New release available!', detail: 'Downloading and updating iom...', buttons: ['OK'] })
+				if (arg == 'userRequested') {
+					dialog.showMessageBox({
+						type: 'info',
+						message: 'New release available!',
+						detail: 'Downloading and updating iom...',
+						buttons: ['OK']
+					})
 				}
 				return true
 			} else {
-				if( arg == 'userRequested' ) {
-					dialog.showMessageBox({ type: 'info', message: 'You are up to date!', detail: 'iom v' + app.getVersion() + ' is the latest version.', buttons: ['OK', 'More Info'] }, function(option) {
-						if(option == 1) {
+				if (arg == 'userRequested') {
+					dialog.showMessageBox({
+						type: 'info',
+						message: 'You are up to date!',
+						detail: 'iom v' + app.getVersion() + ' is the latest version.',
+						buttons: ['OK', 'More Info']
+					}, function (option) {
+						if (option == 1) {
 							shell.openExternal('https://github.com/JavierAroche/iom')
 						}
 					})
@@ -170,28 +191,32 @@ function checkForUpdates(arg) {
 		})
 
 	}).on('error', (err) => {
-		  console.log('Error getting the update feed: ', err)
+		console.log('Error getting the update feed: ', err)
 	})
 }
 
 // Update event listeners
 function attachUpdaterListeners() {
-	autoUpdater.on('update-available', function(update) {
+	autoUpdater.on('update-available', function (update) {
 		mainWindow.webContents.send('console-on-renderer', 'update-available: ' + JSON.stringify(update))
 	})
 
-	autoUpdater.on('checking-for-update', function(update) {
+	autoUpdater.on('checking-for-update', function (update) {
 		mainWindow.webContents.send('console-on-renderer', 'checking-for-update: ' + JSON.stringify(update))
 
 		// Disable check for updates item
 		mainWindow.webContents.send('toggle-checkForUpdatesMenuItem', false)
 	})
 
-	autoUpdater.on('update-downloaded', function(event, url, version, notes, pub_date, quitAndUpdate) {
+	autoUpdater.on('update-downloaded', function (event, url, version, notes, pub_date, quitAndUpdate) {
 		mainWindow.webContents.send('console-on-renderer', 'update-downloaded: ')
 
-		 dialog.showMessageBox({ message: 'New release available!', detail: 'Please update iom to the latest version.', buttons: ['Install and Relaunch'] }, function(buttonIndex) {
-			if(buttonIndex == 0) {
+		dialog.showMessageBox({
+			message: 'New release available!',
+			detail: 'Please update iom to the latest version.',
+			buttons: ['Install and Relaunch']
+		}, function (buttonIndex) {
+			if (buttonIndex == 0) {
 				autoUpdater.quitAndInstall()
 			}
 		})
@@ -200,24 +225,24 @@ function attachUpdaterListeners() {
 		mainWindow.webContents.send('toggle-checkForUpdatesMenuItem', true)
 	})
 
-	autoUpdater.on('update-not-available', function(a) {
+	autoUpdater.on('update-not-available', function (a) {
 		mainWindow.webContents.send('console-on-renderer', 'Update not available' + a)
 	})
 
-	autoUpdater.on('error', function(a, b) {
+	autoUpdater.on('error', function (a, b) {
 		mainWindow.webContents.send('console-on-renderer', 'autoUpdate error: ' + JSON.stringify(a) + ' ' + JSON.stringify(b))
 	})
 }
 
 function updateVersion() {
-	autoUpdater.setFeedURL( getFeedUrl() )
+	autoUpdater.setFeedURL(getFeedUrl())
 	autoUpdater.checkForUpdates()
 
 	mainWindow.webContents.send('console-on-renderer', 'Trying to update app...')
 }
 
 function getFeedUrl() {
-	switch(osPlatform) {
+	switch (osPlatform) {
 		case 'darwin':
 			return 'https://raw.githubusercontent.com/JavierAroche/iom/master/releases/releases-darwin.json'
 			break

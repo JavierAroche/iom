@@ -31,7 +31,6 @@
 	left: 50%;
 	top: 50%;
 	transform: translate(-50%, -50%);
-
 	animation-name: circlePulse;
 	animation-duration: 1s;
 	animation-iteration-count: infinite;
@@ -73,7 +72,6 @@
 	top: 50%;
 	transform: translate(-50%, -50%);
 	opacity: 0;
-
 	animation-name: ringPulse;
 	animation-duration: 1s;
 	animation-iteration-count: infinite;
@@ -115,7 +113,6 @@
 .plusAnim i {
 	color: #fefeff;
 	font-size: 30px;
-
 	animation-name: plusPulse;
 	animation-duration: 1s;
 	animation-iteration-count: infinite;
