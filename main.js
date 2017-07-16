@@ -100,18 +100,19 @@ app.on('activate', () => {
 	}
 })
 
-app.on('open-file', (ev, path) => {
+app.on('open-file', (ev, filePath) => {
 	ev.preventDefault()
-	openedFiles.push(path)
+	var cleanFilePath = path.resolve(decodeURIComponent(filePath))
+	openedFiles.push(cleanFilePath)
 	try {
-		mainWindow.webContents.send('load-file', path)
+		mainWindow.webContents.send('load-file', cleanFilePath)
 	} catch (err) {}
 })
 
 // Listen to custom protocole incoming messages
 app.on('open-url', (ev, url) => {
 	ev.preventDefault()
-	var cleanURL = url.substring(7)
+	var cleanURL = path.resolve(decodeURIComponent(url.substring(7)))
 	openedFiles.push(cleanURL)
 	try {
 		mainWindow.webContents.send('load-file', cleanURL)
