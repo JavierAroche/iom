@@ -14,7 +14,7 @@ Image optimization manager to minify images using [imagemin](https://github.com/
 ## Usage
 Drag and drop images to the iom app. Click on the settings icon (...) to change imagemin's plugin settings.
 
-NOTE: Images will not be overwritten by default. Change this behaviour in the settings.
+NOTE: Images will not be overwritten by default. Change this behavior in the settings.
 
 ## Changelog
 **v0.0.4 (Jun 20 2017)**
