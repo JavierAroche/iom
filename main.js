@@ -10,6 +10,7 @@ const {
 	ipcMain,
 	dialog,
 	app,
+	protocol,
 	BrowserWindow,
 	globalShortcut,
 	autoUpdater,
@@ -97,13 +98,23 @@ app.on('activate', () => {
 	}
 })
 
-app.on('open-file', (ev, path, aaa) => {
+app.on('open-file', (ev, path) => {
 	ev.preventDefault()
 	openedFiles.push(path)
 	try {
 		mainWindow.webContents.send('load-file', path)
 	} catch (err) {}
 })
+
+// Listen to custom protocole incoming messages
+app.on('open-url', (ev, url) => {
+	ev.preventDefault()
+	var cleanURL = url.substring(7)
+	openedFiles.push(cleanURL)
+	try {
+		mainWindow.webContents.send('load-file', cleanURL)
+	} catch (err) {}
+});
 
 app.on('window-all-closed', () => {
 	globalShortcut.unregisterAll()
