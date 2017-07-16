@@ -17,6 +17,7 @@ const {
 	shell
 } = require('electron')
 
+const fs = require('fs')
 const path = require('path')
 const os = require('os')
 const url = require('url')
@@ -31,6 +32,7 @@ let osPlatform = os.platform()
 
 attachAppListeners()
 attachUpdaterListeners()
+installCLI()
 
 function createWindow() {
 	// Create the browser window.
@@ -269,4 +271,15 @@ function getFeedUrl() {
 
 function getLocalStoragePath() {
 	return app.getPath('userData')
+}
+
+function installCLI() {
+	var sourceFile = path.resolve(__dirname + '/' + 'iom.sh')
+	var targetFile = path.resolve('/usr/local/bin/iom')
+
+	fs.stat(targetFile, (err, stats) => {
+		if (err) {
+			fs.symlinkSync(sourceFile, targetFile)
+		}
+	})
 }
