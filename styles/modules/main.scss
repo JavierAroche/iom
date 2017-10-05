@@ -107,8 +107,22 @@ ul {
 	float: right;
 }
 
-.files li:nth-child(odd) {
-	@include background-color('black', .1);
+.files {
+	li:nth-child(even) {
+		&.selected {
+			@include background-color($file-selected, 1);
+			color: white;
+		}
+	}
+
+	li:nth-child(odd) {
+		@include background-color('black', .1);
+
+		&.selected {
+			@include background-color($file-selected, 1);
+			color: white;
+		}
+	}
 }
 
 .fileName {

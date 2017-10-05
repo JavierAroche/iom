@@ -69,6 +69,9 @@ function createWindow() {
 
 	checkForUpdates('autoRequested');
 
+	mainWindow.on('focus', registerShortcuts);
+	mainWindow.on('blur', unregisterShortcuts);
+
 	// Emitted when the window is closed.
 	mainWindow.on('closed', function () {
 		// Dereference the window object, usually you would store windows
@@ -83,13 +86,6 @@ function createWindow() {
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
 	createWindow()
-
-	// Shortcuts
-	// If you want to open up dev tools programmatically,
-	// use the shortcut Command + Shift + X.
-	globalShortcut.register('Command+Shift+X', () => {
-		mainWindow.openDevTools()
-	})
 })
 
 app.on('activate', () => {
@@ -158,7 +154,28 @@ function attachAppListeners() {
 		var localStoragePath = getLocalStoragePath()
 		event.sender.send('send-localStoragePath', localStoragePath)
 	})
+
+	ipcMain.on('open-quick-look', function (event, path) {
+		mainWindow.previewFile(path)
+	})
+
+	ipcMain.on('close-quick-look', function (event, path) {
+		mainWindow.closeFilePreview()
+	})
 }
+
+function registerShortcuts() {
+	globalShortcut.register('Command+Shift+X', () => {
+		mainWindow.openDevTools()
+	})
+	globalShortcut.register('Space', () => {
+		mainWindow.webContents.send('quick-look')
+	})
+};
+
+function unregisterShortcuts() {
+	globalShortcut.unregisterAll()
+};
 
 // Update App Helpers
 function checkForUpdates(arg) {

@@ -35,6 +35,8 @@
 		this.imageminSettings = new ImageminSettings(this).plugins;
 		this.includeSubfolders = ko.observable(false);
 		this.saveInSubFolder = ko.observable(true);
+		this.quickLook = ko.observable(false);
+		this.selectedFile = ko.observable();
 		this.mbDecimals = 2;
 		this.percentageDecimals = 1;
 		this.files = ko.observableArray();
@@ -161,6 +163,7 @@
 				initialFileSize: ko.observable(fileSize),
 				finalFileSize: ko.observable(),
 				fileSavings: ko.observable(),
+				selected: ko.observable(false),
 				status: ko.observable('processing'),
 				parentFolder: parentFolder,
 				filePath: filePath,
@@ -191,6 +194,19 @@
 	iom.prototype.openContainingFolder = function (filePath) {
 		shell.showItemInFolder(filePath);
 	};
+
+	iom.prototype.selectFile = function (model, data) {
+		model.deselectAllFiles();
+		data.selected(true);
+		model.selectedFile(data.filePath)
+	}
+
+	iom.prototype.deselectAllFiles = function () {
+		var self = this;
+		this.files().forEach(function(file) {
+			file.selected(false);
+		});
+	}
 
 	/*
 	 * @private
@@ -430,6 +446,16 @@
 		} catch (err) {}
 	};
 
+	iom.prototype.openQuickLook = function () {
+		if(this.selectedFile()) {
+			ipcRenderer.send('open-quick-look', this.selectedFile());
+		}
+	}
+
+	iom.prototype.closeQuickLook = function () {
+		ipcRenderer.send('close-quick-look');
+	}
+
 	iom.prototype.addPreset = function () {
 		var self = this;
 		this.presets.push({
@@ -476,6 +502,16 @@
 
 		ipcRenderer.on('load-file', function (event, path) {
 			self._receiveLoadedFiles([path]);
+		});
+
+		ipcRenderer.on('quick-look', function (event, path) {
+			if(!self.quickLook()) {
+				self.openQuickLook();
+				self.quickLook(true);
+			} else {
+				self.closeQuickLook();
+				self.quickLook(false);
+			}
 		});
 
 		ipcRenderer.on('toggle-checkForUpdatesMenuItem', function (event, state) {

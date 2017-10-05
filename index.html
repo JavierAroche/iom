@@ -112,7 +112,7 @@
 
 		<div class="dropArea">
 			<ul class="files" data-bind="foreach: files">
-				<li>
+				<li data-bind="click: function(data) { $root.selectFile($root, data) }, css: { selected: selected }">
 					<div class="fileNameTitleDiv">
 						<div class="folderIcons">
 							<i class="folderIcon fa fa-folder fa-fw" aria-hidden="true" title="Open containing folder" data-bind="click: function() { $root.openContainingFolder($data.filePath) }"></i>

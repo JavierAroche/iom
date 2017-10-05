@@ -111,8 +111,15 @@ ul {
 .statusIcons {
   float: right; }
 
+.files li:nth-child(even).selected {
+  background-color: #1a5c8a;
+  color: white; }
+
 .files li:nth-child(odd) {
   background-color: rgba(0, 0, 0, 0.1); }
+  .files li:nth-child(odd).selected {
+    background-color: #1a5c8a;
+    color: white; }
 
 .fileName {
   position: absolute;
@@ -321,7 +328,8 @@ hr {
   height: 1px;
   background-color: rgba(255, 255, 255, 0.1); }
 
-.extraSettingsSpan, .presetsSpan {
+.extraSettingsSpan,
+.presetsSpan {
   margin-bottom: 5px;
   font-size: 12px; }
 
@@ -372,7 +380,8 @@ hr {
     color: #5bbbff;
     background-color: rgba(0, 0, 0, 0.3); }
 
-.saveInSubFolder, .includeSubfolders {
+.saveInSubFolder,
+.includeSubfolders {
   font-size: 11px;
   margin-top: 5px; }
 
