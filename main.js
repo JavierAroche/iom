@@ -171,6 +171,9 @@ function registerShortcuts() {
 	globalShortcut.register('Space', () => {
 		mainWindow.webContents.send('quick-look')
 	})
+	globalShortcut.register('Backspace', () => {
+		mainWindow.webContents.send('delete-file')
+	})
 };
 
 function unregisterShortcuts() {

@@ -198,7 +198,7 @@
 	iom.prototype.selectFile = function (model, data) {
 		model.deselectAllFiles();
 		data.selected(true);
-		model.selectedFile(data.filePath)
+		model.selectedFile(data)
 	}
 
 	iom.prototype.deselectAllFiles = function () {
@@ -206,6 +206,10 @@
 		this.files().forEach(function(file) {
 			file.selected(false);
 		});
+	}
+
+	iom.prototype.deleteFile = function () {
+		this.files.remove(self.selectedFile())
 	}
 
 	/*
@@ -448,7 +452,7 @@
 
 	iom.prototype.openQuickLook = function () {
 		if(this.selectedFile()) {
-			ipcRenderer.send('open-quick-look', this.selectedFile());
+			ipcRenderer.send('open-quick-look', this.selectedFile().filePath);
 		}
 	}
 
@@ -502,6 +506,10 @@
 
 		ipcRenderer.on('load-file', function (event, path) {
 			self._receiveLoadedFiles([path]);
+		});
+
+		ipcRenderer.on('delete-file', function (event) {
+			self.deleteFile();
 		});
 
 		ipcRenderer.on('quick-look', function (event, path) {
