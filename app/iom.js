@@ -209,7 +209,7 @@
 	}
 
 	iom.prototype.deleteFile = function () {
-		this.files.remove(self.selectedFile())
+		this.files.remove(this.selectedFile())
 	}
 
 	/*
