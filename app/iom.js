@@ -450,6 +450,11 @@
 		ipcRenderer.send('close-quick-look')
 	}
 
+  iom.prototype.lockToggle = function() {
+    this.lockedSettings(!this.lockedSettings())
+    this.mainMenu.lockSettingsMenuItem.checked = this.lockedSettings()
+  }
+
 	iom.prototype.addPreset = function() {
 		var self = this
 		this.presets.push({

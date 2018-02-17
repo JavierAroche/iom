@@ -147,6 +147,26 @@
   }
 }
 
+.lockIcon {
+  position: absolute;
+  left: 0;
+  text-align: left;
+  margin: 8px 0 0 35px;
+
+  i {
+    color: $locked-settings-text-color;
+    font-size: 14px;
+  }
+
+  i:hover {
+    color: $locked-settings-text-color-hover;
+  }
+
+  i:active {
+    color: $locked-settings-text-color-active;
+  }
+}
+
 .disabled {
   color: $disabled-settings-color !important;
   opacity: 0.3;

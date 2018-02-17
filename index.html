@@ -27,6 +27,10 @@
           <span class="activePluginText">Settings are locked!</span>
         </div>
 
+        <div class="lockIcon">
+          <i class="fa" aria-hidden="true" title="NPM Plugins info" data-bind="click: lockToggle, css: { 'fa-lock': lockedSettings, 'fa-unlock': !lockedSettings() }"></i>
+        </div>
+
         <div class="infoIcon">
           <i class="fa fa-info-circle" aria-hidden="true" title="NPM Plugins info" data-bind="click: openLink"></i>
         </div>

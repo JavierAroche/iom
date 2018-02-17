@@ -500,6 +500,19 @@ hr {
   .infoIcon i:active {
     color: #1a5c8a; }
 
+.lockIcon {
+  position: absolute;
+  left: 0;
+  text-align: left;
+  margin: 8px 0 0 35px; }
+  .lockIcon i {
+    color: #ed2d2d;
+    font-size: 14px; }
+  .lockIcon i:hover {
+    color: #ff4545; }
+  .lockIcon i:active {
+    color: #9e1c1c; }
+
 .disabled {
   color: #929292 !important;
   opacity: 0.3; }

@@ -43,7 +43,7 @@
 					type: 'checkbox',
 					checked: false,
 					click: function() {
-						self.lockedSettings(!self.lockedSettings())
+						self.lockToggle();
 					}
 				},
 				{
