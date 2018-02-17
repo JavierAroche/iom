@@ -6,17 +6,14 @@
  */
 
 const {
-	electron,
 	ipcMain,
 	dialog,
 	app,
-	protocol,
 	BrowserWindow,
 	globalShortcut,
 	autoUpdater,
 	shell
 } = require('electron')
-
 const fs = require('fs')
 const path = require('path')
 const os = require('os')
@@ -24,15 +21,12 @@ const url = require('url')
 const https = require('https')
 const semver = require('semver')
 
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 let openedFiles = []
 let osPlatform = os.platform()
 
 attachAppListeners()
 attachUpdaterListeners()
-installCLI()
 
 function createWindow() {
 	// Create the browser window.
@@ -52,46 +46,36 @@ function createWindow() {
 	mainWindow.once('ready-to-show', () => {
 		mainWindow.show()
 
-		if (openedFiles.length > 0) {
-			openedFiles.forEach(function (openedFile) {
+		if(openedFiles.length > 0) {
+			openedFiles.forEach(function(openedFile) {
 				mainWindow.webContents.send('load-file', openedFile)
 			})
-			openedFiles = [];
+			openedFiles = []
 		}
 	})
 
-	// and load the index.html of the app.
 	mainWindow.loadURL(url.format({
 		pathname: path.join(__dirname, 'index.html'),
 		protocol: 'file:',
 		slashes: true
 	}))
 
-	checkForUpdates('autoRequested');
+	checkForUpdates('autoRequested')
 
-	mainWindow.on('focus', registerShortcuts);
-	mainWindow.on('blur', unregisterShortcuts);
+	mainWindow.on('focus', registerShortcuts)
+	mainWindow.on('blur', unregisterShortcuts)
 
-	// Emitted when the window is closed.
-	mainWindow.on('closed', function () {
-		// Dereference the window object, usually you would store windows
-		// in an array if your app supports multi windows, this is the time
-		// when you should delete the corresponding element.
+	mainWindow.on('closed', function() {
 		mainWindow = null
 	})
 }
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
 app.on('ready', () => {
 	createWindow()
 })
 
 app.on('activate', () => {
-	// On OS X it's common to re-create a window in the app when the
-	// dock icon is clicked and there are no other windows open.
-	if (mainWindow === null) {
+	if(mainWindow === null) {
 		createWindow()
 	}
 })
@@ -102,7 +86,7 @@ app.on('open-file', (ev, filePath) => {
 	openedFiles.push(cleanFilePath)
 	try {
 		mainWindow.webContents.send('load-file', cleanFilePath)
-	} catch (err) {}
+	} catch(err) {}
 })
 
 // Listen to custom protocole incoming messages
@@ -112,8 +96,8 @@ app.on('open-url', (ev, url) => {
 	openedFiles.push(cleanURL)
 	try {
 		mainWindow.webContents.send('load-file', cleanURL)
-	} catch (err) {}
-});
+	} catch(err) {}
+})
 
 app.on('window-all-closed', () => {
 	globalShortcut.unregisterAll()
@@ -122,44 +106,45 @@ app.on('window-all-closed', () => {
 
 function attachAppListeners() {
 	// Prompt for directory path
-	ipcMain.on('load-files', function (event) {
+	ipcMain.on('load-files', function(event) {
 		// Get files
 		dialog.showOpenDialog(mainWindow, {
 			title: 'Load files',
 			buttonLabel: 'Process',
 			properties: ['openFile', 'openDirectory', 'createDirectory', 'multiSelections']
-		}, function (files) {
-			if (files) {
+		}, function(files) {
+			if(files) {
 				event.sender.send('loaded-files', files)
 			}
 		})
 	})
 
 	// Updates
-	ipcMain.on('request-update', function (event) {
-		switch (osPlatform) {
+	ipcMain.on('request-update', function(event) {
+		switch(osPlatform) {
 			case 'darwin':
 				checkForUpdates('userRequested')
 				break
 			case 'win32':
-				// TODO
-				// Add auto updates for windows
+				// TODO: Add auto updates for windows
+				break
 			case 'linux':
+				break
 			default:
-				break;
+				break
 		}
 	})
 
-	ipcMain.on('request-localStoragePath', function (event) {
+	ipcMain.on('request-localStoragePath', function(event) {
 		var localStoragePath = getLocalStoragePath()
 		event.sender.send('send-localStoragePath', localStoragePath)
 	})
 
-	ipcMain.on('open-quick-look', function (event, path) {
+	ipcMain.on('open-quick-look', function(event, path) {
 		mainWindow.previewFile(path)
 	})
 
-	ipcMain.on('close-quick-look', function (event, path) {
+	ipcMain.on('close-quick-look', function(event, path) {
 		mainWindow.closeFilePreview()
 	})
 }
@@ -183,23 +168,23 @@ function unregisterShortcuts() {
 // Update App Helpers
 function checkForUpdates(arg) {
 	var feedURL = getFeedUrl()
-	if (!feedURL) {
+	if(!feedURL) {
 		return false
 	}
 
 	https.get(feedURL, (res) => {
 		var body = ''
 
-		res.on('data', function (chunk) {
+		res.on('data', function(chunk) {
 			body += chunk
 		})
 
-		res.on('end', function (chunk) {
+		res.on('end', function(chunk) {
 			var feed = JSON.parse(body)
 
-			if (semver.cmp(app.getVersion(), '<', feed.version)) {
+			if(semver.cmp(app.getVersion(), '<', feed.version)) {
 				updateVersion()
-				if (arg == 'userRequested') {
+				if(arg === 'userRequested') {
 					dialog.showMessageBox({
 						type: 'info',
 						message: 'New release available!',
@@ -209,21 +194,20 @@ function checkForUpdates(arg) {
 				}
 				return true
 			} else {
-				if (arg == 'userRequested') {
+				if(arg === 'userRequested') {
 					dialog.showMessageBox({
 						type: 'info',
 						message: 'You are up to date!',
 						detail: 'iom v' + app.getVersion() + ' is the latest version.',
 						buttons: ['OK', 'More Info']
-					}, function (option) {
-						if (option == 1) {
+					}, function(option) {
+						if(option === 1) {
 							shell.openExternal('https://github.com/JavierAroche/iom')
 						}
 					})
 				}
 			}
 		})
-
 	}).on('error', (err) => {
 		console.log('Error getting the update feed: ', err)
 	})
@@ -231,26 +215,26 @@ function checkForUpdates(arg) {
 
 // Update event listeners
 function attachUpdaterListeners() {
-	autoUpdater.on('update-available', function (update) {
+	autoUpdater.on('update-available', function(update) {
 		mainWindow.webContents.send('console-on-renderer', 'update-available: ' + JSON.stringify(update))
 	})
 
-	autoUpdater.on('checking-for-update', function (update) {
+	autoUpdater.on('checking-for-update', function(update) {
 		mainWindow.webContents.send('console-on-renderer', 'checking-for-update: ' + JSON.stringify(update))
 
 		// Disable check for updates item
 		mainWindow.webContents.send('toggle-checkForUpdatesMenuItem', false)
 	})
 
-	autoUpdater.on('update-downloaded', function (event, url, version, notes, pub_date, quitAndUpdate) {
+	autoUpdater.on('update-downloaded', function(event, url, version, notes, pubDate, quitAndUpdate) {
 		mainWindow.webContents.send('console-on-renderer', 'update-downloaded: ')
 
 		dialog.showMessageBox({
 			message: 'New release available!',
 			detail: 'Please update iom to the latest version.',
 			buttons: ['Install and Relaunch']
-		}, function (buttonIndex) {
-			if (buttonIndex == 0) {
+		}, function(buttonIndex) {
+			if(buttonIndex === 0) {
 				autoUpdater.quitAndInstall()
 			}
 		})
@@ -259,11 +243,11 @@ function attachUpdaterListeners() {
 		mainWindow.webContents.send('toggle-checkForUpdatesMenuItem', true)
 	})
 
-	autoUpdater.on('update-not-available', function (a) {
+	autoUpdater.on('update-not-available', function(a) {
 		mainWindow.webContents.send('console-on-renderer', 'Update not available' + a)
 	})
 
-	autoUpdater.on('error', function (a, b) {
+	autoUpdater.on('error', function(a, b) {
 		mainWindow.webContents.send('console-on-renderer', 'autoUpdate error: ' + JSON.stringify(a) + ' ' + JSON.stringify(b))
 	})
 }
@@ -271,36 +255,21 @@ function attachUpdaterListeners() {
 function updateVersion() {
 	autoUpdater.setFeedURL(getFeedUrl())
 	autoUpdater.checkForUpdates()
-
 	mainWindow.webContents.send('console-on-renderer', 'Trying to update app...')
 }
 
 function getFeedUrl() {
-	switch (osPlatform) {
+	switch(osPlatform) {
 		case 'darwin':
 			return 'https://raw.githubusercontent.com/JavierAroche/iom/master/releases/releases-darwin.json'
-			break
 		case 'win32':
 			return 'https://raw.githubusercontent.com/JavierAroche/iom/master/releases/releases-win32.json'
-			break;
 		case 'linux':
 		default:
 			return false
-			break;
 	}
 }
 
 function getLocalStoragePath() {
 	return app.getPath('userData')
-}
-
-function installCLI() {
-	var sourceFile = path.resolve(__dirname + '/' + 'iom.sh')
-	var targetFile = path.resolve('/usr/local/bin/iom')
-
-	fs.stat(targetFile, (err, stats) => {
-		if (err) {
-			fs.symlinkSync(sourceFile, targetFile)
-		}
-	})
 }

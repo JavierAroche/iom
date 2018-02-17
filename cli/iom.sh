@@ -11,23 +11,23 @@ Options
 "
 
 if [ $# -eq 0 ]; then
-    echo "$HELP"
+  echo "$HELP"
 else
-    for arg; do
-        if [ $# -eq 1 ]; then
-            open -a iom "$arg"
-        fi
-        if [ "$arg" == "-s" ]; then
-            open -a iom "$arg"
-        fi
-        if [ "$arg" == "-sub" ]; then
-            open -a iom "$arg"
-        fi
-        if [ "$arg" == "-i" ]; then
-            open -a iom "$arg"
-        fi
-        if [ "$arg" == "-h" ]; then
-            echo "$HELP"
-        fi
-    done
+  for arg; do
+    if [ $# -eq 1 ]; then
+      open -a iom "$arg"
+    fi
+    if [ "$arg" == "-s" ]; then
+      open -a iom "$arg"
+    fi
+    if [ "$arg" == "-sub" ]; then
+      open -a iom "$arg"
+    fi
+    if [ "$arg" == "-i" ]; then
+      open -a iom "$arg"
+    fi
+    if [ "$arg" == "-h" ]; then
+      echo "$HELP"
+    fi
+  done
 fi

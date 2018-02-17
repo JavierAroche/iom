@@ -4,151 +4,150 @@
  *  Author: Javier Aroche
  *
  */
-
 .settingsIcon {
-	position: absolute;
-	top: 0%;
-	width: 100%;
-	text-align: right;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  text-align: right;
 }
 
 .settingsIcon i {
-	margin-top: 10px;
-	margin-right: 15px;
-	color: $settings-icon;
+  margin-top: 10px;
+  margin-right: 15px;
+  color: $settings-icon;
 }
 
 .settingsIcon i:hover {
-	color: $settings-icon-hover;
+  color: $settings-icon-hover;
 }
 
 .settingsIcon i:active {
-	color: $settings-icon-active;
+  color: $settings-icon-active;
 }
 
 .settingsIcon i.on {
-	color: $settings-icon-on;
+  color: $settings-icon-on;
 }
 
 .settingsIcon i.on:hover {
-	color: $settings-icon-on-hover;
+  color: $settings-icon-on-hover;
 }
 
 .settingsIcon i.on:active {
-	color: $settings-icon-on-active;
+  color: $settings-icon-on-active;
 }
 
 .statusIcon {
-	width: 14px;
+  width: 14px;
 }
 
 .fail {
-	color: $fail-icon;
-	margin-right: 2px;
+  color: $fail-icon;
+  margin-right: 2px;
 }
 
 .success {
-	color: $success-icon;
-	margin-right: 3px;
+  color: $success-icon;
+  margin-right: 3px;
 }
 
 .processing {
-	color: $processing-icon;
-	margin-right: 3px;
+  color: $processing-icon;
+  margin-right: 3px;
 }
 
 .folderIcon {
-	color: $folder-icon;
-	margin: 0px 5px 0px 8px;
+  color: $folder-icon;
+  margin: 0 5px 0 8px;
 }
 
 .folderIcon:hover {
-	color: $folder-icon-hover;
+  color: $folder-icon-hover;
 }
 
 .folderIcon:active {
-	color: $folder-icon-active;
+  color: $folder-icon-active;
 }
 
 .addIcon {
-	float: right;
-	margin-right: 10px;
-	margin-top: 8px;
+  float: right;
+  margin-right: 10px;
+  margin-top: 8px;
 }
 
 .addIcon i {
-	color: $add-icon;
-	transition: all 0.2s ease;
+  color: $add-icon;
+  transition: all 0.2s ease;
 }
 
 .addIcon i:hover {
-	color: $add-icon-hover;
+  color: $add-icon-hover;
 }
 
 .addIcon i:active {
-	color: $add-icon-active;
+  color: $add-icon-active;
 }
 
 .clearIcon {
-	float: right;
-	margin-right: 5px;
-	margin-top: 8px;
+  float: right;
+  margin-right: 5px;
+  margin-top: 8px;
 }
 
 .clearIcon i {
-	color: $clear-icon;
-	transition: all 0.2s ease;
+  color: $clear-icon;
+  transition: all 0.2s ease;
 }
 
 .clearIcon i:hover {
-	color: $clear-icon-hover;
+  color: $clear-icon-hover;
 }
 
 .clearIcon i:active {
-	color: $clear-icon-active;
+  color: $clear-icon-active;
 }
 
 .againIcon {
-	float: right;
-	margin-right: 10px;
-	margin-top: 8px;
+  float: right;
+  margin-right: 10px;
+  margin-top: 8px;
 }
 
 .againIcon i {
-	color: $again-icon;
-	font-size: 14px;
-	transition: all 0.2s ease;
+  color: $again-icon;
+  font-size: 14px;
+  transition: all 0.2s ease;
 }
 
 .againIcon i:hover {
-	color: $again-icon-hover;
+  color: $again-icon-hover;
 }
 
 .againIcon i:active {
-	color: $again-icon-active;
+  color: $again-icon-active;
 }
 
 .infoIcon {
-	position: absolute;
-	right: 0px;
-	text-align: right;
-	margin: 8px 35px 0 0;
+  position: absolute;
+  right: 0;
+  text-align: right;
+  margin: 8px 35px 0 0;
 }
 
 .infoIcon i {
-	color: $info-icon;
-	font-size: 14px;
+  color: $info-icon;
+  font-size: 14px;
 }
 
 .infoIcon i:hover {
-	color: $info-icon-hover;
+  color: $info-icon-hover;
 }
 
 .infoIcon i:active {
-	color: $info-icon-active;
+  color: $info-icon-active;
 }
 
 .disabled {
-	color: $disabled-settings-color !important;
-	opacity: .3;
+  color: $disabled-settings-color !important;
+  opacity: 0.3;
 }

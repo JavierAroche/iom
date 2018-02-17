@@ -4,136 +4,140 @@
  *  Author: Javier Aroche
  *
  */
-
 .animOverlay {
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	right: 0px;
-	height: 100%;
-	z-index: 5001;
-	opacity: 0;
-	pointer-events: none;
-	transition: all 0.5s ease;
-	@include background-color('black', .6);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  z-index: 5001;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.5s ease;
+  @include background-color('black', 0.6);
 }
 
 .dragged-over {
-	opacity: 1;
+  opacity: 1;
 }
 
 .circleAnim {
-	position: absolute;
-	width: 90px;
-	height: 90px;
-	background: #30a4f6;
-	border-radius: 50px;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%, -50%);
-	animation-name: circlePulse;
-	animation-duration: 1s;
-	animation-iteration-count: infinite;
-	animation-timing-function: ease-in-out;
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  background: #30a4f6;
+  border-radius: 50px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  animation-name: circlePulse;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
 }
-
 @keyframes circlePulse {
-	0% {
-		width: 90px;
-		height: 90px;
-		background: #30a4f6;
-	}
-	30% {
-		width: 75px;
-		height: 75px;
-		background: #2174ae;
-	}
-	40% {
-		width: 75px;
-		height: 75px;
-		background: #2174ae;
-	}
-	60% {
-		width: 90px;
-		height: 90px;
-		background: #30a4f6;
-	}
+  0% {
+    width: 90px;
+    height: 90px;
+    background: #30a4f6;
+  }
+
+  30% {
+    width: 75px;
+    height: 75px;
+    background: #2174ae;
+  }
+
+  40% {
+    width: 75px;
+    height: 75px;
+    background: #2174ae;
+  }
+
+  60% {
+    width: 90px;
+    height: 90px;
+    background: #30a4f6;
+  }
 }
 
 .outerRingAnim {
-	position: absolute;
-	width: 70px;
-	height: 70px;
-	background: none;
-	border-radius: 35px;
-	border-style: solid;
-	border-width: 2px;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%, -50%);
-	opacity: 0;
-	animation-name: ringPulse;
-	animation-duration: 1s;
-	animation-iteration-count: infinite;
-	animation-timing-function: ease-in-out;
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  background: none;
+  border-radius: 35px;
+  border-style: solid;
+  border-width: 2px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  animation-name: ringPulse;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
 }
-
 @keyframes ringPulse {
-	40% {
-		width: 70px;
-		height: 70px;
-		border-radius: 35px;
-		opacity: 0;
-	}
-	50% {
-		opacity: 1;
-		border-width: 1px;
-	}
-	100% {
-		width: 250px;
-		height: 250px;
-		border-radius: 125px;
-		border-width: 1px;
-		opacity: 0;
-	}
+  40% {
+    width: 70px;
+    height: 70px;
+    border-radius: 35px;
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+    border-width: 1px;
+  }
+
+  100% {
+    width: 250px;
+    height: 250px;
+    border-radius: 125px;
+    border-width: 1px;
+    opacity: 0;
+  }
 }
 
 .plusAnim {
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	right: 0px;
-	height: 100%;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .plusAnim i {
-	color: #fefeff;
-	font-size: 30px;
-	animation-name: plusPulse;
-	animation-duration: 1s;
-	animation-iteration-count: infinite;
-	animation-timing-function: ease-in-out;
+  color: #fefeff;
+  font-size: 30px;
+  animation-name: plusPulse;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
 }
-
 @keyframes plusPulse {
-	0% {
-		font-size: 30px;
-		color: #fefeff;
-	}
-	30% {
-		font-size: 25px;
-		color: #bcd0db;
-	}
-	40% {
-		font-size: 25px;
-		color: #bcd0db;
-	}
-	60% {
-		font-size: 30px;
-		color: #fefeff;
-	}
+  0% {
+    font-size: 30px;
+    color: #fefeff;
+  }
+
+  30% {
+    font-size: 25px;
+    color: #bcd0db;
+  }
+
+  40% {
+    font-size: 25px;
+    color: #bcd0db;
+  }
+
+  60% {
+    font-size: 30px;
+    color: #fefeff;
+  }
 }

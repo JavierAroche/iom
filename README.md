@@ -15,8 +15,12 @@ Drag and drop images to the iom app. Click on the settings icon to change imagem
 
 NOTE: Images will not be overwritten by default. Change this behavior in the settings.
 
-## External Usage
-CLI
+## CLI
+Install
+```
+$ npm link
+```
+
 ```
 Usage: iom file [option ...] ...
 
@@ -27,7 +31,7 @@ Options
 -h, --help            Show iom options
 ```
 
-Protocol
+## Protocol
 ```
 iom:///file
 ```

@@ -4,192 +4,191 @@
  *  Author: Javier Aroche
  *
  */
-
 body {
-	width: 100%;
-	height: 100%;
-	background-color: $main-background-color;
-	font-family: "Myriad Set Pro";
-	letter-spacing: .2px;
-	color: $light-text-color;
-	overflow: hidden;
-	-webkit-user-select: none;
-	cursor: default;
+  width: 100%;
+  height: 100%;
+  background-color: $main-background-color;
+  font-family: "Myriad Set Pro";
+  letter-spacing: 0.2px;
+  color: $light-text-color;
+  overflow: hidden;
+  -webkit-user-select: none;
+  cursor: default;
 }
 
 .titleBar {
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	right: 0px;
-	height: 35px;
-	text-align: center;
-	background-color: $main-background-color;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	z-index: 5002;
-	-webkit-app-region: drag;
-	@include titlebar-footer-outline();
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 35px;
+  text-align: center;
+  background-color: $main-background-color;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 5002;
+  -webkit-app-region: drag;
+  @include titlebar-footer-outline();
 }
 
 .titleBar span {
-	color: $light-text-color;
-	font-size: $font-size-12;
-	letter-spacing: 1px;
+  color: $light-text-color;
+  font-size: $font-size-12;
+  letter-spacing: 1px;
 }
 
 .propertiesBar {
-	position: absolute;
-	top: 35px;
-	left: 0px;
-	right: 0px;
-	height: 20px;
-	font-size: $font-size-12;
-	z-index: 5000;
-	@include background-color('black', .3);
+  position: absolute;
+  top: 35px;
+  left: 0;
+  right: 0;
+  height: 20px;
+  font-size: $font-size-12;
+  z-index: 5000;
+  @include background-color('black', 0.3);
 }
 
 .fileNameTitleDiv {
-	margin-top: 5px;
-	display: inline-block;
+  margin-top: 5px;
+  display: inline-block;
 }
 
 .fileNameTitle {
-	margin-left: 8px;
+  margin-left: 8px;
 }
 
 .fileSizePropertiesDiv {
-	width: 180px;
-	margin-top: 5px;
-	margin-right: 12px;
-	float: right;
-	display: inline-block;
+  width: 180px;
+  margin-top: 5px;
+  margin-right: 12px;
+  float: right;
+  display: inline-block;
 }
 
 .fileSizePropertiesDiv span {
-	margin-right: 10px;
-	float: left;
-	width: 40px;
+  margin-right: 10px;
+  float: left;
+  width: 40px;
 }
 
 .dropArea {
-	position: absolute;
-	top: 55px;
-	bottom: 55px;
-	left: 0px;
-	right: 0px;
-	overflow-y: overlay;
-	overflow-x: hidden;
-	background-color: $main-background-color;
+  position: absolute;
+  top: 55px;
+  bottom: 55px;
+  left: 0;
+  right: 0;
+  overflow-y: overlay;
+  overflow-x: hidden;
+  background-color: $main-background-color;
 }
 
 ul {
-	list-style-type: none;
-	list-style-position: inside;
-	margin: 0 0;
-	padding: 0 0;
-	font-size: $font-size-12;
+  list-style-type: none;
+  list-style-position: inside;
+  margin: 0;
+  padding: 0;
+  font-size: $font-size-12;
 }
 
 .files li {
-	width: 100%;
-	display: inline-block;
-	height: 25px;
+  width: 100%;
+  display: inline-block;
+  height: 25px;
 }
 
 .folderIcons {
-	float: left;
+  float: left;
 }
 
 .statusIcons {
-	float: right;
+  float: right;
 }
 
 .files {
-	li:nth-child(even) {
-		&.selected {
-			@include background-color($file-selected, 1);
-			color: white;
-		}
-	}
+  li:nth-child(even) {
+    &.selected {
+      @include background-color($file-selected, 1);
+      color: white;
+    }
+  }
 
-	li:nth-child(odd) {
-		@include background-color('black', .1);
+  li:nth-child(odd) {
+    @include background-color('black', 0.1);
 
-		&.selected {
-			@include background-color($file-selected, 1);
-			color: white;
-		}
-	}
+    &.selected {
+      @include background-color($file-selected, 1);
+      color: white;
+    }
+  }
 }
 
 .fileName {
-	position: absolute;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	max-width: 50%;
+  position: absolute;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 50%;
 }
 
 .footer {
-	position: absolute;
-	left: 0px;
-	right: 0px;
-	width: 100%;
-	bottom: 0px;
-	height: 35px;
-	background-color: $main-background-color;
-	z-index: 5002;
-	-webkit-app-region: drag;
-	@include titlebar-footer-outline();
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: 100%;
+  bottom: 0;
+  height: 35px;
+  background-color: $main-background-color;
+  z-index: 5002;
+  -webkit-app-region: drag;
+  @include titlebar-footer-outline();
 }
 
 .footer span {
-	font-size: $font-size-12;
+  font-size: $font-size-12;
 }
 
 .footerPlugins {
-	position: absolute;
-	left: 0px;
-	right: 0px;
-	width: 100%;
-	bottom: 35px;
-	height: 20px;
-	color: $light-footer-text-color;
-	text-align: center;
-	@include background-color('black', .3);
-	pointer-events: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: 100%;
+  bottom: 35px;
+  height: 20px;
+  color: $light-footer-text-color;
+  text-align: center;
+  @include background-color('black', 0.3);
+  pointer-events: none;
 }
 
 .footerPluginsTitle {
-	margin-left: 8px;
+  margin-left: 8px;
 }
 
 .activePluginText {
-	margin: 0 7px 0 7px;
+  margin: 0 7px;
 }
 
 .totalSavings {
-	position: absolute;
-	top: 30%;
-	color: $light-footer-text-color;
-	margin-left: 10px;
-	pointer-events: none;
+  position: absolute;
+  top: 30%;
+  color: $light-footer-text-color;
+  margin-left: 10px;
+  pointer-events: none;
 }
 
 ::-webkit-scrollbar {
-	width: 12px;
+  width: 12px;
 }
 
 ::-webkit-scrollbar-track {
-	@include background-color('black', .3);
+  @include background-color('black', 0.3);
 }
 
 ::-webkit-scrollbar-thumb {
-	background-color: $light-footer-text-color;
-	border-radius: 9px;
-	border: 2px solid transparent;
-	background-clip: content-box;
+  background-color: $light-footer-text-color;
+  border-radius: 9px;
+  border: 2px solid transparent;
+  background-clip: content-box;
 }

@@ -1,13 +1,13 @@
-var gulp = require('gulp');
-var sass = require('gulp-sass');
+var gulp = require('gulp')
+var sass = require('gulp-sass')
 
 gulp.task('styles', function () {
-	gulp.src('styles/iom.scss')
-		.pipe(sass().on('error', sass.logError))
-		.pipe(gulp.dest('styles'));
-});
+  gulp.src('styles/iom.scss')
+    .pipe(sass().on('error', sass.logError))
+    .pipe(gulp.dest('styles'))
+})
 
-//Watch task
+// Watch task
 gulp.task('default', function () {
-	gulp.watch('styles/**/*.scss', ['styles']);
-});
+  gulp.watch('styles/**/*.scss', ['styles'])
+})
