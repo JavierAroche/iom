@@ -110,7 +110,7 @@
 
 .pluginSettingsContainer {
   border-radius: 5px 5px 5px 5px;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
   overflow-y: overlay;
   overflow-x: hidden;
 }
@@ -205,12 +205,17 @@ hr {
   @include background-color('white', 0.85);
 }
 
+.selectAllButton {
+    text-align: center;
+}
+
 .presetButtons {
   display: flex;
   flex-direction: row;
   margin-top: 7px;
 }
 
+.selectAllButton input,
 .presetButtons input {
   width: 102px;
   height: 25px;

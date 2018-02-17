@@ -28,6 +28,10 @@
 		this.lockedSettings = ko.observable(true)
 		this.enabledSettingsOverlay = ko.observable(false)
 		this.imageminSettings = new ImageminSettings(this).plugins
+    this.selectAllButton = ko.observable(true)
+    this.selectAllButtonText = ko.computed(function() {
+      return this.selectAllButton() ? 'Select All' : 'Deselect All'
+    }, this)
 		this.includeSubfolders = ko.observable(false)
 		this.saveInSubFolder = ko.observable(true)
 		this.quickLook = ko.observable(false)
@@ -453,6 +457,22 @@
   iom.prototype.lockToggle = function() {
     this.lockedSettings(!this.lockedSettings())
     this.mainMenu.lockSettingsMenuItem.checked = this.lockedSettings()
+  }
+
+  iom.prototype.selectAllToggle = function() {
+    var self = this;
+    this.imageminSettings.forEach(function(imageminSettings) {
+      if(imageminSettings.active()) {
+        imageminSettings.plugins.forEach(function(plugin) {
+          if(plugin.name === imageminSettings.activePlugin()) {
+            plugin.settings.forEach(function(setting) {
+              setting.checkbox(self.selectAllButton());
+            })
+          }
+        })
+      }
+    })
+    this.selectAllButton(!this.selectAllButton())
   }
 
 	iom.prototype.addPreset = function() {

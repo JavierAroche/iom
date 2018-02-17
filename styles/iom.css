@@ -277,7 +277,7 @@ ul {
 
 .pluginSettingsContainer {
   border-radius: 5px 5px 5px 5px;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
   overflow-y: overlay;
   overflow-x: hidden; }
 
@@ -359,11 +359,15 @@ hr {
   border: none;
   background-color: rgba(255, 255, 255, 0.85); }
 
+.selectAllButton {
+  text-align: center; }
+
 .presetButtons {
   display: flex;
   flex-direction: row;
   margin-top: 7px; }
 
+.selectAllButton input,
 .presetButtons input {
   width: 102px;
   height: 25px;
@@ -374,8 +378,10 @@ hr {
   outline: none;
   color: #94b4c7;
   background-color: rgba(0, 0, 0, 0.15); }
+  .selectAllButton input:hover,
   .presetButtons input:hover {
     color: #5bbbff; }
+  .selectAllButton input:active,
   .presetButtons input:active {
     color: #5bbbff;
     background-color: rgba(0, 0, 0, 0.3); }
