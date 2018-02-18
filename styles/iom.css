@@ -367,8 +367,8 @@ hr {
   flex-direction: row;
   margin-top: 7px; }
 
-.selectAllButton input,
-.presetButtons input {
+.presetButtons input,
+.selectAllButton input {
   width: 102px;
   height: 25px;
   font-size: 11px;
@@ -378,11 +378,11 @@ hr {
   outline: none;
   color: #94b4c7;
   background-color: rgba(0, 0, 0, 0.15); }
-  .selectAllButton input:hover,
-  .presetButtons input:hover {
+  .presetButtons input:hover,
+  .selectAllButton input:hover {
     color: #5bbbff; }
-  .selectAllButton input:active,
-  .presetButtons input:active {
+  .presetButtons input:active,
+  .selectAllButton input:active {
     color: #5bbbff;
     background-color: rgba(0, 0, 0, 0.3); }
 
