@@ -392,6 +392,7 @@
 	iom.prototype._loadPrefFileSettings = function() {
 		this.includeSubfolders(JSON.parse(localStorage.includeSubfolders));
 		this.saveInSubFolder(JSON.parse(localStorage.saveInSubFolder));
+		this.lockedSettings(JSON.parse(localStorage.lockedSettings));
 		let prefFileSettings = JSON.parse(fs.readFileSync(this.localStorageSettingsPath(), 'utf8'));
 		this._loadImageminPrefs(prefFileSettings);
 	};
@@ -419,6 +420,7 @@
 	iom.prototype._savePrefToCache = function(args) {
 		localStorage.includeSubfolders = this.includeSubfolders();
 		localStorage.saveInSubFolder = this.saveInSubFolder();
+		localStorage.lockedSettings = this.lockedSettings();
 
 		try {
 			fs.writeFileSync(this.localStorageSettingsPath(), args);
