@@ -6,22 +6,22 @@
  */
 
 ;(function() {
-	'use strict'
+	'use strict';
 
-	const imageminAdvpng = require('imagemin-advpng')
-	const imageminGiflossy = require('imagemin-giflossy')
-	const imageminGifsicle = require('imagemin-gifsicle')
-	const imageminGuetzli = require('imagemin-guetzli')
-	const imageminJpegRecompress = require('imagemin-jpeg-recompress')
-	const imageminJpegoptim = require('imagemin-jpegoptim')
-	const imageminJpegtran = require('imagemin-jpegtran')
-	const imageminMozjpeg = require('imagemin-mozjpeg')
-	const imageminOptipng = require('imagemin-optipng')
-	const imageminPngcrush = require('imagemin-pngcrush')
-	const imageminPngout = require('imagemin-pngout')
-	const imageminPngquant = require('imagemin-pngquant')
-	const imageminSvgo = require('imagemin-svgo')
-	const imageminZopfli = require('imagemin-zopfli')
+	const imageminAdvpng = require('imagemin-advpng');
+	const imageminGiflossy = require('imagemin-giflossy');
+	const imageminGifsicle = require('imagemin-gifsicle');
+	const imageminGuetzli = require('imagemin-guetzli');
+	const imageminJpegRecompress = require('imagemin-jpeg-recompress');
+	const imageminJpegoptim = require('imagemin-jpegoptim');
+	const imageminJpegtran = require('imagemin-jpegtran');
+	const imageminMozjpeg = require('imagemin-mozjpeg');
+	const imageminOptipng = require('imagemin-optipng');
+	const imageminPngcrush = require('imagemin-pngcrush');
+	const imageminPngout = require('imagemin-pngout');
+	const imageminPngquant = require('imagemin-pngquant');
+	const imageminSvgo = require('imagemin-svgo');
+	const imageminZopfli = require('imagemin-zopfli');
 
 	/*
 	 * Imagemin Settings constructor.
@@ -358,7 +358,7 @@
 							{
 								'name': 'quality',
 								'type': ko.observable('checkbox-text'),
-								'title': ko.observable("Instructs pngquant to use the least amount of colors required to meet or exceed the max quality. If conversion results in quality below the min quality the image won't be saved. \nMin and max are numbers in range 0 (worst) to 100 (perfect), similar to JPEG."),
+								'title': ko.observable('Instructs pngquant to use the least amount of colors required to meet or exceed the max quality. If conversion results in quality below the min quality the image won\'t be saved. \nMin and max are numbers in range 0 (worst) to 100 (perfect), similar to JPEG.'),
 								'checkbox': ko.observable(false),
 								'textValue': ko.observable(100),
 								'dropdownOptions': ko.observableArray(),
@@ -507,7 +507,7 @@
 						'settings': [{
 							'name': 'optimizationLevel',
 							'type': ko.observable('checkbox-dropdown'),
-							'title': ko.observable("Select an optimization level between 0 and 4. \n\n Levels: \n 0 Don't compress \n 1 Compress fast (zlib) \n 2 Compress normal (7z) \n 3 Compress extra (7z) \n 4 Compress extreme (zopfli)"),
+							'title': ko.observable('Select an optimization level between 0 and 4. \n\n Levels: \n 0 Don\'t compress \n 1 Compress fast (zlib) \n 2 Compress normal (7z) \n 3 Compress extra (7z) \n 4 Compress extreme (zopfli)'),
 							'checkbox': ko.observable(false),
 							'textValue': ko.observable(),
 							'dropdownOptions': ko.observableArray([0, 1, 2, 3, 4]),
@@ -737,7 +737,7 @@
 						{
 							'name': 'removeNonInheritableGroupAttrs',
 							'type': ko.observable('checkbox'),
-							'title': ko.observable("remove non-inheritable group's 'presentation' attributes"),
+							'title': ko.observable('remove non-inheritable group\'s \'presentation\' attributes'),
 							'checkbox': ko.observable(false),
 							'textValue': ko.observable(),
 							'dropdownOptions': ko.observableArray(),
@@ -791,7 +791,7 @@
 						{
 							'name': 'moveElemsAttrsToGroup',
 							'type': ko.observable('checkbox'),
-							'title': ko.observable("move elements' attributes to their enclosing group"),
+							'title': ko.observable('move elements\' attributes to their enclosing group'),
 							'checkbox': ko.observable(false),
 							'textValue': ko.observable(),
 							'dropdownOptions': ko.observableArray(),
@@ -986,7 +986,7 @@
 							{
 								'name': 'lossy',
 								'type': ko.observable('checkbox-text'),
-								'title': ko.observable("Order pixel patterns to create smaller GIFs at cost of artifacts and noise.\n\nAdjust lossy argument to quality you want (30 is very light compression, 200 is heavy).\n\nIt works best when only little loss is introduced, and due to limitation of the compression algorithm very high loss levels won't give as much gain."),
+								'title': ko.observable('Order pixel patterns to create smaller GIFs at cost of artifacts and noise.\n\nAdjust lossy argument to quality you want (30 is very light compression, 200 is heavy).\n\nIt works best when only little loss is introduced, and due to limitation of the compression algorithm very high loss levels won\'t give as much gain.'),
 								'checkbox': ko.observable(false),
 								'textValue': ko.observable(80),
 								'dropdownOptions': ko.observableArray(),
@@ -995,7 +995,7 @@
 							{
 								'name': 'resize',
 								'type': ko.observable('checkbox-text'),
-								'title': ko.observable("Resize the output GIF to widthxheight.\n\ne.g.:\n\nimageminGiflossy({ resize: '300x200' });"),
+								'title': ko.observable('Resize the output GIF to widthxheight.\n\ne.g.:\n\nimageminGiflossy({ resize: \'300x200\' });'),
 								'checkbox': ko.observable(false),
 								'textValue': ko.observable('300x200'),
 								'dropdownOptions': ko.observableArray(),
@@ -1050,8 +1050,8 @@
 					}
 				]
 			}
-		]
+		];
 	}
 
-	module.exports = ImageminSettings
-})()
+	module.exports = ImageminSettings;
+})();
