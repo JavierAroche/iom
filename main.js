@@ -80,10 +80,11 @@ app.on('activate', () => {
 app.on('open-file', (ev, filePath) => {
 	ev.preventDefault()
 	var cleanFilePath = path.resolve(decodeURIComponent(filePath))
-	openedFiles.push(cleanFilePath)
-	try {
+	if(mainWindow) {
 		mainWindow.webContents.send('load-file', cleanFilePath)
-	} catch(err) {}
+	} else {
+		openedFiles.push(cleanFilePath)
+	}
 })
 
 // Listen to custom protocol incoming messages
