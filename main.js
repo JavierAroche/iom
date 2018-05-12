@@ -5,232 +5,271 @@
  *
  */
 
-const { electron, ipcMain, dialog, app, BrowserWindow, globalShortcut, autoUpdater, shell } = require('electron')
+const {
+	ipcMain,
+	dialog,
+	app,
+	BrowserWindow,
+	globalShortcut,
+	autoUpdater,
+	shell
+} = require('electron');
+const fs = require('fs');
+const path = require('path');
+const os = require('os');
+const url = require('url');
+const https = require('https');
+const semver = require('semver');
 
-const path = require('path')
-const os = require('os')
-const url = require('url')
-const https = require ('https')
-const semver = require('semver')
+let mainWindow;
+let openedFiles = [];
+let osPlatform = os.platform();
 
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
-let mainWindow
-let openedFiles = []
-let osPlatform = os.platform()
-
-attachAppListeners()
-attachUpdaterListeners()
+attachAppListeners();
+attachUpdaterListeners();
 
 function createWindow() {
 	// Create the browser window.
 	mainWindow = new BrowserWindow({
 		width: 500,
-		height: 450,
+		height: 310,
 		minWidth: 500,
 		minHeight: 200,
 		frame: true,
-		center : true,
-		maximizable : true,
+		center: true,
+		maximizable: true,
 		resizable: true,
-		titleBarStyle: 'hidden-inset',
+		titleBarStyle: 'hiddenInset',
 		show: false
-	})
+	});
 
 	mainWindow.once('ready-to-show', () => {
-		mainWindow.show()
-
+		mainWindow.show();
+		// Load files
 		if(openedFiles.length > 0) {
 			openedFiles.forEach(function(openedFile) {
-				mainWindow.webContents.send('load-file', openedFile)
-			})
+				mainWindow.webContents.send('load-file', openedFile);
+			});
+			// Reset queue
 			openedFiles = [];
 		}
-	})
-
-	// and load the index.html of the app.
+	});
 	mainWindow.loadURL(url.format({
 		pathname: path.join(__dirname, 'index.html'),
 		protocol: 'file:',
 		slashes: true
-	}))
-
+	}));
 	checkForUpdates('autoRequested');
-
-	// Emitted when the window is closed.
-	mainWindow.on('closed', function () {
-		// Dereference the window object, usually you would store windows
-		// in an array if your app supports multi windows, this is the time
-		// when you should delete the corresponding element.
-		mainWindow = null
-	})
+	mainWindow.on('focus', registerShortcuts);
+	mainWindow.on('blur', unregisterShortcuts);
+	mainWindow.on('closed', function() {
+		mainWindow = null;
+	});
 }
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
 app.on('ready', () => {
-	createWindow()
-
-	// Shortcuts
-	// If you want to open up dev tools programmatically,
-	// use the shortcut Command + Shift + X.
-	globalShortcut.register('Command+Shift+X', () => {
-		mainWindow.openDevTools()
-	})
-})
+	createWindow();
+});
 
 app.on('activate', () => {
-	// On OS X it's common to re-create a window in the app when the
-	// dock icon is clicked and there are no other windows open.
-	if (mainWindow === null) {
-		createWindow()
+	if(mainWindow === null) {
+		createWindow();
 	}
-})
+});
 
-app.on('open-file', (ev, path, aaa) => {
-	ev.preventDefault()
-	openedFiles.push(path)
+app.on('open-file', (ev, filePath) => {
+	ev.preventDefault();
+	let cleanFilePath = path.resolve(decodeURIComponent(filePath));
+	if(mainWindow) {
+		mainWindow.webContents.send('load-file', cleanFilePath);
+	} else {
+		openedFiles.push(cleanFilePath);
+	}
+});
+
+// Listen to custom protocol incoming messages
+app.on('open-url', (ev, url) => {
+	ev.preventDefault();
+	let cleanURL = path.resolve(decodeURIComponent(url.substring(7)));
+	openedFiles.push(cleanURL);
 	try {
-		mainWindow.webContents.send('load-file', path)
-	} catch(err) {}
-})
+		mainWindow.webContents.send('load-file', cleanURL);
+	} catch(err) {
+		console.log(err);
+	}
+});
 
 app.on('window-all-closed', () => {
-	globalShortcut.unregisterAll()
-	app.quit()
-})
+	globalShortcut.unregisterAll();
+	app.quit();
+});
 
 function attachAppListeners() {
 	// Prompt for directory path
-	ipcMain.on('load-files', function(event) {
+	ipcMain.on('load-files', event => {
 		// Get files
 		dialog.showOpenDialog(mainWindow, {
-			title       : 'Load files',
-			buttonLabel : 'Process',
-			properties  : ['openFile', 'openDirectory', 'createDirectory', 'multiSelections']
+			title: 'Load files',
+			buttonLabel: 'Process',
+			properties: ['openFile', 'openDirectory', 'createDirectory', 'multiSelections']
 		}, function(files) {
 			if(files) {
-				event.sender.send('loaded-files', files)
+				event.sender.send('loaded-files', files);
 			}
-		})
-	})
+		});
+	});
 
 	// Updates
-	ipcMain.on('request-update', function(event) {
+	ipcMain.on('request-update', event => {
 		switch(osPlatform) {
 			case 'darwin':
-				checkForUpdates('userRequested')
-				break
+				checkForUpdates('userRequested');
+				break;
 			case 'win32':
-			// TODO
-			// Add auto updates for windows
-			case 'linux':
+				// TODO: Add auto updates for windows
+				break;
+			case ';linux':
+				break;
 			default:
 				break;
-		}
-	})
+		};;
+	});
 
-	ipcMain.on('request-localStoragePath', function(event) {
-		var localStoragePath = getLocalStoragePath()
-		event.sender.send('send-localStoragePath', localStoragePath)
-	})
+	ipcMain.on('request-localStoragePath', event => {
+		let localStoragePath = getLocalStoragePath();
+		event.sender.send('send-localStoragePath', localStoragePath);
+	});
+
+	ipcMain.on('open-quick-look', (event, path) => {
+		mainWindow.previewFile(path);
+	});
+
+	ipcMain.on('close-quick-look', (event, path) => {
+		mainWindow.closeFilePreview();
+	});
 }
+
+function registerShortcuts() {
+	globalShortcut.register('Command+Shift+X', () => {
+		mainWindow.openDevTools();
+	});
+	globalShortcut.register('Space', () => {
+		mainWindow.webContents.send('quick-look');
+	});
+	globalShortcut.register('Backspace', () => {
+		mainWindow.webContents.send('delete-file');
+	});
+};
+
+function unregisterShortcuts() {
+	globalShortcut.unregisterAll();
+};
 
 // Update App Helpers
 function checkForUpdates(arg) {
-	var feedURL = getFeedUrl()
-	if(!feedURL) { return false }
+	let feedURL = getFeedUrl();
+	if(!feedURL) {
+		return false;
+	}
 
 	https.get(feedURL, (res) => {
-		var body = ''
+		let body = '';
 
-		res.on('data', function(chunk){
-			body += chunk
-		})
+		res.on('data', chunk => {
+			body += chunk;
+		});
 
-		res.on('end', function(chunk) {
-			var feed = JSON.parse(body)
+		res.on('end', chunk => {
+			let feed = JSON.parse(body);
 
-			if ( semver.cmp(app.getVersion(), '<', feed.version) ) {
-				updateVersion()
-				if( arg == 'userRequested' ) {
-					dialog.showMessageBox({ type: 'info', message: 'New release available!', detail: 'Downloading and updating iom...', buttons: ['OK'] })
+			if(semver.cmp(app.getVersion(), '<', feed.version)) {
+				updateVersion();
+				if(arg === 'userRequested') {
+					dialog.showMessageBox({
+						type: 'info',
+						message: 'New release available!',
+						detail: 'Downloading and updating iom...',
+						buttons: ['OK']
+					});
 				}
-				return true
+				return true;
 			} else {
-				if( arg == 'userRequested' ) {
-					dialog.showMessageBox({ type: 'info', message: 'You are up to date!', detail: 'iom v' + app.getVersion() + ' is the latest version.', buttons: ['OK', 'More Info'] }, function(option) {
-						if(option == 1) {
-							shell.openExternal('https://github.com/JavierAroche/iom')
+				if(arg === 'userRequested') {
+					dialog.showMessageBox({
+						type: 'info',
+						message: 'You are up to date!',
+						detail: `iom v${app.getVersion()} is the latest version.`,
+						buttons: ['OK', 'More Info']
+					}, option => {
+						if(option === 1) {
+							shell.openExternal('https://github.com/JavierAroche/iom');
 						}
-					})
+					});
 				}
 			}
-		})
-
+		});
 	}).on('error', (err) => {
-		  console.log('Error getting the update feed: ', err)
-	})
+		console.log('Error getting the update feed: ', err);
+	});
 }
 
 // Update event listeners
 function attachUpdaterListeners() {
-	autoUpdater.on('update-available', function(update) {
-		mainWindow.webContents.send('console-on-renderer', 'update-available: ' + JSON.stringify(update))
-	})
+	autoUpdater.on('update-available', update => {
+		mainWindow.webContents.send('console-on-renderer', `update-available: ${JSON.stringify(update)}`);
+	});
 
-	autoUpdater.on('checking-for-update', function(update) {
-		mainWindow.webContents.send('console-on-renderer', 'checking-for-update: ' + JSON.stringify(update))
+	autoUpdater.on('checking-for-update', update => {
+		mainWindow.webContents.send('console-on-renderer', `checking-for-update: ${JSON.stringify(update)}`);
 
 		// Disable check for updates item
-		mainWindow.webContents.send('toggle-checkForUpdatesMenuItem', false)
-	})
+		mainWindow.webContents.send('toggle-checkForUpdatesMenuItem', false);
+	});
 
-	autoUpdater.on('update-downloaded', function(event, url, version, notes, pub_date, quitAndUpdate) {
-		mainWindow.webContents.send('console-on-renderer', 'update-downloaded: ')
+	autoUpdater.on('update-downloaded', (event, url, version, notes, pubDate, quitAndUpdate) => {
+		mainWindow.webContents.send('console-on-renderer', 'update-downloaded: ');
 
-		 dialog.showMessageBox({ message: 'New release available!', detail: 'Please update iom to the latest version.', buttons: ['Install and Relaunch'] }, function(buttonIndex) {
-			if(buttonIndex == 0) {
-				autoUpdater.quitAndInstall()
+		dialog.showMessageBox({
+			message: 'New release available!',
+			detail: 'Please update iom to the latest version.',
+			buttons: ['Install and Relaunch']
+		}, buttonIndex => {
+			if(buttonIndex === 0) {
+				autoUpdater.quitAndInstall();
 			}
-		})
+		});
 
 		// Enable check for updates item
-		mainWindow.webContents.send('toggle-checkForUpdatesMenuItem', true)
-	})
+		mainWindow.webContents.send('toggle-checkForUpdatesMenuItem', true);
+	});
 
-	autoUpdater.on('update-not-available', function(a) {
-		mainWindow.webContents.send('console-on-renderer', 'Update not available' + a)
-	})
+	autoUpdater.on('update-not-available', a => {
+		mainWindow.webContents.send('console-on-renderer', `Update not available ${a}`);
+	});
 
-	autoUpdater.on('error', function(a, b) {
-		mainWindow.webContents.send('console-on-renderer', 'autoUpdate error: ' + JSON.stringify(a) + ' ' + JSON.stringify(b))
-	})
+	autoUpdater.on('error', (a, b) => {
+		mainWindow.webContents.send('console-on-renderer', `autoUpdate error: ${JSON.stringify(a)} ${JSON.stringify(b)}`);
+	});
 }
 
 function updateVersion() {
-	autoUpdater.setFeedURL( getFeedUrl() )
-	autoUpdater.checkForUpdates()
-
-	mainWindow.webContents.send('console-on-renderer', 'Trying to update app...')
+	autoUpdater.setFeedURL(getFeedUrl());
+	autoUpdater.checkForUpdates();
+	mainWindow.webContents.send('console-on-renderer', 'Trying to update app...');
 }
 
 function getFeedUrl() {
 	switch(osPlatform) {
 		case 'darwin':
-			return 'https://raw.githubusercontent.com/JavierAroche/iom/master/releases/releases-darwin.json'
-			break
+			return 'https://raw.githubusercontent.com/JavierAroche/iom/master/releases/releases-darwin.json';
 		case 'win32':
-			return 'https://raw.githubusercontent.com/JavierAroche/iom/master/releases/releases-win32.json'
-			break;
+			return 'https://raw.githubusercontent.com/JavierAroche/iom/master/releases/releases-win32.json';
 		case 'linux':
 		default:
-			return false
-			break;
+			return false;
 	}
 }
 
 function getLocalStoragePath() {
-	return app.getPath('userData')
+	return app.getPath('userData');
 }

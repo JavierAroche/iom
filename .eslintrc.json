@@ -1,0 +1,55 @@
+{
+	"extends": "eslint:recommended",
+	"rules": {
+		"quotes": [
+			"error",
+			"single"
+		],
+		"eqeqeq": "error",
+		"no-unused-vars": [
+			"off",
+			{
+				"vars": "local",
+				"args": "none"
+			}
+		],
+		"consistent-return": "off",
+		"no-use-before-define": [
+			"error",
+			"nofunc"
+		],
+		"camelcase": "warn",
+		"eol-last": "off",
+		"no-console": "off",
+		"curly": "error",
+		"brace-style": [
+			"error",
+			"1tbs",
+			{
+				"allowSingleLine": false
+			}
+		],
+		"semi": [
+			"error",
+			"always"
+		],
+		"no-extra-semi": "off",
+		"no-useless-escape": "off",
+		"no-global-assign": "off"
+	},
+	"globals": {
+		"ko": false,
+		"io": false,
+		"document": false,
+		"window": false,
+		"localStorage": false
+	},
+	"env": {
+		"es6": true,
+		"node": true
+	},
+	"ecmaFeatures": {
+		"modules": true,
+		"experimentalObjectRestSpread": true
+	}
+}

@@ -4,13 +4,12 @@
  *  Author: Javier Aroche
  *
  */
-
 body {
 	width: 100%;
 	height: 100%;
 	background-color: $main-background-color;
 	font-family: "Myriad Set Pro";
-	letter-spacing: .2px;
+	letter-spacing: 0.2px;
 	color: $light-text-color;
 	overflow: hidden;
 	-webkit-user-select: none;
@@ -19,9 +18,9 @@ body {
 
 .titleBar {
 	position: absolute;
-	top: 0px;
-	left: 0px;
-	right: 0px;
+	top: 0;
+	left: 0;
+	right: 0;
 	height: 35px;
 	text-align: center;
 	background-color: $main-background-color;
@@ -43,12 +42,12 @@ body {
 .propertiesBar {
 	position: absolute;
 	top: 35px;
-	left: 0px;
-	right: 0px;
+	left: 0;
+	right: 0;
 	height: 20px;
 	font-size: $font-size-12;
 	z-index: 5000;
-	@include background-color('black', .3);
+	@include background-color('black', 0.3);
 }
 
 .fileNameTitleDiv {
@@ -78,8 +77,8 @@ body {
 	position: absolute;
 	top: 55px;
 	bottom: 55px;
-	left: 0px;
-	right: 0px;
+	left: 0;
+	right: 0;
 	overflow-y: overlay;
 	overflow-x: hidden;
 	background-color: $main-background-color;
@@ -88,8 +87,8 @@ body {
 ul {
 	list-style-type: none;
 	list-style-position: inside;
-	margin: 0 0;
-	padding: 0 0;
+	margin: 0;
+	padding: 0;
 	font-size: $font-size-12;
 }
 
@@ -107,8 +106,22 @@ ul {
 	float: right;
 }
 
-.files li:nth-child(odd) {
-	@include background-color('black', .1);
+.files {
+	li:nth-child(even) {
+		&.selected {
+			@include background-color($file-selected, 1);
+			color: white;
+		}
+	}
+
+	li:nth-child(odd) {
+		@include background-color('black', 0.1);
+
+		&.selected {
+			@include background-color($file-selected, 1);
+			color: white;
+		}
+	}
 }
 
 .fileName {
@@ -121,10 +134,10 @@ ul {
 
 .footer {
 	position: absolute;
-	left: 0px;
-	right: 0px;
+	left: 0;
+	right: 0;
 	width: 100%;
-	bottom: 0px;
+	bottom: 0;
 	height: 35px;
 	background-color: $main-background-color;
 	z-index: 5002;
@@ -138,14 +151,14 @@ ul {
 
 .footerPlugins {
 	position: absolute;
-	left: 0px;
-	right: 0px;
+	left: 0;
+	right: 0;
 	width: 100%;
 	bottom: 35px;
 	height: 20px;
 	color: $light-footer-text-color;
 	text-align: center;
-	@include background-color('black', .3);
+	@include background-color('black', 0.3);
 	pointer-events: none;
 }
 
@@ -154,7 +167,7 @@ ul {
 }
 
 .activePluginText {
-	margin: 0 7px 0 7px;
+	margin: 0 7px;
 }
 
 .totalSavings {
@@ -170,7 +183,7 @@ ul {
 }
 
 ::-webkit-scrollbar-track {
-	@include background-color('black', .3);
+	@include background-color('black', 0.3);
 }
 
 ::-webkit-scrollbar-thumb {

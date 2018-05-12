@@ -6,19 +6,14 @@
  */
 
 ;(function(window) {
-
 	'use strict';
 
-	const fs   = require('fs');
+	const fs = require('fs');
 	const path = require('path');
-	const exec = require('child_process').exec;
-	const { dialog } = require('electron').remote;
 	const { ipcRenderer, shell } = require('electron');
-
 	const imagemin = require('imagemin');
 	const MainMenu = require('./app/MainMenu');
 	const ImageminSettings = require('./app/ImageminSettings');
-
 	window.ko = require('knockout');
 
 	function iom() {
@@ -30,26 +25,30 @@
 		this.lockedSettings = ko.observable(true);
 		this.enabledSettingsOverlay = ko.observable(false);
 		this.imageminSettings = new ImageminSettings(this).plugins;
+		this.selectAllButton = ko.observable(true);
+		this.selectAllButtonText = ko.computed(() => {
+			return this.selectAllButton() ? 'Select All' : 'Deselect All';
+		}, this);
 		this.includeSubfolders = ko.observable(false);
 		this.saveInSubFolder = ko.observable(true);
+		this.quickLook = ko.observable(false);
+		this.selectedFile = ko.observable();
 		this.mbDecimals = 2;
 		this.percentageDecimals = 1;
 		this.files = ko.observableArray();
 		this.totalPercentageSavings = ko.observable('0.0%');
-		this.totalSavings = ko.computed(function() {
-			var initialBytes = 0,
-				finalBytes = 0,
-				savedBytes = 0,
-				savedTotal = '0 kb',
-				percentageSaved = '0.0%';
-
-			this.files().forEach(function(file) {
-				if(file.status() == 'success') {
+		this.totalSavings = ko.computed(() => {
+			let initialBytes = 0;
+			let finalBytes = 0;
+			let savedBytes = 0;
+			let savedTotal = '0 kb';
+			let percentageSaved = '0.0%';
+			this.files().forEach(file => {
+				if(file.status() === 'success') {
 					initialBytes = initialBytes + file.initialFileSize();
 					finalBytes = finalBytes + file.finalFileSize();
 				}
 			});
-
 			savedBytes = initialBytes - finalBytes;
 
 			if(savedBytes > 0) {
@@ -62,25 +61,23 @@
 		}, this);
 		this.acceptableFileTypes = ['png', 'PNG', 'jpg', 'JPG', 'jpeg', 'JPEG', 'svg', 'SVG', 'gif', 'GIF'];
 		this.newPresetName = ko.observable();
-		this.presets = ko.observableArray([
-			{
-				name : 'Default...',
-				settings : {
-					imagemin : ko.toJSON(this.imageminSettings),
-					includeSubfolders : this.includeSubfolders(),
-					saveInSubFolder : this.saveInSubFolder()
-				}
+		this.presets = ko.observableArray([{
+			name: 'Default...',
+			settings: {
+				imagemin: ko.toJSON(this.imageminSettings),
+				includeSubfolders: this.includeSubfolders(),
+				saveInSubFolder: this.saveInSubFolder()
 			}
-		], this);
+		}], this);
 		this.selectedPresetValue = ko.observable('Default...');
-		this.selectedPreset = ko.computed(function() {
-			var selectedPresetValue = this.selectedPresetValue();
-			var selectedPreset = this.presets()[0]
-			this.presets().forEach(function(preset) {
-				if(preset.name == selectedPresetValue) {
+		this.selectedPreset = ko.computed(() => {
+			let selectedPresetValue = this.selectedPresetValue();
+			let selectedPreset = this.presets()[0];
+			this.presets().forEach(preset => {
+				if(preset.name === selectedPresetValue) {
 					selectedPreset = preset;
 				}
-			})
+			});
 			return selectedPreset;
 		}, this);
 
@@ -97,32 +94,29 @@
 	};
 
 	iom.prototype._setPlaceholderListeners = function() {
-		var self = this;
-
+		let self = this;
 		// Drag over event for the drop area
-		document.addEventListener('dragover', function(event) {
+		document.addEventListener('dragover', event => {
 			event.preventDefault();
 			if(!self.enabledSettingsOverlay()) {
 				self.animOverlay.classList.add('dragged-over');
 			}
-
 			return false;
 		}, false);
 
 		// Drop event for the drop area
-		document.addEventListener('drop', function(event) {
+		document.addEventListener('drop', event => {
 			event.preventDefault();
 			if(!self.enabledSettingsOverlay()) {
-				var files = event.dataTransfer.files;
+				let files = event.dataTransfer.files;
 				self.addFilesToList(files, true);
 				self.animOverlay.classList.remove('dragged-over');
 			}
-
 			return false;
 		}, false);
 
 		// Drag leave the drop area
-		document.addEventListener('dragleave',function(event) {
+		document.addEventListener('dragleave', event => {
 			event.preventDefault();
 			self.animOverlay.classList.remove('dragged-over');
 			return false;
@@ -130,10 +124,10 @@
 	};
 
 	iom.prototype.addFilesToList = function(files, mainFolder) {
-		for(var i = 0; i < files.length; i++) {
-			var fileStats = fs.statSync(files[i].path);
+		for(let i = 0; i < files.length; i++) {
+			let fileStats = fs.statSync(files[i].path);
 			if(fileStats.isDirectory()) {
-				var filesInFolder = this._getFolderContents(files[i].path);
+				let filesInFolder = this._getFolderContents(files[i].path);
 				if(this.includeSubfolders() || mainFolder) {
 					this.addFilesToList(filesInFolder, false);
 				}
@@ -144,44 +138,42 @@
 	};
 
 	iom.prototype._addFileToList = function(file) {
-		var pathProperties = path.parse(file.path),
-			name = pathProperties.base,
-			parentFolder = pathProperties.dir,
-			filePath = file.path,
-			fileSize = file.size,
-			fileType = pathProperties.ext.replace('.', ''),
-			index = this.files().length;
-
+		let pathProperties = path.parse(file.path);
+		let name = pathProperties.base;
+		let parentFolder = pathProperties.dir;
+		let filePath = file.path;
+		let fileSize = file.size;
+		let fileType = pathProperties.ext.replace('.', '');
+		let index = this.files().length;
 		if(this.acceptableFileTypes.indexOf(fileType) !== -1) {
 			this.files.push({
-				name : ko.observable(name),
-				initialFileSize : ko.observable(fileSize),
-				finalFileSize : ko.observable(),
-				fileSavings : ko.observable(),
-				status : ko.observable('processing'),
-				parentFolder : parentFolder,
-				filePath : filePath,
-				fileType : fileType,
-				index : index
+				name: ko.observable(name),
+				initialFileSize: ko.observable(fileSize),
+				finalFileSize: ko.observable(),
+				fileSavings: ko.observable(),
+				selected: ko.observable(false),
+				status: ko.observable('processing'),
+				parentFolder: parentFolder,
+				filePath: filePath,
+				fileType: fileType,
+				index: index
 			});
-
 			this._compressImageFile(this.files()[index]);
 		}
 	};
 
 	iom.prototype._getFolderContents = function(folder) {
-		var self = this;
-		var filesInFolder = fs.readdirSync(folder),
-			files = [];
+		let self = this;
+		let filesInFolder = fs.readdirSync(folder);
+		let files = [];
 
-		filesInFolder.forEach(function(file) {
-			var filePath = path.resolve(folder, file);
+		filesInFolder.forEach(file => {
+			let filePath = path.resolve(folder, file);
 			files.unshift({
-				path : filePath,
-				size : self._getFileSize(filePath)
+				path: filePath,
+				size: self._getFileSize(filePath)
 			});
 		});
-
 		return files;
 	};
 
@@ -189,16 +181,32 @@
 		shell.showItemInFolder(filePath);
 	};
 
-   /*
-	* @private
-	* Handler function to compress an image file with imagemin
-	* @param {Object}
-	*/
+	iom.prototype.selectFile = function(model, data) {
+		model.deselectAllFiles();
+		data.selected(true);
+		model.selectedFile(data);
+	};
+
+	iom.prototype.deselectAllFiles = function() {
+		this.files().forEach(function(file) {
+			file.selected(false);
+		});
+	};
+
+	iom.prototype.deleteFile = function() {
+		this.files.remove(this.selectedFile());
+	};
+
+	/*
+	 * @private
+	 * Handler function to compress an image file with imagemin
+	 * @param {Object}
+	 */
 	iom.prototype._compressImageFile = function(file) {
-		var self = this;
-		var fileType = file.fileType.toUpperCase();
-		var userImageminSettings = this._getImageminSettings();
-		var outputFolder;
+		let self = this;
+		let fileType = file.fileType.toUpperCase();
+		let userImageminSettings = this._getImageminSettings();
+		let outputFolder;
 
 		if(this.saveInSubFolder()) {
 			outputFolder = file.parentFolder + '/_exports';
@@ -207,34 +215,42 @@
 		}
 
 		imagemin([file.filePath], outputFolder, {
-			plugins: [ userImageminSettings[fileType].plugin(userImageminSettings[fileType].options) ]
+			plugins: [
+				userImageminSettings['JPG'].plugin(userImageminSettings['JPG'].options),
+				userImageminSettings['PNG'].plugin(userImageminSettings['PNG'].options),
+				userImageminSettings['GIF'].plugin(userImageminSettings['GIF'].options),
+				userImageminSettings['SVG'].plugin({
+					plugins: [ userImageminSettings['SVG'].options ]
+				})
+			]
 		}).then(files => {
-			var compressedFile = files[0];
-			var finalFileSize = self._getFileSize(compressedFile.path);
+			let compressedFile = files[0];
+			let finalFileSize = self._getFileSize(compressedFile.path);
 			self.files()[file.index].finalFileSize(finalFileSize);
-			var fileSavings = self._getFileSavings(self.files()[file.index]);
+			let fileSavings = self._getFileSavings(self.files()[file.index]);
 			self.files()[file.index].fileSavings(fileSavings);
 			self.files()[file.index].status('success');
-		}).catch(function(err){
+		}).catch(err => {
 			self.files()[file.index].status('fail');
-			console.log(err)
+			console.log(err);
 		});
 	};
 
 	iom.prototype.loadFiles = function() {
-		var self = this;
-		if(this.enabledSettingsOverlay()) { return; }
+		if(this.enabledSettingsOverlay()) {
+			return;
+		}
 		ipcRenderer.send('load-files');
 	};
 
 	iom.prototype._receiveLoadedFiles = function(files) {
-		var self = this;
-		var filesToProcess = [];
+		let self = this;
+		let filesToProcess = [];
 
-		files.forEach(function(file) {
+		files.forEach(file => {
 			filesToProcess.unshift({
-				path : file,
-				size : self._getFileSize(file)
+				path: file,
+				size: self._getFileSize(file)
 			});
 		});
 
@@ -242,7 +258,7 @@
 	};
 
 	iom.prototype.setSettingsOverlay = function() {
-		if(this.settingsOverlay.classList.value.indexOf('addOverlay') == -1) {
+		if(this.settingsOverlay.classList.value.indexOf('addOverlay') === -1) {
 			this.settingsOverlay.classList.add('addOverlay');
 			this.enabledSettingsOverlay(true);
 		} else {
@@ -252,10 +268,12 @@
 	};
 
 	iom.prototype.reprocessFiles = function() {
-		var self = this;
-		if(this.enabledSettingsOverlay()) { return; }
+		let self = this;
+		if(this.enabledSettingsOverlay()) {
+			return;
+		}
 
-		for(var ii = 0; ii < self.files().length; ii++) {
+		for(let ii = 0; ii < self.files().length; ii++) {
 			try {
 				self.files()[ii].status('processing');
 				self.files()[ii].initialFileSize(self._getFileSize(self.files()[ii].filePath));
@@ -269,13 +287,15 @@
 	};
 
 	iom.prototype.clearList = function() {
-		if(this.enabledSettingsOverlay()) { return; }
+		if(this.enabledSettingsOverlay()) {
+			return;
+		}
 		this.files.removeAll();
 	};
 
 	iom.prototype.selectTab = function(tabName) {
-		this.imageminSettings.forEach(function(setting) {
-			if(setting.fileType == tabName) {
+		this.imageminSettings.forEach(setting => {
+			if(setting.fileType === tabName) {
 				setting.active(true);
 			} else {
 				setting.active(false);
@@ -284,27 +304,34 @@
 	};
 
 	iom.prototype.setSettings = function(fileType, plugin) {
-		var index = 0;
+		let index = 0;
 		switch(fileType) {
-			case 'JPG': index = 0; break;
-			case 'PNG': index = 1; break;
-			case 'SVG': index = 2; break;
-			case 'GIF': index = 3; break;
+			case 'JPG':
+				index = 0;
+				break;
+			case 'PNG':
+				index = 1;
+				break;
+			case 'SVG':
+				index = 2;
+				break;
+			case 'GIF':
+				index = 3;
+				break;
 		}
-
 		this.imageminSettings[index].activePlugin(plugin);
 	};
 
 	iom.prototype._getFileSize = function(filePath) {
-		var stats = fs.statSync(filePath);
-		var fileSizeInBytes = stats.size;
+		let stats = fs.statSync(filePath);
+		let fileSizeInBytes = stats.size;
 		return fileSizeInBytes;
 	};
 
 	iom.prototype._getFinalFileSize = function(bytes) {
-		var kb, mb;
+		let kb, mb;
 
-		if(bytes == '' || bytes == undefined) {
+		if(bytes === '' || bytes === undefined) {
 			return '';
 		}
 
@@ -316,35 +343,34 @@
 
 		if(kb > 1000) {
 			mb = bytes / 1000000;
-			return (mb).toFixed(this.mbDecimals) + 'mb';
+			return(mb).toFixed(this.mbDecimals) + 'mb';
 		} else {
 			return Math.round(kb) + 'kb';
 		}
 	};
 
 	iom.prototype._getFileSavings = function(file) {
-		var initialSize = file.initialFileSize();
-		var finalSize = file.finalFileSize();
-		return (100 - ((finalSize * 100) / initialSize)).toFixed(this.percentageDecimals) + '%';
+		let initialSize = file.initialFileSize();
+		let finalSize = file.finalFileSize();
+		return(100 - ((finalSize * 100) / initialSize)).toFixed(this.percentageDecimals) + '%';
 	};
 
 	iom.prototype._getImageminSettings = function() {
-		var self = this;
-		var userImageminSettings = {
-			JPG : {},
-			PNG : {},
-			SVG : {},
-			GIF : {},
+		let userImageminSettings = {
+			JPG: {},
+			PNG: {},
+			SVG: {},
+			GIF: {}
 		};
 
 		// Iterate through file types
-		this.imageminSettings.forEach(function(imageminSetting) {
+		this.imageminSettings.forEach(imageminSetting => {
 			// Iterate through plugins
-			imageminSetting.plugins.forEach(function(imageminPlugin) {
-				if(imageminPlugin.name == imageminSetting.activePlugin()) {
-					var options = {};
+			imageminSetting.plugins.forEach(imageminPlugin => {
+				if(imageminPlugin.name === imageminSetting.activePlugin()) {
+					let options = {};
 
-					imageminPlugin.settings.forEach(function(pluginSetting) {
+					imageminPlugin.settings.forEach(pluginSetting => {
 						if(pluginSetting.checkbox()) {
 							switch(pluginSetting.type()) {
 								case 'checkbox':
@@ -361,11 +387,20 @@
 							}
 						}
 					});
-
 					userImageminSettings[imageminSetting.fileType].plugin = imageminPlugin.plugin;
-					userImageminSettings[imageminSetting.fileType].options = options;
+
+					if(imageminSetting.fileType !== 'SVG') {
+						userImageminSettings[imageminSetting.fileType].options = options;
+					} else {
+						// imagemin-svgo needs a different option structure
+						let svgOptions = [];
+						for(let option in options) {
+							svgOptions.push({ [option]: options[option] });
+						}
+						userImageminSettings[imageminSetting.fileType].options = svgOptions;
+					}
 				}
-			})
+			});
 		});
 
 		return userImageminSettings;
@@ -374,22 +409,23 @@
 	iom.prototype._loadPrefFileSettings = function() {
 		this.includeSubfolders(JSON.parse(localStorage.includeSubfolders));
 		this.saveInSubFolder(JSON.parse(localStorage.saveInSubFolder));
-		var prefFileSettings = JSON.parse(fs.readFileSync(this.localStorageSettingsPath(), 'utf8'));
+		this.lockedSettings(JSON.parse(localStorage.lockedSettings));
+		let prefFileSettings = JSON.parse(fs.readFileSync(this.localStorageSettingsPath(), 'utf8'));
 		this._loadImageminPrefs(prefFileSettings);
 	};
 
 	iom.prototype._loadPresetsFileSettings = function() {
-		var presetsFileSettings = JSON.parse(fs.readFileSync(this.localStoragePresetsPath(), 'utf8'));
+		let presetsFileSettings = JSON.parse(fs.readFileSync(this.localStoragePresetsPath(), 'utf8'));
 		this.presets(presetsFileSettings);
 	};
 
 	iom.prototype._loadImageminPrefs = function(prefFileSettings) {
-		for(var i = 0; i < this.imageminSettings.length; i++) {
+		for(let i = 0; i < this.imageminSettings.length; i++) {
 			this.imageminSettings[i].active(prefFileSettings[i].active);
 			this.imageminSettings[i].activePlugin(prefFileSettings[i].activePlugin);
 
-			for(var j = 0; j < this.imageminSettings[i].plugins.length; j++) {
-				for(var k = 0; k < this.imageminSettings[i].plugins[j].settings.length; k ++) {
+			for(let j = 0; j < this.imageminSettings[i].plugins.length; j++) {
+				for(let k = 0; k < this.imageminSettings[i].plugins[j].settings.length; k++) {
 					this.imageminSettings[i].plugins[j].settings[k].checkbox(prefFileSettings[i].plugins[j].settings[k].checkbox);
 					this.imageminSettings[i].plugins[j].settings[k].textValue(prefFileSettings[i].plugins[j].settings[k].textValue);
 					this.imageminSettings[i].plugins[j].settings[k].dropdownSelection(prefFileSettings[i].plugins[j].settings[k].dropdownSelection);
@@ -401,71 +437,121 @@
 	iom.prototype._savePrefToCache = function(args) {
 		localStorage.includeSubfolders = this.includeSubfolders();
 		localStorage.saveInSubFolder = this.saveInSubFolder();
+		localStorage.lockedSettings = this.lockedSettings();
 
 		try {
 			fs.writeFileSync(this.localStorageSettingsPath(), args);
-		} catch(err) {}
+		} catch(err) {
+			console.log(err);
+		}
 	};
 
 	iom.prototype._savePresetsToCache = function(args) {
 		try {
 			fs.writeFileSync(this.localStoragePresetsPath(), args);
-		} catch(err) {}
+		} catch(err) {
+			console.log(err);
+		}
+	};
+
+	iom.prototype.openQuickLook = function() {
+		if(this.selectedFile()) {
+			ipcRenderer.send('open-quick-look', this.selectedFile().filePath);
+		}
+	};
+
+	iom.prototype.closeQuickLook = function() {
+		ipcRenderer.send('close-quick-look');
+	};
+
+	iom.prototype.lockToggle = function() {
+		this.lockedSettings(!this.lockedSettings());
+		this.mainMenu.lockSettingsMenuItem.checked = this.lockedSettings();
+	};
+
+	iom.prototype.selectAllToggle = function() {
+		let self = this;
+		this.imageminSettings.forEach((imageminSettings) => {
+			if(imageminSettings.active()) {
+				imageminSettings.plugins.forEach((plugin) => {
+					if(plugin.name === imageminSettings.activePlugin()) {
+						plugin.settings.forEach((setting) => {
+							setting.checkbox(self.selectAllButton());
+						});
+					}
+				});
+			}
+		});
+		this.selectAllButton(!this.selectAllButton());
 	};
 
 	iom.prototype.addPreset = function() {
-		var self = this;
+		let self = this;
 		this.presets.push({
 			name: self.newPresetName(),
 			settings: {
-				imagemin : ko.toJSON(self.imageminSettings),
-				includeSubfolders : this.includeSubfolders(),
-				saveInSubFolder : this.saveInSubFolder()
+				imagemin: ko.toJSON(self.imageminSettings),
+				includeSubfolders: this.includeSubfolders(),
+				saveInSubFolder: this.saveInSubFolder()
 			}
 		});
 		this.newPresetName('');
 	};
 
 	iom.prototype.loadPreset = function() {
-		var selectedPreset = this.selectedPreset();
+		let selectedPreset = this.selectedPreset();
 		this.includeSubfolders(selectedPreset.settings.includeSubfolders);
 		this.saveInSubFolder(selectedPreset.settings.saveInSubFolder);
-		var prefFileSettings = JSON.parse(selectedPreset.settings.imagemin);
+		let prefFileSettings = JSON.parse(selectedPreset.settings.imagemin);
 		this._loadImageminPrefs(prefFileSettings);
 	};
 
 	iom.prototype.deletePreset = function() {
-		var index = this.presets().indexOf(this.selectedPreset());
-		if (index > -1) {
+		let index = this.presets().indexOf(this.selectedPreset());
+		if(index > -1) {
 			this.presets.splice(index, 1);
 		}
-	}
+	};
 
 	iom.prototype.openLink = function() {
 		shell.openExternal('https://www.npmjs.com/browse/keyword/imageminplugin');
 	};
 
 	iom.prototype._attachAppListeners = function() {
-		var self = this;
+		let self = this;
 
 		// Helpers
-		ipcRenderer.on('console-on-renderer', function(event, args) {
+		ipcRenderer.on('console-on-renderer', (event, args) => {
 			console.log(args);
 		});
 
-		ipcRenderer.on('loaded-files', function(event, files) {
+		ipcRenderer.on('loaded-files', (event, files) => {
 			self._receiveLoadedFiles(files);
 		});
 
-		ipcRenderer.on('load-file', function(event, path) {
+		ipcRenderer.on('load-file', (event, path) => {
 			self._receiveLoadedFiles([path]);
 		});
 
-		ipcRenderer.on('toggle-checkForUpdatesMenuItem', function(event, state) {
+		ipcRenderer.on('delete-file', (event) => {
+			self.deleteFile();
+		});
+
+		ipcRenderer.on('quick-look', (event, path) => {
+			if(!self.quickLook()) {
+				self.openQuickLook();
+				self.quickLook(true);
+			} else {
+				self.closeQuickLook();
+				self.quickLook(false);
+			}
+		});
+
+		ipcRenderer.on('toggle-checkForUpdatesMenuItem', (event, state) => {
 			self.mainMenu.checkForUpdatesMenuItem.enabled = state;
 		});
 
-		ipcRenderer.on('send-localStoragePath', function(event, localStoragePath) {
+		ipcRenderer.on('send-localStoragePath', (event, localStoragePath) => {
 			self.localStorageSettingsPath(localStoragePath + '/Local Storage/iomPreferences.json');
 			self.localStoragePresetsPath(localStoragePath + '/Local Storage/iomPlugins.json');
 
@@ -473,40 +559,39 @@
 			try {
 				fs.statSync(self.localStorageSettingsPath()).isFile();
 				self._loadPrefFileSettings();
-			} catch(err) {}
+			} catch(err) {
+				console.log(err);
+			};
 
 			// Read presets file if it exists
 			try {
 				fs.statSync(self.localStoragePresetsPath()).isFile();
 				self._loadPresetsFileSettings();
-			} catch(err) {}
+			} catch(err) {
+				console.log(err);
+			}
 
 			// Set preference file computed only after obtaining local storage path
-			self.prefFileComputed = ko.computed(function() {
-				var plugins = ko.toJSON(this.imageminSettings);
-				var includeSubfolders = self.includeSubfolders();
-				var saveInSubFolder = self.saveInSubFolder();
-
+			self.prefFileComputed = ko.computed(() => {
+				let plugins = ko.toJSON(this.imageminSettings);
+				let includeSubfolders = self.includeSubfolders();
+				let saveInSubFolder = self.saveInSubFolder();
 				if(self.localStorageSettingsPath() !== '') {
 					self._savePrefToCache(plugins);
 				}
-
 				return true;
 			}, self);
 
 			// Set presets file computed only after obtaining local storage path
-			self.presetsFileComputed = ko.computed(function() {
-				var presets = ko.toJSON(this.presets);
-
+			self.presetsFileComputed = ko.computed(() => {
+				let presets = ko.toJSON(this.presets);
 				if(self.localStorageSettingsPath() !== '') {
 					self._savePresetsToCache(presets);
 				}
-
 				return true;
 			}, self);
 		});
 	};
 
-	ko.applyBindings(new iom);
-
+	ko.applyBindings(new iom());
 })(window);
