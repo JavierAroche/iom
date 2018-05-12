@@ -23,12 +23,13 @@
   },
   "devDependencies": {
     "devtron": "^1.4.0",
-    "electron": "^1.7.12",
-    "electron-packager": "^9.1.0",
+    "electron": "^2.0.0",
+    "electron-packager": "^12.0.2",
     "gulp": "^3.9.1",
-    "gulp-sass": "^3.1.0"
+    "gulp-sass": "^4.0.1"
   },
   "dependencies": {
+    "electron-osx-sign": "^0.4.10",
     "font-awesome": "^4.7.0",
     "imagemin": "^5.3.1",
     "imagemin-advpng": "^4.0.0",
@@ -38,12 +39,12 @@
     "imagemin-jpeg-recompress": "^5.1.0",
     "imagemin-jpegoptim": "^5.2.0",
     "imagemin-jpegtran": "^5.0.2",
-    "imagemin-mozjpeg": "^6.0.0",
+    "imagemin-mozjpeg": "^7.0.0",
     "imagemin-optipng": "^5.2.1",
     "imagemin-pngcrush": "^5.1.0",
-    "imagemin-pngout": "^2.0.0",
-    "imagemin-pngquant": "^5.0.1",
-    "imagemin-svgo": "^5.2.4",
+    "imagemin-pngout": "^3.0.0",
+    "imagemin-pngquant": "^5.1.0",
+    "imagemin-svgo": "^6.0.0",
     "imagemin-zopfli": "^5.1.0",
     "knockout": "^3.4.2",
     "semver": "^5.5.0"
