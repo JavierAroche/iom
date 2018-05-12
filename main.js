@@ -45,26 +45,23 @@ function createWindow() {
 
 	mainWindow.once('ready-to-show', () => {
 		mainWindow.show()
-
+		// Load files
 		if(openedFiles.length > 0) {
 			openedFiles.forEach(function(openedFile) {
 				mainWindow.webContents.send('load-file', openedFile)
 			})
+			// Reset queue
 			openedFiles = []
 		}
 	})
-
 	mainWindow.loadURL(url.format({
 		pathname: path.join(__dirname, 'index.html'),
 		protocol: 'file:',
 		slashes: true
 	}))
-
 	checkForUpdates('autoRequested')
-
 	mainWindow.on('focus', registerShortcuts)
 	mainWindow.on('blur', unregisterShortcuts)
-
 	mainWindow.on('closed', function() {
 		mainWindow = null
 	})
@@ -89,7 +86,7 @@ app.on('open-file', (ev, filePath) => {
 	} catch(err) {}
 })
 
-// Listen to custom protocole incoming messages
+// Listen to custom protocol incoming messages
 app.on('open-url', (ev, url) => {
 	ev.preventDefault()
 	var cleanURL = path.resolve(decodeURIComponent(url.substring(7)))
