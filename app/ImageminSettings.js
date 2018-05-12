@@ -129,7 +129,7 @@
 								'dropdownSelection': ko.observable(1)
 							},
 							{
-								'name': 'notrellis',
+								'name': 'trellis',
 								'type': ko.observable('checkbox'),
 								'title': ko.observable('Disable trellis optimization.'),
 								'checkbox': ko.observable(false),
@@ -138,7 +138,7 @@
 								'dropdownSelection': ko.observable()
 							},
 							{
-								'name': 'notrellisDC',
+								'name': 'trellisDC',
 								'type': ko.observable('checkbox'),
 								'title': ko.observable('Disable trellis optimization of DC coefficients.'),
 								'checkbox': ko.observable(false),
@@ -152,7 +152,7 @@
 								'title': ko.observable('Set trellis optimization method. Available methods: psnr, hvs-psnr, ssim and ms-ssim'),
 								'checkbox': ko.observable(false),
 								'textValue': ko.observable(),
-								'dropdownOptions': ko.observableArray(['psnr', 'hvs-psnr', 'ssim', 'ms-ssimh']),
+								'dropdownOptions': ko.observableArray(['psnr', 'hvs-psnr', 'ssim', 'ms-ssim']),
 								'dropdownSelection': ko.observable('hvs-psnr')
 							},
 							{
