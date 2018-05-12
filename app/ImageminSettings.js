@@ -1016,8 +1016,8 @@
 								'title': ko.observable('Set the method used to resize images.'),
 								'checkbox': ko.observable(false),
 								'textValue': ko.observable(),
-								'dropdownOptions': ko.observableArray(['sample']),
-								'dropdownSelection': ko.observable()
+								'dropdownOptions': ko.observableArray(['point', 'sample', 'mix', 'box']),
+								'dropdownSelection': ko.observable('mix')
 							},
 							{
 								'name': 'colorMethod',
@@ -1034,8 +1034,8 @@
 								'title': ko.observable('Optimize output GIF animations for space.\n\nThere are currently three levels:\n\n1: Stores only the changed portion of each image. This is the default.\n2: Also uses transparency to shrink the file further.\n3: Try several optimization methods (usually slower, sometimes better results).'),
 								'checkbox': ko.observable(false),
 								'textValue': ko.observable(),
-								'dropdownOptions': ko.observableArray(['diversity', 'blend-diversity']),
-								'dropdownSelection': ko.observable('diversity')
+								'dropdownOptions': ko.observableArray([1, 2, 3]),
+								'dropdownSelection': ko.observable(1)
 							},
 							{
 								'name': 'unoptimize',
@@ -1043,8 +1043,8 @@
 								'title': ko.observable('Unoptimize GIF animations into an easy-to-edit form.'),
 								'checkbox': ko.observable(false),
 								'textValue': ko.observable(),
-								'dropdownOptions': ko.observableArray([1, 2, 3]),
-								'dropdownSelection': ko.observable(1)
+								'dropdownOptions': ko.observableArray(),
+								'dropdownSelection': ko.observable()
 							}
 						]
 					}
