@@ -215,7 +215,14 @@
 		}
 
 		imagemin([file.filePath], outputFolder, {
-			plugins: [userImageminSettings[fileType].plugin(userImageminSettings[fileType].options)]
+			plugins: [
+				userImageminSettings['JPG'].plugin(userImageminSettings['JPG'].options),
+				userImageminSettings['PNG'].plugin(userImageminSettings['PNG'].options),
+				userImageminSettings['GIF'].plugin(userImageminSettings['GIF'].options),
+				userImageminSettings['SVG'].plugin({
+					plugins: [ userImageminSettings['SVG'].options ]
+				})
+			]
 		}).then(files => {
 			let compressedFile = files[0];
 			let finalFileSize = self._getFileSize(compressedFile.path);
@@ -381,7 +388,17 @@
 						}
 					});
 					userImageminSettings[imageminSetting.fileType].plugin = imageminPlugin.plugin;
-					userImageminSettings[imageminSetting.fileType].options = options;
+
+					if(imageminSetting.fileType !== 'SVG') {
+						userImageminSettings[imageminSetting.fileType].options = options;
+					} else {
+						// imagemin-svgo needs a different option structure
+						let svgOptions = [];
+						for(let option in options) {
+							svgOptions.push({ [option]: options[option] });
+						}
+						userImageminSettings[imageminSetting.fileType].options = svgOptions;
+					}
 				}
 			});
 		});
