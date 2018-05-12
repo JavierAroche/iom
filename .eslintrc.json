@@ -13,10 +13,6 @@
 				"args": "none"
 			}
 		],
-		"consistent-this": [
-			"error",
-			"self"
-		],
 		"consistent-return": "off",
 		"no-use-before-define": [
 			"error",
