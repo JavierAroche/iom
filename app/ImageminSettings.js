@@ -1025,7 +1025,7 @@
 								'title': ko.observable('Determine how a smaller colormap is chosen.'),
 								'checkbox': ko.observable(false),
 								'textValue': ko.observable(),
-								'dropdownOptions': ko.observableArray(['mix', 'sample']),
+								'dropdownOptions': ko.observableArray(['diversity', 'blend-diversity', 'median-cut']),
 								'dropdownSelection': ko.observable('mix')
 							},
 							{
