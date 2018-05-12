@@ -15,26 +15,13 @@ Drag and drop images to the iom app. Click on the settings icon to change imagem
 
 NOTE: Images will not be overwritten by default. Change this behavior in the settings.
 
-## CLI
-Install
-```
-$ npm link
-```
-
-```
-Usage: iom file [option ...] ...
-
-Options
--s <setting [option]> Use setting with options
--sub <folder name>    Save exports in subfolder (keep original)
--i                    Include subfolders when loading a folder
--h, --help            Show iom options
-```
-
 ## Protocol
 ```
 iom:///file
 ```
+
+
+
 
 ## License
 MIT © Javier Aroche
