@@ -1,7 +1,7 @@
 {
   "name": "iom",
   "title": "iom",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "description": "Image optimization manager to minify images",
   "author": {
     "name": "Javier Aroche",

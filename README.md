@@ -1,14 +1,14 @@
-<img src="/icon/iom.png" width="150" height="150">
+<img src="/assets/icon/iom.png" width="150" height="150">
 
-[![npm-image](https://img.shields.io/badge/iom-v0.0.4-09bc00.svg)](https://github.com/JavierAroche/iom)
+[![npm-image](https://img.shields.io/badge/iom-v0.1.0-09bc00.svg)](https://github.com/JavierAroche/iom)
 
 ## Description
 Image optimization manager to minify images using [imagemin](https://github.com/imagemin/imagemin).
 
 ## Latest Release
-* [MacOS](https://raw.githubusercontent.com/JavierAroche/iom/master/releases/darwin/v0.0.4/iom_v0.0.4.zip)
-* [Windows](https://raw.githubusercontent.com/JavierAroche/iom/master/releases/win32/v0.0.4/iom_v0.0.4.zip)
-* [Linux](https://raw.githubusercontent.com/JavierAroche/iom/master/releases/linux/v0.0.4/iom_v0.0.4.zip)
+* [iom - MacOS](https://github.com/JavierAroche/iom/releases/download/v0.1.0/iom_macos_v0.1.0.zip)
+* [iom - Windows](https://github.com/JavierAroche/iom/releases/download/v0.1.0/iom_windows_v0.1.0.zip)
+* [iom - Linux](https://github.com/JavierAroche/iom/releases/download/v0.1.0/iom_linux_v0.1.0.zip)
 
 ## Usage
 Drag and drop images to the iom app. Click on the settings icon to change imagemin's plugin settings.
@@ -20,8 +20,12 @@ NOTE: Images will not be overwritten by default. Change this behavior in the set
 iom:///file
 ```
 
+## Screenshots
+![iom-default](assets/iom-default.png)
 
+![iom-files](assets/iom-files.png)
 
+![iom-settings](assets/iom-settings.png)
 
 ## License
 MIT © Javier Aroche

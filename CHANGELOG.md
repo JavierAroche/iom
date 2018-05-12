@@ -1,4 +1,20 @@
 ## Changelog
+**v0.1.0 (May 11 2018)**
+* Fixed mozjpeg settings
+* Fixed giflossy settings
+* Added iom protocol
+* Added file selection and deletion
+* Added file quick look
+* Added lock icon in settings
+* Lock setting is now saved in localStorage
+* Changed height
+* Added select all button
+* Better file handling if loading file externally
+* Added electron-osx-sign
+* Bumped dependencies
+* Updated README
+* Code cleanup
+
 **v0.0.4 (Jun 20 2017)**
 * Fixed auto updates.
 
