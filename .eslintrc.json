@@ -40,7 +40,9 @@
 	"globals": {
 		"ko": false,
 		"io": false,
-		"document": false
+		"document": false,
+		"window": false,
+		"localStorage": false
 	},
 	"env": {
 		"es6": true,
