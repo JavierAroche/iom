@@ -21,10 +21,8 @@
     "package-linux": "electron-packager . --out=iom-builds --overwrite --platform=linux --arch=x64 --icon=icon/iom.png --ignore=releases --ignore=iom-builds",
     "verify": "codesign --verify -vvvv ./iom-builds/iom-darwin-x64/iom.app"
   },
-  "bin": {
-    "iom": "cli/iom.sh"
-  },
   "devDependencies": {
+    "devtron": "^1.4.0",
     "electron": "^1.7.12",
     "electron-packager": "^9.1.0",
     "gulp": "^3.9.1",
