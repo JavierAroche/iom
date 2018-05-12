@@ -16,9 +16,10 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "package-mac": "electron-packager . --out=iom-builds --overwrite --platform=darwin --arch=x64 --icon=icon/iom.icns --ignore=releases --ignore=iom-builds --extend-info=extend.plist --osx-sign.identity='Javier Aroche'; npm run verify",
+    "package-mac": "electron-packager . --out=iom-builds --overwrite --platform=darwin --arch=x64 --icon=icon/iom.icns --ignore=releases --ignore=iom-builds --extend-info=extend.plist; npm run sign; npm run verify",
     "package-win": "electron-packager . --out=iom-builds --overwrite --platform=win32 --arch=ia32 --icon=icon/iom.ico --ignore=releases --ignore=iom-builds --appCopyright=\"Copyright (C) 2017 Javier Aroche\" --win32metadata.CompanyName=\"Javer Aroche\" --win32metadata.FileDescription=\"iom\" --win32metadata.OriginalFilename=\"iom\" --win32metadata.ProductName=\"iom\"",
     "package-linux": "electron-packager . --out=iom-builds --overwrite --platform=linux --arch=x64 --icon=icon/iom.png --ignore=releases --ignore=iom-builds",
+    "sign": "npx electron-osx-sign ./iom-builds/iom-darwin-x64/iom.app",
     "verify": "codesign --verify -vvvv ./iom-builds/iom-darwin-x64/iom.app"
   },
   "devDependencies": {
