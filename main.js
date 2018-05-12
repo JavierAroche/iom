@@ -32,14 +32,14 @@ function createWindow() {
 	// Create the browser window.
 	mainWindow = new BrowserWindow({
 		width: 500,
-		height: 470,
+		height: 310,
 		minWidth: 500,
 		minHeight: 200,
 		frame: true,
 		center: true,
 		maximizable: true,
 		resizable: true,
-		titleBarStyle: 'hidden-inset',
+		titleBarStyle: 'hiddenInset',
 		show: false
 	});
 
