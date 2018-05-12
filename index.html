@@ -63,7 +63,7 @@
 					</div>
 				</div>
 				<div class="selectAllButton">
-					<input type="button" data-bind="click: selectAllToggle, value: selectAllButtonText">
+					<input type="button" data-bind="click: selectAllToggle, value: selectAllButtonText, css: { locked : lockedSettings }, disable: lockedSettings">
 				</div>
 				<hr>
 				<!-- Extra Settings -->
