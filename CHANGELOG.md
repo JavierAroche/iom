@@ -1,4 +1,7 @@
 ## Changelog
+**v0.1.1 (Oct 04 2018)**
+* Fixed error with imagemin pasing default options instead of false.
+
 **v0.1.0 (May 11 2018)**
 * Fixed mozjpeg settings
 * Fixed giflossy settings
