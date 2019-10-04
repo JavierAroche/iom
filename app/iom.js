@@ -371,20 +371,18 @@
 					let options = {};
 
 					imageminPlugin.settings.forEach(pluginSetting => {
-						if(pluginSetting.checkbox()) {
-							switch(pluginSetting.type()) {
-								case 'checkbox':
-									options[pluginSetting.name] = pluginSetting.checkbox();
-									break;
-								case 'checkbox-text':
-									options[pluginSetting.name] = pluginSetting.textValue();
-									break;
-								case 'checkbox-dropdown':
-									options[pluginSetting.name] = pluginSetting.dropdownSelection();
-									break;
-								default:
-									break;
-							}
+						switch(pluginSetting.type()) {
+							case 'checkbox':
+								options[pluginSetting.name] = pluginSetting.checkbox();
+								break;
+							case 'checkbox-text':
+								options[pluginSetting.name] = pluginSetting.textValue();
+								break;
+							case 'checkbox-dropdown':
+								options[pluginSetting.name] = pluginSetting.dropdownSelection();
+								break;
+							default:
+								break;
 						}
 					});
 					userImageminSettings[imageminSetting.fileType].plugin = imageminPlugin.plugin;
